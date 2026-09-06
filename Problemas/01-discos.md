@@ -19,8 +19,7 @@ Se pide determinar cuáles de las afirmaciones propuestas son verdaderas.
 
 Antes de consultar a la IA este fue mi primer intento de resolver el problema, se dieron 20 minutos para resolverlos. En mi caso, el tiempo de analisis y de las hipotesis que yo tome no fue suficiente para resolver siquiera el primer problema. Aqui mis avances en 20 minutos tras un analisis e hipotesis.
 
-
-
+![SolProblema](../Imagenes/Sol-01.jpeg)
 
 ---
 
