@@ -90,7 +90,7 @@ Vamos a corregir especialmente C, que es donde está el detalle conceptual.
 
 $$\mathbf{L}_{\text{CM}} = I_{\parallel} \boldsymbol{\Omega}_{\parallel} + I_{\perp} \boldsymbol{\Omega}_{\perp}$$
 
-- **Conclusión:** $\mathbf{L}_{\text{CM}} \neq I_{\parallel} \boldsymbol{\omega}$ *(La opción C es falsa).*
+- **Conclusión:** $$\mathbf{L}_{\text{CM}} \neq I_{\parallel} \boldsymbol{\omega}$$ *(La opción C es falsa).*
 ### Resultado
 
 Después de modificar esta hipótesis, la IA concluyó que solamente
