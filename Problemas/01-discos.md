@@ -31,7 +31,7 @@ Antes de consultar a la IA este fue mi primer intento de resolver el problema, s
 
 ### Resultado
 
-La IA concluyó inicialmente que las opciones A y C eran correctas. Tardo 1min 39seg en responder. 
+La IA concluyó inicialmente que las opciones A y C eran correctas. Tardo 1 min 39 seg en responder. 
 
 ### Hipótesis identificadas
 
