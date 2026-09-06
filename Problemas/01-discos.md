@@ -86,9 +86,9 @@ Vamos a corregir especialmente C, que es donde está el detalle conceptual.
 
 * **Asunción:** Existe un **movimiento compuesto** (rotación sobre la varilla $+$ precesión alrededor del eje $z$).
 * **Planteamiento:** La velocidad angular total incluye ambas componentes:
-  $$\boldsymbol{\Omega}_{\text{total}} = \boldsymbol{\omega} \hat{\mathbf{e}} + \frac{\boldsymbol{\omega}}{5} \hat{\mathbf{z}}$$
+  $\boldsymbol{\Omega}_{\text{total}} = \boldsymbol{\omega} \hat{\mathbf{e}} + \frac{\boldsymbol{\omega}}{5} \hat{\mathbf{z}}$
 * **Vector de Momento Angular:** Como los momentos de inercia varían según la dirección ($I_{\parallel} \neq I_{\perp}$), se calcula vectorialmente:
-  $$\mathbf{L}_{\text{CM}} = I_{\parallel} \boldsymbol{\Omega}_{\parallel} + I_{\perp} \boldsymbol{\Omega}_{\perp}$$
+  $\mathbf{L}_{\text{CM}} = I_{\parallel} \boldsymbol{\Omega}_{\parallel} + I_{\perp} \boldsymbol{\Omega}_{\perp}$
 * **Conclusión:** $\mathbf{L}_{\text{CM}} \neq I_{\parallel} \boldsymbol{\omega}$ *(La opción C es falsa)*.
 
 ### Resultado
