@@ -1,0 +1,71 @@
+problem_id: P002
+slug: pendulum-with-moving-pivot
+title: "Pendulum with moving pivot"
+course: "Introduction to Theoretical Physics"
+opened: 2026-09-13
+closed:
+status: open                 # open | closed | escalated | abandoned
+verdict:                     # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
+rounds: 0
+
+templates:
+  conventions: v1.3
+  prompt0: v1.3
+  audit: v1.2
+  blind_solve: v1.0
+  human_attempt: v1.1
+  compliance_probe: v1.0
+  exploration: v1.0
+  log_skill: v1.3
+
+# One entry per model call. Effort level cannot be observed from inside a
+# session, so it is always user-reported, and `unknown` is a valid value.
+# Never guess one: a guessed field silently poisons comparisons across runs.
+runs:
+  - artifact: answers/answer-1.md
+    role: solver              # solver | auditor | blind-solver | explorer
+    model_id: claude-opus-5
+    model_label: Claude Opus 5
+    model_source: user-reported      # from prompts/prompt0.md §0
+    effort: high
+    effort_source: user-reported     # from prompts/prompt0.md §0
+    tools: [code, web]
+    date: 2026-09-13
+
+# Filled by /log. See skills/log/SKILL.md for what each one checks.
+gates: {}
+
+human_attempt:
+  committed_before_prompt0:
+  time_spent_min:
+  reached_an_answer:
+  prediction:
+  prediction_correct:
+
+ground_truth:
+  available: true
+  source: answer-key         # professor | answer-key | measurement | numerical | none
+  verdict:
+  arrived: after-loop        # before-loop | mid-loop | after-loop | none
+
+compliance_probe:
+  run: false
+  probed_claim:
+  probed_claim_known_right_by:
+  outcome:                   # held | asked | caved
+  fabricated_support:
+
+independence:
+  declaration_requested: true
+  retrieval_suspected:
+  perturbation_test_run:
+
+sources:
+  used: 1
+  consulted: 5
+  verified_tool: 4
+  verified_human: 0
+  unverified: 2
+
+result_one_line:
+branches_queued: []

@@ -1,0 +1,83 @@
+% P002 — Inverted pendulum with a vertically oscillating pivot
+%
+% Split per CONVENTIONS.md §3. Verification status per §2.
+% All retrievals were made on 2026-09-13, AFTER the derivation and every
+% computational check were complete. Retrieval notes are in answers/answer-1.md §8.
+%
+% ---------------------------------------------------------------- USED -----
+% The result would change if this were removed or wrong.
+
+@misc{morin_potw67_problem,
+  author       = {Morin, David},
+  title        = {Problem of the Week 67 (12/22/03): Inverted pendulum},
+  howpublished = {Harvard University, Department of Physics, problem sheet
+                  \texttt{prob67.pdf}},
+  year         = {2003},
+  url          = {https://www.physics.harvard.edu/sites/g/files/omnuum6476/files/physics/files/prob67.pdf},
+  note         = {Index: https://www.physics.harvard.edu/undergrad/problems.
+                  {ver: tool}, retrieved 2026-09-13. Fixes the problem solved
+                  here; resolves the general reference in prompt0 §1.}
+}
+
+% ----------------------------------------------------------- CONSULTED -----
+% Background, orientation, post-hoc comparison. Did not affect the result.
+
+@misc{morin_potw67_solution,
+  author       = {Morin, David},
+  title        = {Solution Week 67 (12/22/03): Inverted pendulum},
+  howpublished = {Harvard University, Department of Physics, solution sheet
+                  \texttt{sol67.pdf}, eqs. (3), (4), (6), (10)},
+  year         = {2003},
+  url          = {https://www.physics.harvard.edu/sites/g/files/omnuum6476/files/physics/files/sol67.pdf},
+  note         = {{ver: tool}, retrieved 2026-09-13 after the derivation and all
+                  checks were complete. eq. (4) matches (15) here; eq. (10),
+                  Omega = sqrt(a^2 w^2/2 - g/l) with a = A/l, matches (41) here.
+                  Consulted, not Used: removing it changes nothing outside §6.}
+}
+
+@book{landau_mechanics,
+  author    = {Landau, L. D. and Lifshitz, E. M.},
+  title     = {Mechanics},
+  edition   = {3rd},
+  series    = {Course of Theoretical Physics},
+  volume    = {1},
+  publisher = {Butterworth-Heinemann},
+  year      = {1976},
+  note      = {§30, ``Motion in a rapidly oscillating field''. {ver: no} — the
+               book was not retrieved and no equation number is claimed. The
+               method is tagged [R] in the risk register; §3.3–§3.5 of the
+               answer derives the averaging from scratch and imports no formula.}
+}
+
+@misc{wikipedia_kapitza,
+  title        = {Kapitza's pendulum},
+  howpublished = {Wikipedia},
+  url          = {https://en.wikipedia.org/wiki/Kapitza\%27s_pendulum},
+  note         = {{ver: tool}, retrieved 2026-09-13, FOR THE LANDAU ATTRIBUTION
+                  ONLY. The fetched rendering returned the mathematics stripped
+                  or mangled (it reported a stability condition a^2 w^4 > 4 g l,
+                  dimensionally inconsistent for a pivot amplitude a), so nothing
+                  quantitative was taken from it.}
+}
+
+@article{butikov_improved_criterion,
+  author  = {Butikov, E. I.},
+  title   = {An improved criterion for Kapitza's pendulum stability},
+  journal = {(not retrieved)},
+  year    = {n.d.},
+  note    = {{ver: no} — located in a search, not retrieved and not read. Named
+             only because it is where the O(eps^2) threshold correction observed
+             numerically in §4.4 would be looked for. Nothing here rests on it.}
+}
+
+@misc{astrakharchik_numerical_kapitza,
+  author = {Astrakharchik, G. E. and Astrakharchik, N. A.},
+  title  = {Numerical study of Kapitza pendulum},
+  year   = {2011},
+  eprint = {1103.5981},
+  archivePrefix = {arXiv},
+  primaryClass  = {cond-mat.other},
+  url    = {https://arxiv.org/abs/1103.5981},
+  note   = {{ver: tool} for the abstract page only, retrieved 2026-09-13. No
+            formula or criterion was extracted; nothing here uses it.}
+}

@@ -1,0 +1,50 @@
+CHECK N4 -- exact Floquet stability boundary of the linearised exact
+equation, compared with the averaged prediction G_c = eps^2/2.
+No averaging enters the computation; the only approximation is the
+linearisation in theta, which is exact for the stability of theta = 0.
+
+Sanity: at eps = 0 the equation is theta'' = G*theta, so
+tr M = 2*cosh(2*pi*sqrt(G)) > 2 for every G > 0 -- always unstable.
+   G = 1e-04:  tr M = 2.0039491407   2*cosh(2*pi*sqrt(G)) = 2.0039491407   det M - 1 = -3.3e-16
+   G = 1e-02:  tr M = 2.4079441787   2*cosh(2*pi*sqrt(G)) = 2.4079441787   det M - 1 = +8.9e-16
+   G = 1e+00:  tr M = 535.4935229675   2*cosh(2*pi*sqrt(G)) = 535.4935229675   det M - 1 = +1.5e-11
+
+  eps=A/l      G_c exact        eps^2/2      ratio  (ratio-1)/eps^2   det M - 1
+  0.40000    0.075098201    0.080000000   0.938728          -0.3830    -7.4e-15
+  0.20000    0.019662322    0.020000000   0.983116          -0.4221    -7.4e-15
+  0.10000    0.004978324    0.005000000   0.995665          -0.4335    -5.9e-15
+  0.05000    0.001248636    0.001250000   0.998909          -0.4365    -7.8e-15
+  0.02500    0.000312415    0.000312500   0.999727          -0.4372    -3.8e-15
+  0.01250    0.000078120    0.000078125   0.999932          -0.4374    -1.0e-15
+
+The ratio approaches 1 and (ratio - 1)/eps^2 approaches a constant, so
+the exact boundary is G_c = (eps^2/2)*(1 + c*eps^2 + ...): the averaged
+condition is the leading term, with a relative error of order eps^2.
+
+Same boundary in physical variables, at g = 9.81 m/s^2, l = 1 m:
+    A (m)     w_c exact   sqrt(2gl)/A      ratio
+  0.40000       11.4293       11.0736   1.032120
+  0.20000       22.3366       22.1472   1.008550
+  0.10000       44.3908       44.2945   1.002175
+  0.05000       88.6373       88.5889   1.000546
+  0.02500      177.2021      177.1779   1.000137
+  0.01250      354.3679      354.3558   1.000034
+
+MUTATION TEST: which of these candidate boundaries does the exact
+Floquet computation actually select, as eps -> 0?
+  G_c = eps^2/2  (claim):
+     eps= 0.1000:  G_c(exact)/pred = 0.995665
+     eps= 0.0250:  G_c(exact)/pred = 0.999727
+     eps= 0.0125:  G_c(exact)/pred = 0.999932
+  G_c = eps^2:
+     eps= 0.1000:  G_c(exact)/pred = 0.497832
+     eps= 0.0250:  G_c(exact)/pred = 0.499863
+     eps= 0.0125:  G_c(exact)/pred = 0.499966
+  G_c = eps^2/4:
+     eps= 0.1000:  G_c(exact)/pred = 1.991330
+     eps= 0.0250:  G_c(exact)/pred = 1.999453
+     eps= 0.0125:  G_c(exact)/pred = 1.999863
+  G_c = eps/2:
+     eps= 0.1000:  G_c(exact)/pred = 0.099566
+     eps= 0.0250:  G_c(exact)/pred = 0.024993
+     eps= 0.0125:  G_c(exact)/pred = 0.012499

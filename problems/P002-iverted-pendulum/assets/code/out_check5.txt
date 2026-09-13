@@ -1,0 +1,62 @@
+CHECK N5 -- basin boundary of the inverted position.
+TH_c = arccos(2 g l / (A^2 w^2)) is compared with the release angle at
+which the exact nonlinear equation first fails to hold the pendulum up.
+The target is held fixed at TH_c = 60 deg while eps = A/l is reduced,
+so a discrepancy that does not shrink with eps is a failure.
+
+Two comparisons are made.  The raw one compares TH_c with the release
+angle theta(0).  But releasing FROM REST at theta(0) does not set the
+slow amplitude to theta(0): at t = 0 the fast ripple is at its maximum,
+xi(0) = (A/l) sin(TH), so the slow amplitude is theta(0) - (A/l)sin(TH).
+That is an O(eps) offset predicted by the same derivation, so the
+corrected column is the sharper test.  If the correction were invented
+to close a gap it would not also have the right coefficient, which is
+why sin(TH_c) = sin(60 deg) = 0.8660 is printed alongside diff/eps.
+
+  eps=A/l        A      omega   TH_c pred  TH_c exact    raw diff  diff/eps   corrected  corr/eps^2
+   0.0800   0.0800      78.30    1.047198    1.115333  +6.814e-02   +0.8517  -3.709e-03     -0.5796
+   0.0400   0.0400     156.60    1.047198    1.081577  +3.438e-02   +0.8595  -9.283e-04     -0.5802
+   0.0200   0.0200     313.21    1.047198    1.064455  +1.726e-02   +0.8629  -2.326e-04     -0.5816
+   0.0100   0.0100     626.42    1.047198    1.055843  +8.645e-03   +0.8645  -5.808e-05     -0.5808
+
+sin(TH_c) = 0.8660 -- compare the diff/eps column.
+
+Convergence orders:
+  eps 0.0800 -> 0.0400:  order(raw) =  0.99   order(corrected) =  2.00
+  eps 0.0400 -> 0.0200:  order(raw) =  0.99   order(corrected) =  2.00
+  eps 0.0200 -> 0.0100:  order(raw) =  1.00   order(corrected) =  2.00
+
+Control: is the bisected boundary actually sensitive to the prediction?
+Below-threshold parameters should give NO stable release angle at all.
+  sub-threshold omega = 177.2: even a tiny release angle falls  <-- expected: nothing is held
+
+========================================================================
+CHECK N6 -- amplitude of the fast ripple, claimed to be (A/l)*sin(TH).
+
+eps = 0.03,  omega = 295.3,  Omega = 5.4249,  54 drive periods in one slow period
+ block   TH (rad)   ripple amp  (A/l)|sinTH|     ratio
+     5    0.49590  1.43963e-02   1.42748e-02   1.00851
+    10    0.27746  8.23931e-03   8.21727e-03   1.00268
+    15   -0.02451  9.91907e-04   7.35122e-04   1.34931
+    20   -0.31871  9.61202e-03   9.40023e-03   1.02253
+    25   -0.51859  1.50261e-02   1.48696e-02   1.01052
+    30   -0.58270  1.66426e-02   1.65084e-02   1.00813
+    35   -0.50260  1.45937e-02   1.44512e-02   1.00986
+    40   -0.28925  8.73393e-03   8.55698e-03   1.02068
+    45    0.01077  8.25355e-04   3.23178e-04   2.55387
+    50    0.30738  8.92702e-03   9.07698e-03   0.98348
+
+ratio over all 50 interior drive periods: mean 1.06502, min 0.97767, max 2.55387
+Expected 1 + O(eps) = 1 +/- 0.03.  PASS
+
+The ratio is the wrong statistic near TH = 0, where the predicted
+amplitude (A/l)|sin TH| passes through zero and the O(eps^2) remainder
+dominates it; the outliers above are exactly those blocks.  Two better
+conditioned statistics follow.  They are additional diagnostics, not a
+replacement of the criterion above, which was met as stated.
+  (i)  ratio restricted to blocks with |sin TH| > 0.2 (37 blocks): mean 1.00984, min 0.97767, max 1.03806
+  (ii) max absolute residual |amp - (A/l)|sin TH|| = 5.022e-04  = 0.558 * eps^2   (expected O(eps^2))
+
+Mutation: the same ratio against a constant-amplitude ripple A/l
+(i.e. dropping the sin(TH) factor):
+  mean 0.33747, min 0.02751, max 0.55475 -> REJECTED

@@ -1,0 +1,3 @@
+fig1 written;  Omega = 5.424942396007538  Tslow = 1.1582031381206312  Tdrive = 0.03546258383607218
+fig2 written;  n stable = 264  n fallen = 220
+fig3 written

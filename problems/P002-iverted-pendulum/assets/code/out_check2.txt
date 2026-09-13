@@ -1,0 +1,34 @@
+CHECK N2 -- scalar theta-equation vs Newton-with-constraint-force.
+Both integrations start from the same physical state.
+Primary criterion: max|dtheta| < 1e-6 rad over the window at rtol=1e-11.
+A real disagreement would show as a discrepancy that does NOT fall when
+rtol is tightened.  Both integrators are DOP853, so a shared
+discretisation bias is not credible at these tolerances.
+
+set      l        A    omega  w/w_c      th0   tmax    max|dth|   |u|drift  verdict
+  1  0.479  0.01001    486.2   1.59   0.0274   2.58   1.650e-11   2.07e-13  PASS
+  2  0.461  0.01463    495.2   2.41  -0.1346   2.54   1.062e-10   2.14e-12  PASS
+  3  0.897  0.01741    504.8   2.10  -0.2725   2.49   3.538e-12   5.16e-12  PASS
+  4  0.913  0.03391    247.9   1.99   0.0991   5.07   3.221e-11   1.18e-12  PASS
+  5  0.775  0.01829    364.6   1.71   0.0247   3.45   8.830e-12   2.63e-13  PASS
+  6  1.318  0.03133    250.4   1.54  -0.1594   5.02   1.563e-11   1.71e-12  PASS
+  7  0.752  0.01472    183.4   0.70   0.2748   6.00   2.214e-08   7.32e-10  PASS
+  8  0.256  0.00886    119.7   0.47   0.0535   6.00   4.432e-01   5.80e-01  FAIL
+
+Primary criterion: 7/8 sets passed.
+
+Tolerance-refinement study on the set(s) that failed.
+If the discrepancy is integrator error it falls with rtol, and the
+constraint residual |u|-l falls with it.  If the two formulations
+actually disagree, neither falls.
+  set 8:  l=0.2564  A=0.00886  omega=119.7  th0=0.0535
+     rtol=1e-08   max|dth|=1.033e+01   max||u|-l|/l=6.716e-01
+     rtol=1e-10   max|dth|=1.218e+00   max||u|-l|/l=6.359e-01  (x1.18e-01)
+     rtol=1e-12   max|dth|=8.278e-02   max||u|-l|/l=9.836e-02  (x6.80e-02)
+     rtol=1e-13   max|dth|=1.301e-02   max||u|-l|/l=1.453e-02  (x1.57e-01)
+     first 20 drive periods (t < 1.0499 s): max|dth|=1.325e-10  -> PASS
+
+Mutation test (super-threshold set, where the primary criterion holds):
+  claim as derived          : max|dtheta| = 6.495e-12
+  driving term sign flipped : max|dtheta| = 1.597e-02
+  MUTANT REJECTED: yes
