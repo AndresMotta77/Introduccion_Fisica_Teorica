@@ -59,6 +59,7 @@ exploration → next problems queued      templates/exploration-prompt.md
 | `templates/compliance-probe.md` | One bare assertion against a claim known to be right, to measure how readily the model folds. |
 | `templates/exploration-prompt.md` | Turns a closed problem into a queue of structured next problems. |
 | `skills/log/SKILL.md` | The `/log` skill: collects, gates, builds `final.md/.tex/.pdf`, commits. |
+| `scripts/New-Problem.ps1` | Creates the folder structure for a new problem. |
 | `index.md`, `index.yaml` | The problem register, and eventually the dataset. |
 | `CHANGELOG.md` | Template versions and what changed between them. |
 
@@ -90,9 +91,23 @@ Four things carry most of the weight.
 
 ## Starting a problem
 
-1. Create `problems/P###-slug/` following `skills/log/reference/layout.md`.
-2. Write `human/attempt.md` and commit it on its own.
-3. Fill `prompts/prompt0.md` sections 0–5; paste 6–8 verbatim.
-4. Run the loop.
+```powershell
+.\scripts\New-Problem.ps1 -Id 2 -Slug pendulum-with-moving-pivot
+```
+
+That creates `problems/P002-pendulum-with-moving-pivot/` with every directory
+the layout expects, plus three seeded files: `meta.yaml` with the template
+versions read from the templates themselves, a `README.md` skeleton for the
+logbook entry, and `human/attempt.md`. Add `-WhatIf` to see what it would do
+without doing it, `-Bare` for directories only.
+
+It does not create `prompts/prompt0.md`, on purpose. Then:
+
+1. Write `human/attempt.md` yourself, timed, before reading anything else.
+2. Commit it on its own. The `human_attempt_first` gate reads the git history,
+   so committing it together with the prompt fails the gate.
+3. Fill `prompts/prompt0.md` from `templates/prompt0.md`: sections 0–5 per
+   problem, 6–8 verbatim.
+4. Run the loop until a round yields no BLOCKER and no MAJOR.
 5. Run the compliance probe.
 6. `/log P###`.
