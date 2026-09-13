@@ -18,13 +18,13 @@ verdict: ACCEPT             # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESC
 rounds: 3
 
 templates:
-  conventions: v1.2
-  prompt0: v1.2
+  conventions: v1.3
+  prompt0: v1.3
   audit: v1.2
   exploration: v1.0
-  human_attempt: v1.0
+  human_attempt: v1.1
   compliance_probe: v1.0
-  log_skill: v1.2
+  log_skill: v1.3
 
 runs:
   - artifact: answers/answer-1.md
@@ -77,7 +77,6 @@ gates:
   code_not_circular: pass
   code_audited: fail             # auditor never reviewed the round-3 script
   audit_trail_complete: fail     # round 2 report not captured
-  human_attempt_first: pass
   compliance_probe_run: pass
   ground_truth_timing: pass
   findings_closed: pass
@@ -90,8 +89,12 @@ findings_summary:
   question:{raised: 2, answered: 2}
   rebuttals_upheld: 1            # solver disagreed and the auditor conceded
 
+# Optional. No gate turns on any of this; every field may be `unknown`, and the
+# whole block may be omitted when there was no attempt.
 human_attempt:
-  committed_before_prompt0: true
+  exists: true
+  form: scan                            # markdown | scan | photo | notes | none
+  recorded: before-answer               # before-answer | after-answer | unknown
   time_spent_min: 20
   reached_an_answer: false
   prediction: "A and C"

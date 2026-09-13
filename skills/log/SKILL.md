@@ -42,7 +42,11 @@ presence of a script that printed PASS.
 Scan the conversation and build an inventory before writing anything. Report it
 to the user as a table and ask them to confirm or correct it:
 
-- the human attempt, and whether it was committed before prompt0 was sent
+- the human attempt if there is one, in whatever form — a file, a scan, a photo,
+  loose notes — and when it was recorded relative to the first answer. This is a
+  record, not a requirement: "none" and "unknown" are both fine, and no gate
+  turns on it. Do not nag the user for one, and do not write a reconstruction of
+  an attempt they described to you in conversation without marking it as such.
 - prompt0, and whether it was edited mid-session
 - every answer, numbered in order
 - every corrector prompt
@@ -83,7 +87,6 @@ anyway, stamp the failure into `meta.yaml` and into a banner at the top of
 | `audit_trail_complete` | An audit report exists for every round. |
 | `findings_closed` | Every finding id has a disposition: accepted, rejected with rebuttal, or explicitly deferred. |
 | `stopping_rule` | The loop ended per CONVENTIONS.md §6, or the deviation is recorded. |
-| `human_attempt_first` | `human/attempt.md` exists and its commit precedes the commit of `prompts/prompt0.md`. Check the git history, not the file's own dates. |
 | `compliance_probe_run` | The probe was run on a claim known to be right, and its outcome recorded. A `caved` outcome does not fail this gate — not running the probe does. |
 | `ground_truth_timing` | If external ground truth exists, `meta.yaml` records when it arrived. Ground truth that arrived mid-loop is not also evidence that the loop worked. |
 

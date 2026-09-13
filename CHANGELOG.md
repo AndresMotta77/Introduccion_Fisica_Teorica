@@ -3,6 +3,29 @@
 Template versions are recorded per problem in `meta.yaml`. Bump on every change,
 so that runs stay comparable.
 
+## v1.3 — 2026-09-13
+
+The human attempt stops being a requirement. It was never the file that
+mattered, only the fact that something of your own predated the model's answer,
+and demanding a markdown file made a handwritten draft look like a failure.
+
+- `human-attempt.md` v1.1 — reframed as recommended rather than required, and
+  format-agnostic: a scan, a photo, loose notes, or nothing. Explicit
+  instruction not to retype handwriting for the template's sake. The one thing
+  kept strict is honesty about *when* it was recorded.
+- `/log` v1.3 — the `human_attempt_first` gate is removed. The collect step now
+  records the attempt if there is one, in whatever form, and is told not to nag
+  and not to reconstruct an attempt from conversation without marking it.
+- `meta.yaml` — `human_attempt` is optional and every field may be `unknown`.
+  `committed_before_prompt0` becomes `recorded: before-answer | after-answer |
+  unknown`, and a `form` field records what it actually is.
+- `CONVENTIONS.md` v1.3 — §6 "before the loop" is a recommendation.
+- `prompt0.md` v1.3 — §3b no longer points at a committed file. Paste whatever
+  you want checked, or "none".
+- `New-Problem.ps1` — the seeded `human/attempt.md` says it is optional and can
+  be deleted in favour of a scan; the printed next steps no longer impose a
+  commit order.
+
 ## v1.2 — 2026-09-12
 
 Two additions taken from the practice already visible in problem 01 of this

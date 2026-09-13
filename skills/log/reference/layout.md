@@ -5,7 +5,7 @@ problems/P007-hawking-temperature-tfd/
 ├── README.md                     # the bitácora: the narrative account, written by you
 ├── meta.yaml                     # see meta-schema.md
 ├── human/
-│   └── attempt.md                # written and committed BEFORE prompt0
+│   └── attempt.md                # or a scan, a photo, notes — or nothing
 ├── prompts/
 │   ├── prompt0.md                # exactly as sent, including the filled §0
 │   ├── audit-prompt-1.md         # the audit prompt as sent, with its INPUTS block
@@ -52,8 +52,11 @@ Rules:
   from being read later as a proof.
 - `independence.md` is the file to read first when revisiting a problem months
   later. It is the honest account of what the model knew going in.
-- `human/attempt.md` is never edited after prompt0 is sent. Its git commit is
-  the evidence for the `human_attempt_first` gate, so commit it on its own
-  rather than bundling it with the first prompt.
+- `human/` holds the user's own attempt in whatever form it exists: a markdown
+  file, a scan, a photo of a notebook page, or nothing at all. It is optional
+  and no gate turns on it. Do not transcribe handwriting into markdown for the
+  sake of tidiness. If it was written up after the model's answer, `meta.yaml`
+  says so under `human_attempt.recorded`; that is the only thing about it worth
+  being careful with.
 - `README.md` is yours. Everything else in the folder is a record of what the
   models did; the README is the narrative that says what you concluded from it.
