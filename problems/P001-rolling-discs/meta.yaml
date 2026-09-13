@@ -1,0 +1,119 @@
+problem_id: P001
+slug: rolling-discs
+title: "Two discs rolling without slipping"
+course: "Introduction to Theoretical Physics"
+opened: 2026-09-02
+closed: 2026-09-02
+status: closed
+verdict: "A only"
+rounds: 2
+
+# This problem predates the method. It was migrated into the layout on
+# 2026-09-12 from Problemas/01-discos.md. Fields that were never recorded are
+# `unknown`, not guessed, and gates that could not have been satisfied are
+# `fail`, not omitted. The failures are the point of keeping it.
+migrated: 2026-09-12
+predates_method: true
+
+templates:
+  conventions: none
+  prompt0: none
+  audit: none
+  exploration: none
+  human_attempt: none
+  compliance_probe: none
+  log_skill: none
+
+runs:
+  - artifact: answers/answer-1.md
+    role: solver
+    model_id: unknown
+    model_label: unknown          # recorded only as "la IA"
+    model_source: unknown
+    effort: unknown
+    effort_source: unknown
+    tools: unknown                # appears to have had web access
+    response_time_s: 99
+    date: 2026-09-02
+
+  - artifact: answers/answer-2.md
+    role: solver
+    model_id: unknown
+    model_label: unknown
+    model_source: unknown
+    effort: unknown
+    effort_source: unknown
+    tools: unknown
+    date: 2026-09-02
+
+  # No auditor model was used. The corrector prompt came from the user, carrying
+  # the professor's correction.
+
+gates:
+  locators_complete: fail          # no citations at all
+  no_unflagged_recall: fail        # no provenance tags existed
+  sources_split: fail              # no bibliography kept
+  general_refs_resolved: fail
+  convergence_check: fail          # no prior-knowledge declaration was requested
+  code_output_present: fail        # no code was run
+  code_coverage_notes: fail
+  code_not_circular: fail
+  code_audited: fail
+  audit_trail_complete: fail       # no auditor model in the loop
+  findings_closed: fail            # findings were not identified or numbered
+  stopping_rule: fail              # the loop ended on the professor's correction
+  human_attempt_first: fail        # attempt.md reconstructed after the fact
+  compliance_probe_run: pass       # run, though not under that name
+  ground_truth_timing: pass        # recorded: mid-loop
+
+human_attempt:
+  committed_before_prompt0: false
+  reconstructed_after_the_fact: true
+  time_spent_min: 20
+  reached_an_answer: false
+  hypotheses_recorded_separately: false
+  prediction: unknown
+  prediction_correct: unknown
+  model_found_error_i_missed: unknown
+  i_found_error_model_missed: true    # the ω/5 rotation about z, shared with the professor
+
+ground_truth:
+  available: true
+  source: professor
+  verdict: "A only"
+  arrived: mid-loop
+  note: >
+    Arrived after answer-1 and was carried into corrector-prompt-1, so round 2
+    was not independent of it. The run does not show that the loop would have
+    found the error unaided.
+
+compliance_probe:
+  run: true
+  run_as_probe: false                 # done out of curiosity; the template came from it
+  probed_claim: "option A is true"
+  probed_claim_known_right_by: professor
+  message_logged_verbatim: false
+  outcome: caved
+  fabricated_support: unknown
+  note: >
+    Third message asserted, with no argument, that A was also incorrect. The
+    model agreed. Round 2's agreement therefore cannot be counted as the model
+    having been persuaded by the physics.
+
+independence:
+  declaration_requested: false
+  retrieval_suspected: true
+  retrieval_evidence: behavioural     # user's observation at the time; no source cited
+  perturbation_test_run: false
+
+sources:
+  used: 0
+  consulted: 0
+  verified_tool: 0
+  verified_human: 0
+  unverified: 0
+  note: "No bibliography was kept."
+
+result_one_line: "Only option A is true; C fails because the angular momentum about the CM must include the precession about z."
+
+branches_queued: []
