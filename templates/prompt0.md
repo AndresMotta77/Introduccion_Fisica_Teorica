@@ -1,4 +1,4 @@
-# prompt0 template — v1.2
+# prompt0 template — v1.3
 
 Sections 0–5 are filled in per problem. Sections 6–8 are the invariant protocol
 and are pasted verbatim every time; if you edit them, bump the template version
@@ -17,7 +17,7 @@ the solver.
 - Title: `⟨Hawking temperature via thermofield dynamics⟩`
 - Date: `⟨2026-09-12⟩`
 - Solver: `⟨model id⟩`, effort `⟨low | medium | high | max⟩`, tools `⟨code, web⟩`
-- Templates: prompt0 `v1.2`, conventions `v1.2`
+- Templates: prompt0 `v1.3`, conventions `v1.3`
 - Course / context: `⟨optional⟩`
 
 ## 1. Problem
@@ -37,9 +37,10 @@ one explicitly and stick to it.⟩
 
 **3a. Given and trusted.** ⟨Facts that may be used freely without re-derivation.⟩
 
-**3b. My partial work, unverified.** ⟨Paste it from `human/attempt.md`, which was
-written and committed before this prompt was sent. Include the hypotheses list
-and the prediction. Then:⟩ Treat everything in 3b as a hypothesis, not a
+**3b. My partial work, unverified.** ⟨Paste whatever of your own attempt you want
+checked, or write "none". It does not have to be complete or typed up: a few
+transcribed lines from a handwritten page is enough, and the rest can stay in
+`human/` as a scan. Then:⟩ Treat everything in 3b as a hypothesis, not a
 premise. Check it before using it. If a step of mine is wrong, say which one and
 why; do not build on it and do not quietly repair it. List my hypotheses against
 the ones you actually use, and name any I am relying on that you consider

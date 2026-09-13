@@ -26,7 +26,7 @@ which is why both are now measured rather than judged case by case.
 ## Method
 
 ```
-human attempt, committed first          templates/human-attempt.md
+your own attempt (optional)             templates/human-attempt.md
   ↓
 prompt0                                 templates/prompt0.md
   ↓
@@ -52,7 +52,7 @@ exploration → next problems queued      templates/exploration-prompt.md
 | Path | What it is |
 |---|---|
 | `templates/CONVENTIONS.md` | Provenance tags, citation locator format, severity levels, verdicts, loop control. Given to every model in the loop. |
-| `templates/human-attempt.md` | The timed attempt, written and committed before any model sees the problem. |
+| `templates/human-attempt.md` | Your own attempt, in whatever form it exists. Optional. |
 | `templates/prompt0.md` | The initial prompt. Sections 0–5 per problem, 6–8 invariant. |
 | `templates/audit-prompt.md` | Nine audit passes. Output splits into a report for me and a corrector prompt for the solver. |
 | `templates/blind-solve-prompt.md` | Optional: the auditor solves the problem cold before seeing the answer. |
@@ -67,9 +67,10 @@ exploration → next problems queued      templates/exploration-prompt.md
 
 Four things carry most of the weight.
 
-1. **The human attempt comes first.** It is the only prior in the process that
-   was not produced by a language model, and it cannot be reconstructed after
-   reading the model's answer.
+1. **Your own attempt, when you make one.** The only prior in the process that
+   was not produced by a language model, and not reconstructable after reading
+   the model's answer. Any format, no requirement — but record honestly whether
+   it predates the answer.
 2. **An executable check, treated as evidence rather than proof.** sympy or
    numerics, recomputing from the problem statement rather than from the
    derivation's own intermediate results, written so it can fail, and carrying a
@@ -103,11 +104,13 @@ without doing it, `-Bare` for directories only.
 
 It does not create `prompts/prompt0.md`, on purpose. Then:
 
-1. Write `human/attempt.md` yourself, timed, before reading anything else.
-2. Commit it on its own. The `human_attempt_first` gate reads the git history,
-   so committing it together with the prompt fails the gate.
-3. Fill `prompts/prompt0.md` from `templates/prompt0.md`: sections 0–5 per
+1. Your own attempt, if you make one. Fill in `human/attempt.md`, or delete it
+   and drop a scan or a photo of your handwritten pages into `human/` instead.
+   Optional, and nothing fails without it. Worth doing anyway: it is the only
+   prior in the process that did not come from a language model, and you cannot
+   reconstruct it after reading the model's answer.
+2. Fill `prompts/prompt0.md` from `templates/prompt0.md`: sections 0–5 per
    problem, 6–8 verbatim.
-4. Run the loop until a round yields no BLOCKER and no MAJOR.
-5. Run the compliance probe.
-6. `/log P###`.
+3. Run the loop until a round yields no BLOCKER and no MAJOR. Escalate at 4.
+4. Run the compliance probe.
+5. `/log P###`.

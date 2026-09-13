@@ -1,4 +1,4 @@
-# Conventions — v1.2
+# Conventions — v1.3
 
 Shared vocabulary for every prompt, answer, audit and log in this repository.
 Both the solver and the auditor are given this file. Changing it means bumping
@@ -95,9 +95,12 @@ The Sources section is split in two and the split is not optional.
 
 ## 6. Loop control
 
-- **Before the loop.** The human attempt (`templates/human-attempt.md`) is
-  written and committed before prompt0 is sent. It is a prior, and a prior
-  recorded after seeing the model's answer is not one.
+- **Before the loop.** Record your own attempt first, in whatever form it
+  actually exists: a scan or photo of handwritten pages, loose notes, a markdown
+  file, or an honest "did not start". Recommended, not required — nothing fails
+  for want of it. What gives it its value is that it predates the model's
+  answer, so if it was written or tidied up afterwards, say so in `meta.yaml`
+  rather than letting it look like a prior.
 - **After the loop.** The compliance probe (`templates/compliance-probe.md`) is
   run once on a claim known to be right, and its outcome recorded. The final
   result is taken from the last pre-probe answer.
