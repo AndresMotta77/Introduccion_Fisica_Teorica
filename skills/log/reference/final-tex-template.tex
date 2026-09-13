@@ -1,0 +1,105 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in,marginparwidth=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{marginnote}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+% Provenance tags. These are the audit trail; do not strip them when converting
+% from final.md. They are set small in the margin so the prose reads cleanly.
+\newcommand{\tagmark}[1]{\marginnote{\scriptsize\ttfamily #1}}
+\newcommand{\Dtag}{\tagmark{[D]}}   % derived here
+\newcommand{\Stag}[1]{\tagmark{[S] #1}}  % standard result + locator
+\newcommand{\Vtag}[1]{\tagmark{[V] #1}}  % verified against retrieved source
+\newcommand{\Rtag}{\tagmark{[R]}}   % recalled, unverified
+\newcommand{\Atag}{\tagmark{[A]}}   % assumption
+\newcommand{\Ntag}{\tagmark{[N]}}   % numerical / symbolic check
+\newcommand{\Qtag}{\tagmark{[?]}}   % low confidence
+
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,
+        showstringspaces=false}
+
+\title{<<TITLE>>}
+\author{<<AUTHOR>>}
+\date{<<DATE>>}
+
+\begin{document}
+\maketitle
+
+% Gate banner. Present only when a release gate failed; delete otherwise.
+% <<GATE_BANNER>>
+
+\begin{abstract}
+<<ONE PARAGRAPH: the problem, the result, the method, and the strength of the
+evidence behind it. State plainly whether the result was independently checked
+and by what means.>>
+\end{abstract}
+
+\tableofcontents
+
+\section{Setup}
+<<Conventions, units, signature. Symbol table. The problem restated precisely.>>
+
+\begin{longtable}{ll}
+\toprule
+Symbol & Meaning \\
+\midrule
+<<...>> \\
+\bottomrule
+\end{longtable}
+
+\section{Derivation}
+<<The derivation, with every intermediate step written out. Equations that are
+referred to later are numbered. Tags in the margin.>>
+
+\section{Verification}
+<<Dimensional analysis, limiting cases, symmetry, the numerical check. The code
+appears verbatim in Appendix~\ref{app:code} and its output is quoted here.>>
+
+\section{Result}
+<<The final statement and its domain of validity.>>
+
+\section{Assumptions and open questions}
+<<The risk register, in prose: what the result rests on and what happens if each
+assumption fails.>>
+
+\appendix
+
+\section{Provenance}\label{app:provenance}
+One row per tagged claim. This table is generated from
+\texttt{sources/provenance.md}.
+
+\begin{longtable}{llllll}
+\toprule
+Eq. & Tag & Source & Locator & Verified & Load-bearing \\
+\midrule
+<<...>> \\
+\bottomrule
+\end{longtable}
+
+\section{Independence record}\label{app:independence}
+<<The prior-knowledge declaration, the convergence check, and the result of the
+perturbation test. This appendix states what the model knew before deriving
+anything, and where the derivation could have leaned on it.>>
+
+\section{Audit history}\label{app:audit}
+<<Rounds, auditor, verdict per round, findings raised and their disposition,
+including the ones the solver rebutted successfully.>>
+
+\section{Code}\label{app:code}
+\lstinputlisting[language=Python]{../assets/code/<<script>>.py}
+
+\bibliographystyle{unsrtnat}
+\bibliography{../sources/sources}
+
+\end{document}

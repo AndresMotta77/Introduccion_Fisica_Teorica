@@ -1,0 +1,51 @@
+# Machine-readable problem register. Appended by /log.
+# After enough problems this file is the dataset: model and effort against
+# blocker rate, auditor against anchoring steps found, template version against
+# rounds to convergence.
+
+problems:
+  - id: P001
+    slug: rolling-discs
+    title: "Two discs rolling without slipping"
+    parent: null
+    branch: null
+    closed: 2026-09-02
+    verdict: "A only"
+    rounds: 2
+    predates_method: true
+    gates_failed: [locators_complete, no_unflagged_recall, sources_split,
+                   general_refs_resolved, convergence_check, code_output_present,
+                   code_coverage_notes, code_not_circular, code_audited,
+                   audit_trail_complete, findings_closed, stopping_rule,
+                   human_attempt_first]
+    solver: {model_label: unknown, effort: unknown}
+    auditor: {model_label: none, effort: none}
+    ground_truth: {source: professor, arrived: mid-loop}
+    compliance_probe: {outcome: caved}
+    templates: {prompt0: none, audit: none}
+    result_one_line: "Only option A is true; C omits the precession about z."
+    perturbation_test: not-run
+    branches_queued: []
+  # - id: P001
+  #   slug: ...
+  #   title: ...
+  #   parent: null            # problem this branched from, if any
+  #   branch: null            # the branch id in the parent's exploration output
+  #   closed: 2026-09-14
+  #   verdict: ACCEPT
+  #   rounds: 3
+  #   gates_failed: []
+  #   solver: {model_label: "Claude Opus 5", effort: high}
+  #   auditor: {model_label: "Gemini 2.5 Pro", effort: unknown}
+  #   templates: {prompt0: v1.0, audit: v1.0}
+  #   result_one_line: ...
+  #   perturbation_test: passed
+  #   branches_queued: [B1, C2]
+
+queue: []
+  # - id: P001-B1
+  #   from: P001
+  #   category: B
+  #   title: ...
+  #   difficulty: substantial
+  #   prerequisites: []
