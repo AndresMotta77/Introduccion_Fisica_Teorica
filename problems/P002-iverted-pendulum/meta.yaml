@@ -1,71 +1,199 @@
 problem_id: P002
 slug: pendulum-with-moving-pivot
-title: "Pendulum with moving pivot"
+title: "Inverted pendulum with a vertically oscillating pivot"
 course: "Introduction to Theoretical Physics"
 opened: 2026-09-13
-closed:
-status: open                 # open | closed | escalated | abandoned
-verdict:                     # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
-rounds: 0
+closed: 2026-09-14
+status: closed              # open | closed | escalated | abandoned
+verdict: ACCEPT-WITH-FIXES  # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
+rounds: 1
+
+# The folder is problems/P002-iverted-pendulum; the slug above is the intended
+# one. The directory name carries a typo from New-Problem.ps1 and renaming it
+# needs `git mv`, which the assistant cannot run.
 
 templates:
+  conventions: v1.5
+  prompt0: v1.3
+  audit: v1.4
+  blind_solve: v1.0
+  exploration: v1.0
+  human_attempt: v1.1
+  log_skill: v1.6
+  # The run itself was carried out against conventions v1.3 / audit v1.2, which
+  # were the versions in the clone when prompt0 was sent and when the round-1
+  # audit was returned. The repository moved to v1.7 of the method while this
+  # problem was being closed out, and the versions above are the ones the
+  # FOLDER was built to. Where the two differ it is noted in the field. See
+  # `run_against_templates` below, which records what the models actually saw.
+  #
+  # log_skill is v1.6 because that is the last version CHANGELOG.md states for
+  # /log; the v1.7 entry changes /log again without restating a number, and
+  # skills/log/SKILL.md carries no version header. Not guessed upward.
+
+run_against_templates:
   conventions: v1.3
   prompt0: v1.3
   audit: v1.2
-  blind_solve: v1.0
-  human_attempt: v1.1
-  compliance_probe: v1.0
-  exploration: v1.0
-  log_skill: v1.3
+  # What answer-1, answer-2 and audit-report-1 were actually produced under.
+  # Kept separate from `templates` so that a later comparison across problems is
+  # not silently told this run used v1.5 conventions when it did not.
 
 # One entry per model call. Effort level cannot be observed from inside a
 # session, so it is always user-reported, and `unknown` is a valid value.
 # Never guess one: a guessed field silently poisons comparisons across runs.
 runs:
   - artifact: answers/answer-1.md
-    role: solver              # solver | auditor | blind-solver | explorer
+    role: solver
     model_id: claude-opus-5
-    model_label: Claude Opus 5
-    model_source: user-reported      # from prompts/prompt0.md §0
+    model_label: "Claude Opus 5"
+    model_source: self-reported      # the session's configured model id
     effort: high
     effort_source: user-reported     # from prompts/prompt0.md §0
     tools: [code, web]
     date: 2026-09-13
 
-# Filled by /log. See skills/log/SKILL.md for what each one checks.
-gates: {}
+  - artifact: audits/audit-report-1.md
+    role: auditor
+    model_id: unknown
+    model_label: "Gemini 3.1 Pro Avanzado (extended reasoning)"
+    model_source: user-reported
+    effort: unknown
+    effort_source: unknown
+    tools: [code]
+    date: 2026-09-13
+    # Verdict ACCEPT-WITH-FIXES. Findings F1.1, F1.2, both MINOR, both accepted.
+    # `tools: [code]` is what the report implies by quoting a script it says it
+    # ran. That claim is doubtful: the output it reports is not what the script
+    # produces, which is the observation that prompted audit-prompt v1.4 ground
+    # rule 8. Left as [code] because the report says so and this field records
+    # what was reported, with the doubt stated here rather than resolved.
 
+  - artifact: answers/answer-2.md
+    role: solver
+    model_id: claude-opus-5
+    model_label: "Claude Opus 5"
+    model_source: self-reported
+    effort: high
+    effort_source: user-reported
+    tools: [code, web]
+    date: 2026-09-14
+
+gates:
+  locators_complete: pass
+  no_unflagged_recall: pass
+  sources_split: pass
+  general_refs_resolved: pass
+  convergence_check: pass
+  code_output_present: pass
+  code_coverage_notes: pass
+  code_not_circular: pass
+  code_audited: pass
+  audit_trail_complete: pass
+  findings_closed: pass
+  stopping_rule: pass
+  ground_truth_timing: pass
+  latex_clean: fail
+
+gates_failed: [latex_clean]
+
+# Why each non-obvious verdict, so the pass/fail column can be read later
+# without re-deriving the judgement.
+gates_detail:
+  latex_clean: >-
+    final.pdf compiles with zero undefined references, zero undefined citations,
+    zero missing characters and no \emph, but seven overfull boxes exceed 10pt:
+    37.1, 32.4, 27.7, 27.7, 18.6, 18.2 and 13.5 pt. Six are rows of the
+    check-to-file table in §4 of answer-2, where a long script filename does not
+    fit its cell; the seventh is the (43)-(44) row of the provenance ledger. All
+    typographic. Thirteen further overfull boxes were cleared first by \sloppy
+    and \emergencystretch, which are line-breaking parameters and change no
+    text, and by widening the columns of the tables /log itself authored. The
+    remainder are inside the immutable final document, and step 3 forbids
+    editing it to clear a cosmetic gate.
+  general_refs_resolved: >-
+    Pass. The general reference in prompt0 ("see the Harvard problems page") is
+    resolved to Week 67 with both PDFs and their locators. Landau & Lifshitz is
+    cited at section granularity with no equation number and is honestly
+    declared {ver: no} and tagged [R], which CONVENTIONS §1 permits explicitly.
+  code_audited: >-
+    Pass on round 1's pass 6, which reviewed the solver's verification code for
+    circularity and vacuity. Checks N7 and N8 did not exist then and have never
+    been read by an auditor.
+  audit_trail_complete: >-
+    Pass. One round, one audit report. answer-2 is the fix pass that
+    ACCEPT-WITH-FIXES calls for rather than a further round, so no
+    audit-report-2 is owed. Its new material (§3.9, N7, N8) is unaudited.
+  stopping_rule: >-
+    Pass. Round 1 returned no BLOCKER and no MAJOR, which is the rule in
+    CONVENTIONS §6, and answer-2 closed the two MINORs.
+
+findings_summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 2, accepted: 2, rebutted: 0}
+  question: {raised: 0, answered: 0}
+  rebuttals_upheld: 0
+  # Zero rebuttals is uninformative here: both findings were correct, so
+  # conceding them was right. The one contested item went the other way - the
+  # solver disputed a number in the audit report, not a finding. See
+  # audits/findings.yaml, entry S1.1.
+
+# Optional. No gate turns on any of this; every field may be `unknown`, and the
+# whole block may be omitted when there was no attempt.
 human_attempt:
-  committed_before_prompt0:
-  time_spent_min:
-  reached_an_answer:
-  prediction:
-  prediction_correct:
+  exists: false
+  form: none                            # markdown | scan | photo | notes | none
+  recorded: unknown                     # before-answer | after-answer | unknown
+  time_spent_min: 0
+  reached_an_answer: false
+  prediction: null
+  prediction_correct: null
+  # human/attempt.md is the unfilled New-Problem.ps1 template. No attempt was
+  # made before prompt0 was sent and none is reconstructed. No gate turns on it.
+  # It does mean there is no prior to compare the model's hypotheses against.
 
 ground_truth:
   available: true
-  source: answer-key         # professor | answer-key | measurement | numerical | none
-  verdict:
-  arrived: after-loop        # before-loop | mid-loop | after-loop | none
-
-compliance_probe:
-  run: false
-  probed_claim:
-  probed_claim_known_right_by:
-  outcome:                   # held | asked | caved
-  fabricated_support:
+  source: answer-key                    # professor | answer-key | measurement | numerical | none
+  verdict: matches
+  arrived: mid-loop                     # before-loop | mid-loop | after-loop | none
+  note: >-
+    Morin's published solution, sol67.pdf eq. (10), is the same formula as
+    eq. (41) here, and its eq. (4) is eq. (15) here. Retrieved inside round 1,
+    after answer-1's derivation and all six checks were complete but before the
+    audit. Per CONVENTIONS §6 it therefore cannot also validate what came after
+    it. prompt0 §6.3 requires the solver to retrieve and confirm its Used
+    sources, and for a problem-of-the-week the solution sheet sits beside the
+    problem sheet, so obeying §6.3 is what put the answer key inside the loop.
 
 independence:
-  declaration_requested: true
-  retrieval_suspected:
-  perturbation_test_run:
+  recognized_problem: true
+  declared_result_matched: true
+  anchoring_steps_self_reported: 5
+  anchoring_steps_found_by_auditor: 0
+  perturbation_test_run: false
+  perturbation_test_passed: null
+  blind_solve_run: false
+  note: >-
+    The auditor found no anchoring step the solver had not already declared.
+    That is not independent corroboration: the auditor read the declaration
+    before forming a view, and stage 0 (blind solve), which exists to make this
+    interpretable, was not run. Three candidate perturbation tests are written
+    out in sources/independence.md, unrun.
 
 sources:
   used: 1
-  consulted: 5
-  verified_tool: 4
+  consulted: 6
+  verified_tool: 5
   verified_human: 0
   unverified: 2
+  load_bearing_unverified: 0
 
-result_one_line:
+result_one_line: >-
+  Inverted position stable for A^2 w^2 > 2 g l, strictly; slow oscillation at
+  Omega = sqrt(A^2 w^2/(2 l^2) - g/l), confined to |Theta| < arccos(2gl/A^2w^2).
+
 branches_queued: []
+# Exploration was not run. final/final.md §9 lists six open questions; the first
+# two are concrete, cheap, and constrain each other. See explore/exploration-1.md.

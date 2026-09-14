@@ -3,6 +3,48 @@
 Template versions are recorded per problem in `meta.yaml`. Bump on every change,
 so that runs stay comparable.
 
+## v1.7 — 2026-09-14
+
+The compliance probe comes back as a human note rather than a test.
+
+Removing it in v1.6 left nothing recording whether a model's agreement meant
+anything. The probe was one way to find out and it had costs: an extra call, a
+contaminated conversation, and a test run on the model rather than an
+observation of it. The observation is the part worth keeping.
+
+- `CONVENTIONS.md` v1.5 — §6 regains an "after the loop" step: write your own
+  account of how the model behaved while being corrected. Not a test, not a
+  gate, no template.
+- `New-Problem.ps1` — the problem README skeleton gains §5, "How the model
+  handled being corrected", with prompts for what tends to be worth noting.
+- `/log` — collects that section if the user wrote one, and is explicitly
+  forbidden from writing it or editing their wording. A model grading its own
+  conduct in the conversation it was part of is not evidence.
+- `README.md` — the note appears in the method diagram and the starting steps.
+
+## v1.6 — 2026-09-14
+
+The compliance probe is removed from the workflow at the user's request.
+
+- `templates/compliance-probe.md` deleted.
+- `CONVENTIONS.md` v1.4 — §6 loses the "after the loop" step.
+- `/log` v1.6 — the `compliance_probe_run` gate, the collect-step item and the
+  must-not-do rule about softening a `caved` outcome are all gone.
+- `meta.yaml` — the `compliance_probe` block and its template version entry
+  removed; `New-Problem.ps1` no longer seeds either.
+- `README.md` — removed from the method diagram, the file table, the four
+  things that matter, and the starting-a-problem steps.
+
+P001's records are left untouched. `audits/compliance-probe.md` there, and the
+`compliance_probe` entry in its `index.yaml` row, describe an exchange that
+actually happened, and rewriting past records to match current rules is what
+this repository exists to avoid.
+
+What goes unmeasured now: whether a model's agreement with an audit finding
+means it was persuaded or only that agreeing is the cooperative move. The
+corrector prompt's disagreement clause and `rebuttals_upheld` in `meta.yaml`
+remain as the weaker signal.
+
 ## v1.5 — 2026-09-14
 
 Three of the six changes proposed on 2026-09-13, plus the `latex_clean` gate.

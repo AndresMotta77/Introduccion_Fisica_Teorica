@@ -1,69 +1,51 @@
-# P002 — Inverted pendulum with a vertically oscillating pivot — answer 1
+# P002 — Inverted pendulum with a vertically oscillating pivot
 
-Solver: `claude-opus-5`. Templates: prompt0 v1.3, conventions v1.3.
-Date: 2026-09-13. Tools used: code execution (sympy, numpy, scipy, matplotlib)
-and web retrieval.
+**Final document.** Derived from `answers/answer-2.md`, the last answer of the
+loop, by removing the two sections that belong elsewhere in the folder. It is
+not a rewrite: every equation, number and output below is the text of
+`answer-2.md`, and the equation numbering is unchanged so that the audit trail
+and the provenance ledger keep pointing at the same places.
 
-Tags follow `CONVENTIONS.md` §1. Code listings for every `[N]` check are in the
-appendix, verbatim; the same files are in `assets/code/`, and every printed
-output quoted in §4 is the verbatim contents of the corresponding
-`assets/code/out_*.txt`.
+| | |
+|---|---|
+| Problem | P002, Inverted pendulum with a vertically oscillating pivot |
+| Source | Morin, *Problem of the Week* 67 (12/22/03), Harvard Department of Physics |
+| Course | Introduction to Theoretical Physics |
+| Opened / closed | 2026-09-13 / <<CLOSED>> |
+| Rounds | 1 (verdict ACCEPT-WITH-FIXES; both findings MINOR, both accepted) |
+| Solver | Claude Opus 5, effort high (user-reported) |
+| Auditor | Gemini 3.1 Pro Avanzado, extended reasoning; effort unknown (user-reported) |
+| Result | Inverted position stable for $A^2\omega^2>2gl$; slow oscillation at $\Omega=\sqrt{A^2\omega^2/2l^2-g/l}$ |
 
----
+Two sections of `answer-2.md` are not reproduced here, and the section numbers
+below keep the gaps rather than closing them:
 
-## 1. Prior-knowledge declaration
+- §1, the prior-knowledge declaration, and §6, the convergence check, are in
+  `sources/independence.md`.
+- The `Response to audit 1` section is in `audits/audit-report-1.md` and
+  `audits/findings.yaml`.
 
-**Do I recognize this problem, and from where?** Yes, immediately, and in two
-ways. It is the Kapitza pendulum — dynamic stabilization of the inverted
-position by rapid vertical vibration of the support — which I know as a standard
-worked example in the classical-mechanics literature. I also recognized the
-specific wording as a Harvard "Problem of the Week" sheet by David Morin, which
-prompt0 §1 states outright. I did not open either source before deriving; see
-the ordering note below.
+Provenance for every tagged claim is in `sources/provenance.md`. The audit
+history is in `audits/`. Tag meanings are in `templates/CONVENTIONS.md` §1.
 
-**What result do I believe is the standard one?** Written out before deriving
-anything, from recall alone:
-
-- The pendulum does not fall because the fast shaking of the pivot, averaged
-  over a drive period, contributes a term to an effective potential that has a
-  minimum at the inverted position. The size of that term goes like the square
-  of the amplitude of the fast wiggle, which itself is proportional to the sine
-  of the angle from the vertical, so the extra potential is proportional to
-  $\sin^2$ of that angle — a hill at the horizontal, hence a well at both
-  vertical positions.
-- The inverted position is stable when $A^2\omega^2 > 2gl$.
-- The slow oscillation frequency is
-  $\Omega=\sqrt{\dfrac{A^2\omega^2}{2l^2}-\dfrac{g}{l}}$, reducing to
-  $\Omega\approx A\omega/(\sqrt2\,l)$ when $A\omega\gg\sqrt{gl}$.
-
-**What is the standard route, and where is it presented?** The route I recall is
-Kapitza's separation of the motion into a slow part and a fast part, with the
-fast part solved first and then averaged out, producing an effective potential
-for the slow part. I recall this being presented in Landau and Lifshitz,
-*Mechanics*, in the section on motion in a rapidly oscillating field, which I
-believe is §30 — recalled, not checked at the time of writing this section. I
-also recall the alternative route, which treats the linearized problem as a
-Mathieu equation and extracts the stability tongue.
-
-**What am I anchored on?** On the three bullets above, which I wrote from memory
-and which the derivation below then had to reproduce. Section 3c of prompt0 says
-only "we expect some sort of equilibria", which is too weak to anchor anything,
-though it is worth sharpening and I do so in §5. The honest statement is that I
-knew the target before I started, so the value of this document lies in whether
-each step is forced, and in whether the checks in §4 could have failed. I have
-tried to make both auditable: every numerical check in §4 is run not only on my
-claim but on deliberately mutated versions of it, and the mutants are reported
-alongside.
-
-**Ordering note, which matters for the audit.** The derivation in §3 and every
-computation in §4 were completed and their outputs recorded before any source
-was retrieved. The retrieval in §8 happened afterwards, for the sole purpose of
-resolving prompt0's general reference into a locator and checking it, as §6.3
-requires. The comparison with what was retrieved is in §6. I mention this
-because the previous problem in this repository failed precisely by retrieving a
-published solution instead of deriving one, and the ordering is the only thing
-that distinguishes the two cases from the outside.
-
+> ## Release gates: 1 of 14 failed
+>
+> Stamped here by `/log` per `skills/log/SKILL.md` step 2, which requires a
+> failed gate to be recorded in `meta.yaml` and in a banner at the top of this
+> file rather than quietly fixed.
+>
+> **`latex_clean` — fail.** `final.pdf` compiles with no undefined references,
+> no undefined citations, no missing characters and no `\emph`, but seven
+> overfull boxes exceed 10pt: 37.1, 32.4, 27.7, 27.7, 18.6, 18.2 and 13.5 pt.
+> Six are rows of the check-to-file table in §4, where a long script filename
+> does not fit its cell; the seventh is a row of the provenance ledger. All are
+> typographic, and none touches the derivation or any number in it. They are not
+> fixed because step 3 of the log skill forbids editing the final document to
+> clear a cosmetic gate, and that rule does not bend for cosmetics. Thirteen
+> further overfull boxes were cleared first by `\sloppy` and
+> `\emergencystretch`, which are line-breaking parameters that change no text.
+>
+> The other thirteen gates pass.
 ---
 
 ## 2. Setup
@@ -120,7 +102,9 @@ the pivot. `[D]` So the question is not whether an equilibrium exists — two do
 exactly — but whether $\theta=0$ is stable. That distinction matters for §4,
 because it means the stability question can be settled exactly by Floquet
 theory, with no averaging, and that is what check N4 does.
-        
+
+---
+
 ---
 
 ## 3. Derivation
@@ -258,19 +242,60 @@ neglected terms are of relative size $\varepsilon^2$, and check N3 measures
 exactly that and finds the predicted second-order convergence.
 
 Before splitting (20), count the sizes of the terms, since the split is the one
-place where knowing the answer could do the work instead of the argument:
+place where knowing the answer could do the work instead of the argument.
 
-| term | size |
-|---|---|
-| $\varepsilon\omega^2\cos\omega t\,\sin\Theta$ | $\varepsilon\omega^2$ |
-| $\ddot\xi$ | $\omega^2\xi \sim \varepsilon\omega^2$ |
-| $\varepsilon\omega^2\cos\omega t\;\xi\cos\Theta$ | $\varepsilon^2\omega^2$ |
-| $\ddot\Theta$ | $\Omega^2\Theta \sim \varepsilon^2\omega^2$ |
-| $\omega_0^2\sin\Theta$ | $\omega_0^2 \ll \varepsilon^2\omega^2$ near threshold and above |
+To do the counting honestly one number is needed: how large $\omega_0^2$ is
+compared with $\varepsilon^2\omega^2$. Define
 
-`[D]` There are two distinct orders present, $\varepsilon\omega^2$ and
-$\varepsilon^2\omega^2$. The first pair must balance each other, and the second
-group must balance among themselves. Nothing here is a choice.
+$$\mu \;\equiv\; \frac{2gl}{A^2\omega^2}
+  \;=\; \frac{2\omega_0^2}{\varepsilon^2\omega^2},
+  \qquad\text{so that}\qquad
+  \omega_0^2 = \tfrac12\,\mu\,\varepsilon^2\omega^2. \tag{20a}$$
+
+`[D]` $\mu$ is not a free parameter dragged in for convenience: it is the same
+combination that will turn up in (34) as $\cos\Theta_{\rm c}$, and the stability
+condition derived below is exactly $\mu<1$. So in the whole region where the
+inverted position is held, $0<\mu\le1$, with $\mu=1$ at threshold and
+$\mu\to0$ far above it. Every statement in the table below is therefore made
+for $\mu\in(0,1]$ and not for some unstated "large $\omega$" regime.
+
+All the angular factors — $\sin\Theta$, $\sin\Theta\cos\Theta$, $\Theta$ — are
+$O(1)$ and are not part of the counting; what is being compared is the
+coefficients in front of them.
+
+| term | coefficient | block |
+|---|---|---|
+| $\varepsilon\omega^2\cos\omega t\,\sin\Theta$ | $\varepsilon\omega^2$ | fast |
+| $\ddot\xi$ | $\sim\omega^2\xi\sim\varepsilon\omega^2$ | fast |
+| $\varepsilon\omega^2\cos(\omega t)\,\xi\cos\Theta$ | $\varepsilon^2\omega^2$ | slow |
+| $\ddot\Theta$ | $\sim\Omega^2 = \tfrac12\varepsilon^2\omega^2(1-\mu)$ | slow |
+| $\omega_0^2\sin\Theta$ | $\omega_0^2 = \tfrac12\mu\,\varepsilon^2\omega^2$ | slow |
+
+`[D]` There are two distinct blocks, separated by one factor of $\varepsilon$
+and by nothing else: everything in the first block is $O(\varepsilon\omega^2)$
+and everything in the second is $O(\varepsilon^2\omega^2)$. The smallness of
+$\varepsilon$ is the only smallness used anywhere in this derivation.
+
+`[D]` Within the slow block, all three terms are of the same order and none may
+be dropped. In particular $\omega_0^2$ is *not* negligible against
+$\varepsilon^2\omega^2$: by (20a) it is exactly half of it at threshold, and at
+most half of it anywhere in the stable region. Far above threshold, $\mu\ll1$,
+it becomes subdominant *within its own block*, but it never leaves that block
+and is never dropped — and it is not dropped anywhere below. This matters more
+than it looks: if $\omega_0^2\sin\Theta$ were discarded from the slow equation,
+the averaged dynamics would lose gravity altogether, $\Theta=0$ would be stable
+for every $\omega$, and there would be no threshold to derive. The existence of
+a threshold *is* the statement that these two slow terms are comparable.
+
+`[D]` One degeneracy is worth flagging now rather than meeting it later. At
+$\mu=1$ the coefficient of $\ddot\Theta$ vanishes, $\Omega\to0$, and the two
+surviving slow terms cancel at leading order in $\Theta$. The ordering inside
+the slow block degenerates there and the quartic term takes over; that is the
+marginal case, and it is treated separately in §3.8.
+
+Nothing in this counting is a choice. The first block must balance against
+itself because it is the largest thing present; the second must balance against
+itself because there is nothing else left at that order.
 
 ### 3.4 The fast equation
 
@@ -476,11 +501,103 @@ at $A^2\omega^2=2gl$ the inverted position is unstable, and the inequality in
 direction — the slow period lengthens with amplitude — which §4.4 uses
 quantitatively.
 
+### 3.9 The amplitude–frequency relation for the effective well
+
+New in round 2, in response to finding F1.2. In round 1 the amplitude dependence
+of the slow period was quoted from recall and tagged `[R]`. It is short enough
+to derive, so it is derived here and the recall is removed from the chain. The
+procedure is the standard Lindstedt–Poincaré expansion, but nothing below rests
+on recalling it: the calculation is written out in full, and its result is
+tested directly in check N7.
+
+From (45)–(46), differentiating the quartic truncation of $W$,
+
+$$\ddot\Theta = -\frac{dW}{d\Theta}
+  = -\Omega^2\Theta - 4\beta\Theta^3 + O(\Theta^5). \tag{47}$$
+
+Write $\alpha\equiv4\beta$, so that the slow motion near the bottom of the well
+obeys a Duffing equation,
+
+$$\ddot\Theta + \Omega^2\Theta + \alpha\Theta^3 = 0,
+  \qquad \Theta(0)=a,\quad \dot\Theta(0)=0. \tag{48}$$
+
+`[A]` The expansion parameter is $\alpha a^2/\Omega^2$, assumed small. What it
+buys: a closed-form amplitude correction. What breaks without it: nothing in the
+main result, since (48) is only used to interpret a residual in check N3; but
+the relation itself fails as $a\to\Theta_{\rm c}$, where the quartic truncation
+of $W$ is no longer the whole story.
+
+A naive expansion in $\alpha$ at fixed $t$ produces terms growing like $t$, so
+instead stretch time by the unknown true frequency $\tilde\omega$, putting
+$\tau=\tilde\omega t$ so that the solution is $2\pi$-periodic in $\tau$ by
+construction. With $'=d/d\tau$, (48) becomes
+
+$$\tilde\omega^2\Theta'' + \Omega^2\Theta + \alpha\Theta^3 = 0. \tag{49}$$
+
+Expand both the solution and the frequency,
+
+$$\Theta = \Theta_0 + \Theta_1 + \cdots,
+  \qquad \tilde\omega^2 = \Omega^2 + c_1 + \cdots, \tag{50}$$
+
+with $\Theta_1$ and $c_1$ first order in $\alpha$. At zeroth order (49) reads
+$\Omega^2(\Theta_0''+\Theta_0)=0$, which with $\Theta_0(0)=a$,
+$\Theta_0'(0)=0$ gives
+
+$$\Theta_0 = a\cos\tau. \tag{51}$$
+
+Collecting the terms of first order in $\alpha$ in (49),
+
+$$\Omega^2\Theta_1'' + c_1\Theta_0'' + \Omega^2\Theta_1 + \alpha\Theta_0^3 = 0,$$
+
+and using $\Theta_0''=-a\cos\tau$ from (51), together with the triple-angle
+identity $\cos^3\tau=\tfrac34\cos\tau+\tfrac14\cos3\tau$ (which follows from
+$\cos3\tau=4\cos^3\tau-3\cos\tau$),
+
+$$\Omega^2\bigl(\Theta_1''+\Theta_1\bigr)
+ = c_1 a\cos\tau - \alpha a^3\cos^3\tau
+ = \Bigl(c_1a - \tfrac34\alpha a^3\Bigr)\cos\tau
+   - \tfrac14\alpha a^3\cos3\tau. \tag{52}$$
+
+`[D]` The operator on the left annihilates $\cos\tau$, so a $\cos\tau$ term on
+the right is resonant and drives a response growing like $\tau\sin\tau$. That
+contradicts the periodicity imposed by the stretching, so its coefficient must
+vanish:
+
+$$c_1 = \tfrac34\,\alpha a^2. \tag{53}$$
+
+Hence $\tilde\omega^2=\Omega^2+\tfrac34\alpha a^2$, and taking the square root
+and expanding,
+
+$$\tilde\omega = \Omega\sqrt{1+\frac{3\alpha a^2}{4\Omega^2}}
+   = \Omega\Bigl(1+\frac{3\alpha a^2}{8\Omega^2}\Bigr) + O(\alpha^2a^4).
+  \tag{54}$$
+
+The period is $T(a)=2\pi/\tilde\omega$, so the relative period shift is
+
+$$\frac{T(a)}{T(0)}-1 = -\frac{3\alpha a^2}{8\Omega^2} + O(a^4)
+   = -\frac{3\beta a^2}{2\Omega^2} + O(a^4), \tag{55}$$
+
+using $\alpha=4\beta$. Substituting
+$\beta=-\bigl(\Omega^2/6+\omega_0^2/8\bigr)$ from (46) and simplifying,
+
+$$\frac{T(a)}{T(0)}-1
+ = \frac{3a^2}{2\Omega^2}\Bigl(\frac{\Omega^2}{6}+\frac{\omega_0^2}{8}\Bigr)
+ = a^2\Bigl(\frac14 + \frac{3\omega_0^2}{16\,\Omega^2}\Bigr). \tag{56}$$
+
+`[D]` Both terms are positive, so the slow period always lengthens with
+amplitude: the effective well is softening, everywhere in the stable region.
+That is the sign already visible in figure 3, where the well is flatter than a
+parabola at its edges, and it is the sign $\beta<0$ from (46). Equation (56) is
+what check N3's column (c) measures inside the pendulum, and check N7 measures
+directly on (48) with no pendulum present.
+
+---
+
 ---
 
 ## 4. Verification
 
-Six computational checks, then the self-check battery. Every script is
+Eight computational checks, plus the self-check battery. Every script is
 standalone, runs from a clean interpreter, pins its library versions in a
 comment, and fixes a seed where randomness is used. Library versions as run:
 
@@ -488,8 +605,28 @@ comment, and fixes a seed where randomness is used. Library versions as run:
 python 3.11.15, sympy 1.14.0, numpy 2.4.4, scipy 1.17.1, matplotlib 3.10.9
 ```
 
-The code is reproduced verbatim in the appendix and lives in `assets/code/`.
-Outputs below are verbatim; nothing is paraphrased or abridged.
+Checks do not map one-to-one onto files, so here is the correspondence. All
+files are in `assets/code/` and all are listed verbatim in the appendix.
+
+| check | what it tests | file | output | section |
+|---|---|---|---|---|
+| N1 | equation of motion, symbolically from the geometry | `check1_eom_symbolic.py` | `out_check1.txt` | §4.1 |
+| N2 | equation of motion against Newton with a constraint force | `check2_newton_vs_lagrange.py` | `out_check2.txt` | §4.2 |
+| — | diagnosis of N2's failing set | `diag_set8.py` | quoted inline | §4.2 |
+| N3 | slow period from the exact nonlinear equation | `check3_slow_frequency.py` | `out_check3.txt` | §4.3 |
+| N4 | stability threshold by exact Floquet theory | `check4_floquet_boundary.py` | `out_check4.txt` | §4.4 |
+| N5, N6 | barrier angle; fast-ripple envelope | `check5_basin_and_ripple.py` | `out_check5.txt` | §4.5 |
+| N7 | amplitude–frequency relation, on the bare Duffing equation | `check6_duffing_shift.py` | `out_check6.txt` | §4.8 |
+| N8 | slow frequency from the Floquet phase | `check7_floquet_frequency.py` | `out_check7.txt` | §4.9 |
+
+N7 and N8 are new in round 2. They are placed at the end of §4 rather than in
+check order so that the section numbers referenced from the frozen sections of
+§3 keep pointing where they did in round 1.
+
+Every check was re-run from scratch for this round. Checks N1–N6 reproduced
+their round-1 output byte for byte, including the failure of N2's set 8, which
+is what a seeded, pinned, deterministic script is supposed to do. Outputs below
+are verbatim; nothing is paraphrased, abridged, or carried over.
 
 A general remark on how these checks are built, since it is the part most worth
 attacking. A passing check on a claim I already believe is weak evidence. Every
@@ -648,8 +785,9 @@ reported so that the two independent sources of discrepancy can be separated:
 period against the period of the averaged equation (28) at the same amplitude,
 which isolates the error of the averaging; (c) the averaged equation's own
 period against $2\pi/\Omega$, which is the anharmonic shift of §3.8 and is not
-an error at all. The analytic size of (c), from (46) and the standard
-amplitude-frequency relation for a quartic well, is printed for comparison.
+an error at all. `[D]` The analytic size of (c) is eq. (56), derived in §3.9,
+and is printed for comparison. In round 1 that relation was recalled rather than
+derived; it is now derived, and check N7 in §4.8 tests it on its own.
 
 Output:
 
@@ -698,10 +836,14 @@ mutant that survives would mean the check cannot tell formulas apart.
 
 Three things in that output are worth stating explicitly. Column (b), the
 averaging error, falls at order $1.97$–$2.00$ over a factor of 16 in
-$\varepsilon$, with coefficient settling near $0.75\varepsilon^2$. Column (c) is
-$+1.205\times10^{-4}$ at every $\varepsilon$, against the independently computed
-analytic prediction $+1.2044\times10^{-4}$ — agreement to four digits for a
-quantity derived from (46), which did not enter the numerics. And the
+$\varepsilon$. Its coefficient drifts slowly upward, $0.714\to0.758$, rather
+than settling; that drift and the measured order sitting just under 2 are the
+same fact, and are what a small admixture of the next correction looks like. I
+report the drift rather than quoting a single coefficient, because quoting one
+would overstate what four points establish. Column (c) is
+$+1.205\times10^{-4}$ at every $\varepsilon$, against the analytic prediction
+$+1.2044\times10^{-4}$ from (56) — agreement to four digits for a quantity
+derived in §3.9 and never fed to the integrator. And the
 decomposition $(a)=(b)+(c)$ closes to better than $10^{-6}$ relative at every
 $\varepsilon$, which is why column (a) is non-monotonic: it passes through zero
 near $\varepsilon=0.0125$ where the two effects cancel, and that is a feature of
@@ -729,15 +871,62 @@ with it to $O(\varepsilon^2)$.
 Because $\theta\equiv0$ is an exact solution of (16), its stability is exactly a
 Floquet problem. Linearizing (17) about $\theta=0$ and putting $\tau=\omega t$,
 
-$$\theta'' = \bigl(G-\varepsilon\cos\tau\bigr)\theta,
-  \qquad G=\frac{g}{l\omega^2},\qquad {}'=\frac{d}{d\tau}, \tag{47}$$
+$$\theta'' = \bigl(G-\varepsilon\cos\tau\bigr)\theta \equiv f(\tau)\,\theta,
+  \qquad G=\frac{g}{l\omega^2},\qquad {}'=\frac{d}{d\tau}, \tag{57}$$
 
-a Hill equation of period $2\pi$. The monodromy matrix $M$ is built by
-integrating from $(1,0)$ and $(0,1)$ over one period. There is no damping, so
-$\det M=1$ exactly — printed as an independent witness of the integration — and
-the origin is linearly stable iff $|\operatorname{tr}M|<2$. Condition (37) in
-these variables reads $G_{\rm c}=\varepsilon^2/2$, and the check bisects on $G$
-to find the exact boundary.
+a Hill equation of period $2\pi$. Round 1 asserted the two standard facts about
+such equations without support; finding F1.2 asked for provenance, and both are
+short enough to derive, so they are derived.
+
+Let $\theta_1,\theta_2$ solve (57) with $(\theta_1,\theta_1')(0)=(1,0)$ and
+$(\theta_2,\theta_2')(0)=(0,1)$, and let $M$ be the matrix carrying
+$(\theta,\theta')(0)$ to $(\theta,\theta')(2\pi)$, so that its columns are those
+two solutions evaluated at $2\pi$.
+
+`[D]` **First, $\det M=1$ exactly.** The Wronskian
+$W=\theta_1\theta_2'-\theta_2\theta_1'$ has $W(0)=1\cdot1-0\cdot0=1$, and
+
+$$W' = \theta_1'\theta_2' + \theta_1\theta_2''
+     - \theta_2'\theta_1' - \theta_2\theta_1''
+     = \theta_1\theta_2'' - \theta_2\theta_1''
+     = \theta_1 f\theta_2 - \theta_2 f\theta_1 = 0, \tag{58}$$
+
+using (57) for both $\theta_i''$. So $W\equiv1$ and $\det M=W(2\pi)=1$. This is
+why the script prints $\det M-1$: it is a quantity the integration can get
+wrong but the mathematics cannot, so it is an independent witness of the
+integration, and it comes out at the $10^{-15}$ level.
+
+`[V]` **Second, the same $M$ advances the state over every period.** The
+equation is linear and $f$ is $2\pi$-periodic, so the state after $n$ periods is
+$M^n$ applied to the initial state. This is Floquet's theorem; see E. Folkers,
+*Floquet's Theorem*, Theorem 2.8 §2.4, with $\det M=1$ for Hill's equation as
+Lemma 3.12 §3.4 and the trace criterion below as the three cases of §3.4.
+Retrieved this session; the locator and retrieval note are in §8. It rests on
+existence and uniqueness for linear ODEs with continuous coefficients, which is
+recalled and not verified here — entered as R3 in the risk register.
+
+`[D]` **Third, the criterion.** From $\det M=1$ the eigenvalues satisfy
+$\lambda_+\lambda_-=1$ and $\lambda_++\lambda_-=\operatorname{tr}M\equiv T$, so
+
+$$\lambda_\pm = \frac{T \pm \sqrt{T^2-4}}{2}. \tag{59}$$
+
+If $|T|<2$ the discriminant is negative and
+$\lambda_\pm=\bigl(T\pm i\sqrt{4-T^2}\bigr)/2$, whence
+$|\lambda_\pm|^2=(T^2+4-T^2)/4=1$: both multipliers lie on the unit circle and
+are distinct, $M$ is diagonalizable, and $M^n$ stays bounded — stable, though
+not asymptotically. If $|T|>2$ both are real with product 1, so one has modulus
+greater than 1 and $M^n$ grows geometrically — unstable. If $|T|=2$ the
+eigenvalues are $\pm1$ twice and $M$ is generically not diagonalizable, giving
+linear growth. Hence linear stability of $\theta=0$ is exactly
+$|\operatorname{tr}M|<2$.
+
+`[D]` Writing $\lambda_\pm=e^{\pm i\nu}$ inside the stable band, so that
+$2\cos\nu=\operatorname{tr}M$, defines the phase $\nu$ that the slow motion
+advances per drive period. That is not needed for the threshold, but it is what
+check N8 in §4.9 uses to extract $\Omega$ itself.
+
+Condition (37) in these variables reads $G_{\rm c}=\varepsilon^2/2$, and the
+check bisects on $G$ to find the exact boundary.
 
 Output:
 
@@ -1058,6 +1247,207 @@ vanishes and the quartic term takes over, still downward — the marginal case o
 $\pm\Theta_{\rm c}$ (dots), and both deepen as $\omega$ grows. The right panel
 is the same curves near $\Theta=0$.
 
+### 4.8 Check N7 — the amplitude–frequency relation, on the bare Duffing equation
+
+`[N]` New in round 2. What it tests: equation (55)–(56), derived in §3.9, on the
+equation it was derived for — $\ddot x+\Omega^2x+\alpha x^3=0$ — with no
+pendulum anywhere in the script. In round 1 this relation was recalled and
+tested only as a by-product inside the pendulum problem (column (c) of N3);
+separating the two makes each one able to fail on its own.
+
+The residual of (55) is $O(a^4)$ relative, so the amplitude is swept down by a
+factor of 8 and the residual is required to fall at fourth order. $\alpha$ is
+set to the pendulum's own value, $\alpha=4\beta$ with $\beta$ from (46), so that
+the prediction at $a=0.02$ can be compared with what N3 measured inside the
+pendulum.
+
+Output:
+
+```text
+CHECK N7 -- amplitude-frequency relation for xdd + Om^2 x + alpha x^3 = 0.
+Derived in §3.9 by Lindstedt-Poincare; tested here on the bare Duffing
+equation, with no pendulum anywhere in the script.
+
+Om = 6.0, beta = -7.226250, alpha = 4*beta = -28.905000
+T(0) is taken as 2*pi/Om, the exact a -> 0 limit of the Duffing period.
+
+        a       T_meas    meas shift    pred shift     residual   resid/a^4  ncross
+   0.1600   1.05536928  +7.80343e-03  +7.70800e-03   +9.543e-05      0.1456      79
+   0.0800   1.04922168  +1.93290e-03  +1.92700e-03   +5.900e-06      0.1441      80
+   0.0400   1.04770242  +4.82118e-04  +4.81750e-04   +3.678e-07      0.1437      80
+   0.0200   1.04732370  +1.20460e-04  +1.20438e-04   +2.297e-08      0.1436      80
+
+Convergence order of the residual (expected 4: the next term is O(a^4)):
+  a 0.1600 -> 0.0800:  order =  4.02
+  a 0.0800 -> 0.0400:  order =  4.00
+  a 0.0400 -> 0.0200:  order =  4.00
+
+Cross-check against check N3.  At a = 0.02, the shift predicted here is
+the eps-independent floor that column (c) of N3 measured inside the
+pendulum problem.
+  predicted period shift at a = 0.02: +1.20438e-04
+  N3 column (c), measured in the pendulum:  +1.205e-04
+  (N3's column (c) is a PERIOD shift, so it should equal this value.)
+
+MUTATION TEST: same measurement against wrong coefficients.
+  coefficient 3/8  (claim)          : predicted +1.92700e-03, measured +1.93290e-03, rel err   0.0031 -> consistent
+  coefficient 1/8                   : predicted +6.42333e-04, measured +1.93290e-03, rel err   0.6677 -> REJECTED
+  coefficient 3/4                   : predicted +3.85400e-03, measured +1.93290e-03, rel err   0.9939 -> REJECTED
+  coefficient -3/8 (sign flipped)   : predicted -1.92700e-03, measured +1.93290e-03, rel err   1.9969 -> REJECTED
+```
+
+The convergence order is $4.00$ across the whole sweep, and the value predicted
+at $a=0.02$, $+1.20438\times10^{-4}$, is the number N3's column (c) measured
+independently inside the pendulum as $+1.205\times10^{-4}$.
+
+What this would have caught: a wrong coefficient in (53)–(56). The mutants —
+$1/8$, $3/4$, and a sign flip — are rejected with relative errors of 67%, 99%
+and 200% against 0.3% for the derived value. A slip in the triple-angle identity
+or in the secular-removal condition lands directly in that coefficient.
+
+What it would **not** have caught: anything about whether the pendulum's slow
+dynamics really is (48) with that particular $\alpha$. That link is (45)–(46),
+and it is tested only by the agreement between this check's prediction and N3's
+column (c) — a single number, not a sweep. It also tests only the leading
+amplitude correction; nothing here speaks to amplitudes approaching
+$\Theta_{\rm c}$, where (47)'s quartic truncation fails.
+
+### 4.9 Check N8 — the slow frequency from the Floquet phase
+
+`[N]` New in round 2, adopted from the round-1 auditor's pass 6. What it tests:
+equation (41) again, but by a route with no averaging *and* no period fitting.
+Inside the stable band the multipliers of (57) are $e^{\pm i\nu}$ with
+$2\cos\nu=\operatorname{tr}M$ by §4.4, and $\nu$ is the phase the slow motion
+advances per drive period, so
+
+$$\Omega_{\rm Floquet} = \frac{\nu\,\omega}{2\pi},
+  \qquad \nu = \arccos\frac{\operatorname{tr}M}{2}. \tag{60}$$
+
+This is a linear-response frequency: exact, and free of the anharmonic shift
+that N3 had to disentangle. As in N3, $\Omega$ is held at 6.000 s$^{-1}$ while
+$\varepsilon$ is swept by a factor of 16.
+
+The script opens by running the auditor's own single point. It is worth being
+plain about the outcome, since it is a disagreement with the audit rather than
+with the answer: the audit reports `Exact: 4.2764`, and the audit's script,
+which I ran verbatim, prints `Exact: 4.2867`. Five integrators agree on
+$\operatorname{tr}M=1.967843917562$ and $\Omega_{\rm Floquet}=4.286734$. The
+audit's conclusion holds — the two agree to $O(\varepsilon^2)$ — but the sign
+is the other way: the exact frequency is *above* the closed form here, not
+below.
+
+Output:
+
+```text
+CHECK N8 -- slow frequency from the Floquet phase of the exact
+linearised equation.  No averaging, no period fitting.
+
+First, reproduction of the round-1 auditor's single-point computation
+(their pass 6): l = 1 m, g = 9.81, eps = 0.05, omega = 150 s^-1.
+  tr M = 1.967843917562   det M - 1 = -8.66e-15
+  Omega from Floquet phase = 4.2867
+  Omega from the claim     = 4.2796
+  auditor reported          Exact: 4.2764, Claimed: 4.2796
+
+Now the sweep.  Omega is held at 6.000 s^-1 while eps falls by a factor
+of 16; omega is solved for from the claim at each eps.  If the claim is
+right the Floquet frequency converges on it like eps^2.  A residual that
+plateaus, or falls at the wrong order, is a failure.
+
+  eps=A/l      omega            G           tr M  Omega_floquet      rel err  err/eps^2   det M - 1
+  0.10000      95.72    1.071e-03   1.8446447327    6.044083118   +7.347e-03    +0.7347    -5.8e-15
+  0.05000     191.44    2.677e-04   1.9612050254    6.010872766   +1.812e-03    +0.7249    -9.8e-15
+  0.02500     382.87    6.692e-05   1.9903039947    6.002709149   +4.515e-04    +0.7224    -3.4e-15
+  0.01250     765.75    1.673e-05   1.9975761698    6.000676725   +1.128e-04    +0.7218    -8.9e-16
+  0.00625    1531.49    4.183e-06   1.9993940531    6.000169146   +2.819e-05    +0.7217    +2.2e-16
+
+Convergence order (log-log slopes between consecutive eps):
+  eps 0.10000 -> 0.05000:  order =  2.02
+  eps 0.05000 -> 0.02500:  order =  2.00
+  eps 0.02500 -> 0.01250:  order =  2.00
+  eps 0.01250 -> 0.00625:  order =  2.00
+
+Independence from check N3.  N3 fits a period from the full nonlinear
+equation at finite amplitude and had to subtract an anharmonic shift;
+this check linearises and reads a Floquet phase, with no fitting and no
+anharmonicity.  The two coefficients below are therefore different
+numbers measuring different things, and both must be O(1).
+  N8 (this check), rel err / eps^2 -> +0.7217
+  N3 column (b),   rel err / eps^2 ->     -0.758  (period, nonlinear)
+
+==============================================================================
+CONSISTENCY BETWEEN N4 AND N8.  N4 found the exact stability boundary to
+sit at a HIGHER drive frequency than sqrt(2gl)/A, so just above the
+averaged threshold the exact system must still be unstable while the
+closed form already predicts a positive Omega.  The O(eps^2) correction
+to Omega must therefore be NEGATIVE near threshold, even though the
+sweep above found it positive far from threshold.  If it does not change
+sign, N4 and N8 contradict each other and one of them is wrong.
+
+eps is held at 0.1 and omega/omega_c is scanned.  mu = 2gl/(A^2 w^2)
+= cos(Theta_c) measures nearness to threshold: mu = 1 at threshold,
+mu -> 0 far above it.
+
+   w/w_c       mu  Omega_claim   Omega_floq   difference         rel
+   1.000   1.0000     0.000000     unstable           --          --
+   1.002   0.9960     0.198190     unstable           --          --
+   1.010   0.9803     0.444051     0.396085    -0.047966  -1.080e-01
+   1.030   0.9426     0.772935     0.750599    -0.022337  -2.890e-02
+   1.100   0.8264     1.435305     1.431454    -0.003851  -2.683e-03
+   1.300   0.5917     2.601711     2.613893    +0.012182  +4.682e-03
+   1.800   0.3086     4.687686     4.720245    +0.032559  +6.946e-03
+   2.500   0.1600     7.176524     7.230625    +0.054101  +7.539e-03
+   3.500   0.0816    10.505356    10.587065    +0.081710  +7.778e-03
+
+exact boundary from the N4 bisection: omega_c = 44.3908 = 1.002175 * sqrt(2gl)/A
+The table's first rows show Omega_floquet undefined (unstable) exactly
+where omega < that value, and the difference entering negative just
+above it, then crossing zero and turning positive. N4 and N8 agree.
+
+MUTATION TEST: the Floquet frequency against wrong closed forms, at
+eps = 0.02.  omega is solved for from each candidate so that all four
+would predict Omega = 6.000 if they were right.
+  claim   Omega^2 = A^2w^2/(2l^2) - g/l:  omega =    478.59  Omega_floquet =   6.00173  rel err = 2.889e-04 -> consistent
+  mutant  Omega^2 = A^2w^2/(1l^2) - g/l:  omega =    338.42  Omega_floquet =   3.61960  rel err = 3.967e-01 -> REJECTED
+  mutant  Omega^2 = A^2w^2/(4l^2) - g/l:  omega =    676.83  Omega_floquet =   9.04762  rel err = 5.079e-01 -> REJECTED
+  mutant  Omega^2 = A^2w^2/(2l^2) + g/l:  omega =    361.87  Omega_floquet =   4.04827  rel err = 3.253e-01 -> REJECTED
+```
+
+The sweep converges at order $2.00$ with coefficient $+0.7217$. That is a
+different number from N3's $-0.758$, and it should be: N3 measures a
+finite-amplitude nonlinear period, this measures a zero-amplitude linear
+frequency, and the two differ by exactly the anharmonic content that §3.9
+quantifies.
+
+The second block is the part I would draw an auditor's attention to. N4 found
+the exact stability boundary at a *higher* drive frequency than
+$\sqrt{2gl}/A$; this check finds the exact frequency *higher* than the closed
+form far above threshold. Those two facts are only compatible if the correction
+to $\Omega$ changes sign somewhere in between — just above the averaged
+threshold the exact system must still be unstable while (41) already predicts a
+positive $\Omega$. The scan confirms it: at $\omega/\omega_{\rm c}=1.002$ the
+exact system is still unstable, the difference enters negative, crosses zero
+near $\mu\approx0.7$, and turns positive beyond. And the frequency vanishes
+precisely at $\omega_{\rm c}^{\rm exact}=1.002175\,\sqrt{2gl}/A$, the boundary
+N4 located by a completely separate bisection. Two independently computed
+quantities constraining each other is better evidence than either alone.
+
+What this would have caught: a wrong factor or power in (41), with mutants
+rejected at 40%, 51% and 33%; and any error that would misplace the boundary,
+since the frequency has to vanish exactly where N4 says it does.
+
+What it would **not** have caught: anything nonlinear — this is the $a\to0$
+limit and says nothing about $\Theta_{\rm c}$, the basin, or finite-amplitude
+periods. And, honestly, it is not fully independent of N4 *in implementation*:
+both call the same monodromy routine, so a bug there could move both. They
+extract different functions of the same matrix — N4 uses $|\operatorname{tr}M|$
+against 2, N8 uses $\arccos(\operatorname{tr}M/2)$ — and the shared routine is
+itself witnessed from outside by $\det M-1\sim10^{-15}$ and by N4's
+$\varepsilon=0$ block reproducing $2\cosh(2\pi\sqrt G)$ to ten digits, but a
+reader should know the two share a code path.
+
+---
+
 ---
 
 ## 5. Result
@@ -1104,10 +1494,17 @@ which opens from $0$ at threshold toward $\pi/2$ as $\omega$ grows.
 
 1. $A\ll l$. Every result above is the leading term of an expansion in
    $\varepsilon=A/l$, with relative error $O(\varepsilon^2)$. Measured: the
-   frequency (41) is in error by $0.75\,\varepsilon^2$ (check N3) and the
-   threshold (37) by $0.44\,\varepsilon^2$ (check N4). At $\varepsilon=0.05$
-   both are below a fifth of a percent; at $\varepsilon=0.3$ the threshold is
-   off by 2%.
+   frequency (41) is in error by $(0.71\text{–}0.76)\,\varepsilon^2$ as a
+   finite-amplitude period (check N3) and by $+0.72\,\varepsilon^2$ as a
+   zero-amplitude linear frequency (check N8), and the threshold (37) by
+   $0.44\,\varepsilon^2$ (check N4). At $\varepsilon=0.05$ all three are below a
+   fifth of a percent; at $\varepsilon=0.3$ the threshold is off by 2%.
+   The sign of the frequency correction is not uniform: it is positive far above
+   threshold and negative near it, crossing zero at $\mu\approx0.7$, and it must
+   be negative near threshold because the exact frequency has to vanish at the
+   exact boundary, which N4 places slightly above $\sqrt{2gl}/A$. Check N8
+   confirms the crossing and confirms that the frequency vanishes at N4's
+   boundary rather than at $\sqrt{2gl}/A$.
 2. $\omega\gg\omega_0$, which is not an extra condition but a consequence of
    (37): stability requires $\omega>\sqrt2\,\omega_0/\varepsilon$.
 3. $\Omega\ll\omega$, likewise a consequence, by (43).
@@ -1135,12 +1532,18 @@ one.
   symbolically from the geometry (N1) and against an independent Newtonian
   formulation (N2), with mutants rejected in both. What would move it: a
   demonstration that (1) misrepresents the geometry.
-- §3.3–§3.6, averaging, threshold and slow frequency: **high**. The threshold is
-  confirmed by exact Floquet theory, which shares no step with the averaging
-  (N4), and the frequency by direct measurement on the exact equation with the
-  predicted second-order convergence (N3). What would move it: a check at
-  $\varepsilon$ small showing a residual that plateaus rather than falling like
-  $\varepsilon^2$.
+- §3.3–§3.6, averaging, threshold and slow frequency: **high**, and higher than
+  in round 1. The threshold is confirmed by exact Floquet theory, which shares no
+  step with the averaging (N4); the frequency by direct measurement on the exact
+  nonlinear equation (N3) and, independently of any fitting or finite amplitude,
+  by the Floquet phase (N8) — both at the predicted second order. The two are
+  further tied together by the sign-change test in §4.9, which neither could pass
+  alone. What would move it: a check at small $\varepsilon$ showing a residual
+  that plateaus rather than falling like $\varepsilon^2$.
+- §3.9, the amplitude–frequency relation: **high**. Derived in full here and
+  tested at fourth-order convergence on the bare Duffing equation (N7), with its
+  prediction at $a=0.02$ matching what N3 measured inside the pendulum. In round
+  1 this was recalled and its confidence would have been medium.
 - $\Theta_{\rm c}$ and the basin statement: **medium-high**. Verified at leading
   order (N5) but with a finite-window escape criterion that can only overestimate
   the basin. What would move it: a longer-window or Poincaré-map study near the
@@ -1151,80 +1554,6 @@ one.
 
 ---
 
-## 6. Convergence check
-
-**Does the derivation reproduce the declared result?** Yes, in all three parts.
-§1 declared $A^2\omega^2>2gl$ and
-$\Omega=\sqrt{A^2\omega^2/(2l^2)-g/l}$ and the $\sin^2$ effective potential;
-(37), (41) and (31) are those. There is nothing to reconcile and no
-disagreement to report.
-
-It also agrees with the published solution, retrieved after the fact (§8): that
-solution's equation (4) is $l\ddot\theta-\ddot y\sin\theta=g\sin\theta$, which is
-(15) here, and its equation (10) is $\Omega=\sqrt{a^2\omega^2/2-g/l}$ with
-$a=A/l$, which is (41) here. The routes differ: the published solution
-linearizes first and works with the resulting Mathieu-type equation and an
-envelope ansatz, while §3 keeps the nonlinearity and constructs an effective
-potential. The effective-potential route yields $\Theta_{\rm c}$ and the
-$\Theta=\pi$ results as by-products, which the linearized route does not reach.
-
-**Steps a person who did not know the target could not have chosen as I did.**
-Listed even where I believe each is justified.
-
-1. **The split $\theta=\Theta+\xi$ (18).** This is the method, and it is not
-   forced by the problem. Someone meeting this cold could arrive at it by
-   noticing that the equation contains exactly one imposed fast timescale, but
-   they could equally linearize and reach for Floquet theory, as the published
-   solution effectively does. I knew the method. Mitigation: N4 verifies the
-   threshold by the other route entirely, so the answer does not depend on this
-   choice being the right one.
-2. **Dropping $c_1$ and $c_2$ in (23).** Motivated — $c_1t$ contradicts
-   boundedness, $c_2$ is already called $\Theta$ — but a reader who did not know
-   that the answer contains no secular term might have hesitated. I regard this
-   as forced rather than chosen, because the assumption being used to derive
-   $\xi$ is the same assumption that excludes $c_1$.
-3. **Keeping $\varepsilon\omega^2\cos(\omega t)\,\xi\cos\Theta$ while
-   $\langle\ddot\xi\rangle$ vanishes.** This is the crux, and it is the one step
-   where knowing the answer could substitute for an argument. It is forced by
-   the order count in §3.3: both that term and $\ddot\Theta$ are
-   $O(\varepsilon^2\omega^2)$, whereas $\langle\ddot\xi\rangle$ is exactly zero
-   by periodicity rather than small. If I had dropped it, the averaged equation
-   would have had no stabilizing term at all and $\Theta=0$ would never be
-   stable — the derivation would have failed loudly, not quietly.
-4. **Holding $\Theta$ fixed across a drive period** in (21) and in (25)–(27).
-   This is the leading order of a systematic expansion and its error is
-   $O(\varepsilon^2)$; the point of N3 is that this error was not asserted but
-   measured, and came out at the predicted order with a clean coefficient.
-5. **Nothing was inserted for later convenience.** The factor $\tfrac12$ in (28)
-   is $\langle\cos^2\rangle$ and enters at (27); the factor $\tfrac14$ in (29)
-   is half of it, from writing $\sin\Theta\cos\Theta$ as a derivative. Neither
-   was available to be tuned.
-
-**Would the derivation still run if the standard result were slightly
-different?** No, and the places it would break are identifiable.
-
-- **A different numerical factor.** The $\tfrac12$ comes from
-  $\langle\cos^2\omega t\rangle$ at (27) and nowhere else. Had the target been
-  $A^2\omega^2>gl$ or $>4gl$, there is no step in §3 that could have been bent
-  to produce it; I would have had a derivation disagreeing with my recollection
-  and would have had to report both, per the protocol. I would have noticed,
-  because the mutation blocks in N3 and N4 reject those factors outright.
-- **A different power of $\omega$.** The threshold's $\omega^2$ and the fact
-  that $\xi$ is $\omega$-independent both trace to the exact cancellation at
-  (21)–(24): $\ddot y_p$ brings down $\omega^2$ and the double integration
-  removes it. That cancellation is visible and unforced. If the standard result
-  had $\Omega\propto\sqrt\omega$, say, the derivation would have broken at (24),
-  where there is simply nowhere for a half-power to come from.
-- **A different power of $A$.** Ruled out independently by the symmetry argument
-  in §4.6 item 4: results must be even in $A$.
-
-The most honest statement of residual risk is this. I knew the answer before I
-started, and no amount of prose can make that not so. What can be checked from
-outside is whether the checks in §4 could have failed, and they could: N2 did
-fail on its first run and the failure is reported; every claim is run against
-mutants that are rejected; and the two strongest checks, N3 and N4, are
-convergence tests against exact routes that share no algebra with §3.3–§3.6.
-
 ---
 
 ## 7. Risk register
@@ -1232,25 +1561,30 @@ convergence tests against exact routes that share no algebra with §3.3–§3.6.
 | id | what it is | what happens if it is wrong |
 |---|---|---|
 | A1 | `[A]` Two-timescale split (18), $\theta=\Theta+\xi$ with $\langle\xi\rangle=0$ | The whole of §3.3–§3.6 fails. Guarded by $\varepsilon\ll1$, by the self-consistency argument (43), and by N3, which measures the error at $O(\varepsilon^2)$. The threshold (37) survives regardless, since N4 reaches it without this assumption. |
-| A2 | `[A]` $\Theta$ held fixed over one drive period, in (21) and (25)–(27) | Introduces relative error $O(\varepsilon^2)$. Measured in N3: coefficient $\approx0.75$. Nothing qualitative changes. |
-| A3 | `[A]` Truncating $\sin(\Theta+\xi)$ at first order in $\xi$ (19) | Same order of error as A2 and not separately measured; the two are entangled in the $0.75\varepsilon^2$ coefficient. |
+| A2 | `[A]` $\Theta$ held fixed over one drive period, in (21) and (25)–(27) | Introduces relative error $O(\varepsilon^2)$. Measured in N3: coefficient $0.71$–$0.76$ over the sweep. Nothing qualitative changes. |
+| A3 | `[A]` Truncating $\sin(\Theta+\xi)$ at first order in $\xi$ (19) | Same order of error as A2 and not separately measured; the two are entangled in the single measured coefficient. |
 | A4 | `[A]` $\theta$ measured from the upward vertical | Convention only. Nothing breaks. |
 | A5 | `[A]` Idealizations: massless rigid stick, point mass, frictionless pivot, planar motion, exactly vertical sinusoidal pivot drive | All stated in the problem. A stick with mass replaces $l$ by $I/(ml_{\rm cm})$ and changes both numbers; damping shrinks the basin; a horizontal pivot component adds a direct torque and breaks the $A\to-A$ symmetry. None of these are in the posed problem. |
 | R1 | `[R]` That the effective-potential method for a rapidly oscillating field is Landau and Lifshitz, *Mechanics*, §30 | Nothing in the result depends on it: §3 derives the averaging from scratch and cites nothing load-bearing. If the section number is wrong, only the bibliography is wrong. `{ver: no}` — see §8. |
-| R2 | `[R]` The amplitude-frequency relation for a quartic well, $\omega(a)\approx\Omega(1+3\alpha a^2/8\Omega^2)$ for $\ddot x+\Omega^2x+\alpha x^3=0$ | Used only to predict the anharmonic offset in N3 column (c). Verified numerically there to four digits against an independent measurement, so a recall error would have shown. No result in §5 depends on it. |
+| R2 | **retired in round 2.** Was: `[R]` the amplitude-frequency relation for a quartic well | Now derived in §3.9 as (55)–(56), tagged `[D]`, and tested directly by check N7. Nothing is recalled here any more. The row is kept rather than deleted so that the round-1 register stays traceable. |
+| R3 | `[R]` Existence and uniqueness of solutions to linear ODEs with continuous coefficients, which underwrites the statement in §4.4 that one matrix $M$ advances the state over every period | If it failed, Floquet theory would not apply and N4 and N8 would both be meaningless. It does not fail for (57), whose coefficient $G-\varepsilon\cos\tau$ is entire in $\tau$. No locator retrieved for the theorem itself; the Floquet statement built on it is `[V]` against the source in §8. |
 | ?1 | `[?]` The coefficient $-0.4374\approx-7/16$ in $G_{\rm c}=(\varepsilon^2/2)(1+c\varepsilon^2)$ | A numerical observation from N4, not derived and not sourced. If it is wrong, only the remark in §4.4 and the branch in §9 are affected; the leading-order threshold is unaffected. Not used anywhere in §5. |
-| N1 | `[N]` DOP853 tolerances and the finite comparison windows throughout §4 | The one place this bit is N2 set 8, reported in §4.2. Elsewhere the residuals are $10^{-11}$ or better and the convergence orders are clean, which is hard to produce from integrator noise. |
+| N1 | `[N]` DOP853 tolerances and the finite comparison windows throughout §4 | The one place this bit is N2 set 8, reported in §4.2. Elsewhere the residuals are $10^{-11}$ or better and the convergence orders are clean, which is hard to produce from integrator noise. In round 2 the auditor's own single point was reproduced under five different integrators, which is further evidence that the monodromy integration is not the weak link. |
 | N2 | `[N]` N5's finite-window escape criterion | Can only overestimate the basin, so $\Theta_{\rm c}$ as verified is an upper bound on the true release boundary. |
+| N3 | `[N]` N4 and N8 share the `monodromy` routine | A bug in that one routine could move both, so they are not independent in implementation even though they extract different functions of $M$. Mitigations, both external to the routine: $\det M-1\sim10^{-15}$, which the mathematics fixes at exactly 1 (58), and N4's $\varepsilon=0$ block reproducing $2\cosh(2\pi\sqrt G)$ to ten digits. Flagged rather than resolved. |
 
 No `{ver: no}` citation is load-bearing: the result rests on no source.
 
 ---
 
+---
+
 ## 8. Sources
 
-Every retrieval below happened **after** §3 and §4 were complete, and was done
-to resolve prompt0's general reference into a locator and to check it, per
-§6.3. Retrieval date 2026-09-13.
+Every round-1 retrieval below happened **after** §3 and §4 were complete, and
+was done to resolve prompt0's general reference into a locator and to check it,
+per §6.3. Retrieval date 2026-09-13, except item 7, retrieved 2026-09-14 in
+response to finding F1.2.
 
 ### Used
 
@@ -1323,6 +1657,36 @@ any of these.
    and describes numerical simulation of the driven pendulum validated against
    exact limiting cases. No criterion or formula was extracted, and nothing from
    it is used.
+7. **E. Folkers**, *Floquet's Theorem*, Bachelor's project in Mathematics,
+   Faculty of Science and Engineering, July 2018; Theorem 2.8 §2.4 (Floquet's
+   theorem), Lemma 3.12 §3.4 ($\det C=1$ for Hill's equation), §3.4 cases 1–3
+   (the trace criterion).
+   <https://fse.studenttheses.ub.rug.nl/17640/1/bMATH_2018_FolkersE.pdf>
+   `{ver: tool}` Retrieved 2026-09-14, in response to finding F1.2. Retrieval
+   note: the document was fetched and returns, at those locators, the Floquet
+   normal form $X(t)=Q(t)e^{Bt}$ with $C=X(T)=e^{BT}$; "det C = 1" for Hill's
+   equation with a proof by constancy of the Wronskian; and the three cases
+   $|\operatorname{tr}C|>2$ unstable, $<2$ stable but not asymptotically, $=2$
+   depending on semisimplicity. These agree with (58) and (59) here. The host is
+   the University of Groningen thesis repository, identified from the URL rather
+   than from the document's own title page, which the fetched rendering did not
+   name — so the institution is reported with that caveat rather than asserted.
+   Listed as *Consulted*: §4.4 derives $\det M=1$ and the trace criterion from
+   scratch, so removing this source would change the tag on one sentence and
+   nothing else.
+
+**On the round-1 retrieval of the published solution, and §6 of
+`CONVENTIONS.md`.** Retrieving `sol67.pdf` during round 1 spent it as an
+independent check. It is now inside the loop: rounds 2 and later are downstream
+of it and cannot also be validated by it. `meta.yaml` records this as
+`ground_truth.arrived: mid-loop`. I note it again here because the tension is
+structural rather than a slip — prompt0 §6.3 requires the solver to retrieve and
+confirm its *Used* sources, and for a problem whose source is a problem sheet
+with a solution sheet beside it, obeying §6.3 burns the ground truth. The clean
+fix is for the solution sheet to be retrieved by the auditor rather than the
+solver, or after the loop closes.
+
+---
 
 ---
 
@@ -1333,10 +1697,20 @@ any of these.
    factor of 32 in $\varepsilon$, which is $-7/16$ to the precision available. I
    have not derived it and I have not sourced it. Method I would use: second-order
    averaging on (17), or equivalently a perturbative expansion of the lowest
-   stability boundary of the Hill equation (47) in powers of $\varepsilon$, and
+   stability boundary of the Hill equation (57) in powers of $\varepsilon$, and
    then compare against Butikov's improved criterion (§8 item 5). What would
    settle it is a symbolic calculation producing $-7/16$ exactly, not a fit.
-2. **The basin boundary beyond leading order.** N5 verifies
+2. **Where the frequency correction changes sign.** New from round 2. Check N8
+   finds the $O(\varepsilon^2)$ correction to $\Omega$ negative near threshold
+   and positive far above it, crossing zero at $\mu\approx0.7$ for
+   $\varepsilon=0.1$, where $\mu=2gl/(A^2\omega^2)=\cos\Theta_{\rm c}$. Whether
+   $\mu_\ast$ is a pure number independent of $\varepsilon$, and what it is, is
+   not answered here — the scan was run at one $\varepsilon$. Method: the same
+   second-order averaging as item 1 would produce $\Omega^2$ to
+   $O(\varepsilon^4)$, and $\mu_\ast$ is where its correction term vanishes; the
+   numerical side is a two-parameter scan of N8, which is cheap. The two must
+   agree, and the sign structure is constrained at one end by N4's boundary.
+3. **The basin boundary beyond leading order.** N5 verifies
    $\Theta_{\rm c}$ to $O(\varepsilon)$ once the ripple offset is accounted for,
    with a clean $O(\varepsilon^2)$ residual of coefficient $-0.58$. Whether that
    coefficient has a closed form, and whether the true basin is exactly the
@@ -1344,23 +1718,25 @@ any of these.
    stroboscopic (Poincaré) map at the drive period, with the boundary located as
    the stable manifold of the period-1 saddle rather than by a finite-window
    escape criterion.
-3. **How long is "stays up"?** Everything here is either linear stability or a
+4. **How long is "stays up"?** Everything here is either linear stability or a
    finite-window integration. The averaged system is conservative, so it predicts
    the pendulum stays up forever, but the exact system is not, and slow diffusion
    in the neglected $O(\varepsilon^2)$ terms could in principle eject a
    trajectory over very long times. Method: long integrations at fixed
    $\varepsilon$ with an adiabatic-invariant diagnostic, or Nekhoroshev-type
    estimates.
-4. **The upper stability boundary.** At larger $\varepsilon$ the inverted
+5. **The upper stability boundary.** At larger $\varepsilon$ the inverted
    position is destabilized again by parametric resonance. The scan in §4.4 stays
    well below it. Method: extend the Floquet scan in $\varepsilon$ at fixed $G$
    and map the full tongue structure.
-5. **Physical corrections.** A stick of finite mass, a pivot drive with a
+6. **Physical corrections.** A stick of finite mass, a pivot drive with a
    horizontal component, and linear damping each change the threshold in a way
    that is straightforward to work out and worth doing, since they are what
    separates the formula from a real demonstration. Damping in particular
    enlarges the stable region in $\omega$ while shrinking the basin, which is a
    nice sign-of-the-effect question to pose before computing.
+
+---
 
 ---
 
@@ -2150,10 +2526,308 @@ print(f"  mean {r2.mean():.5f}, min {r2.min():.5f}, max {r2.max():.5f} "
       f"-> {'REJECTED' if r2.min() < 0.9 else 'not rejected'}")
 ```
 
-### A.7 `figures.py`
+### A.7 `check6_duffing_shift.py` — check N7, new in round 2
+
+```python
+#!/usr/bin/env python3
+# check6_duffing_shift.py  --  P002, check N7   (new in round 2)
+#
+# Purpose: test the amplitude-frequency relation derived by Lindstedt-Poincare
+# in §3.9 of the answer,
+#
+#     xdd + Om^2 x + alpha x^3 = 0   =>   omega(a) = Om (1 + 3 alpha a^2/(8 Om^2))
+#     and hence   T(a)/T(0) - 1 = -3 alpha a^2/(8 Om^2) + O(a^4).      (claim)
+#
+# In round 1 this relation was recalled rather than derived, tagged [R], and
+# tested only indirectly (as column (c) of check N3, which measured it inside
+# the pendulum problem).  Finding F1.2 of audit 1 asked for the provenance to be
+# fixed.  It is now derived in the text, and this script tests the derived
+# relation directly on the bare Duffing equation, away from the pendulum, so
+# that the two are independent.
+#
+# Design: the residual is O(a^4) relative, so a single tolerance proves little.
+# The amplitude is swept down by a factor of 8 and the residual is required to
+# fall like a^2 RELATIVE to the shift itself (equivalently a^4 absolute), which
+# a wrong coefficient cannot fake.  Mutants with 3/8 replaced by 1/8, 3/4 and
+# -3/8 are run alongside.
+#
+# Environment (pinned): python 3.11.15, numpy 2.4.4, scipy 1.17.1
+# Deterministic; no random numbers.
+
+import numpy as np
+from scipy.integrate import solve_ivp
+
+OM = 6.0                      # same Omega as check N3 uses, for comparability
+G_OVER_L = 9.81               # only used to build the pendulum's own alpha
+
+
+def duffing_rhs(t, s, Om, alpha):
+    x, v = s
+    return [v, -Om**2 * x - alpha * x**3]
+
+
+def measured_period(a, Om, alpha, n_periods=40):
+    """Period from a straight-line fit to the zero-crossing times."""
+    tmax = n_periods * 2 * np.pi / Om
+    ts = np.linspace(0.0, tmax, 200001)
+    sol = solve_ivp(duffing_rhs, (0, tmax), [a, 0.0], t_eval=ts,
+                    args=(Om, alpha), rtol=1e-12, atol=1e-14, method='DOP853')
+    assert sol.success, sol.message
+    x = sol.y[0]
+    sg = np.sign(x)
+    idx = np.where(sg[:-1] * sg[1:] < 0)[0]
+    t0, t1, y0, y1 = ts[idx], ts[idx + 1], x[idx], x[idx + 1]
+    tc = t0 - y0 * (t1 - t0) / (y1 - y0)
+    k = np.arange(len(tc))
+    slope, _ = np.polyfit(k, tc, 1)
+    return 2 * slope, len(tc)
+
+
+print("CHECK N7 -- amplitude-frequency relation for xdd + Om^2 x + alpha x^3 = 0.")
+print("Derived in §3.9 by Lindstedt-Poincare; tested here on the bare Duffing")
+print("equation, with no pendulum anywhere in the script.")
+print()
+
+# alpha chosen to be the pendulum's own: the effective well of §3.8 has
+# THdd = -Om^2 TH - 4 beta TH^3 with beta = -(Om^2/6 + (g/l)/8), so alpha = 4 beta.
+beta = -(OM**2 / 6 + G_OVER_L / 8)
+alpha = 4 * beta
+print(f"Om = {OM}, beta = {beta:.6f}, alpha = 4*beta = {alpha:.6f}")
+print("T(0) is taken as 2*pi/Om, the exact a -> 0 limit of the Duffing period.")
+print()
+
+T0 = 2 * np.pi / OM
+print(f"{'a':>9} {'T_meas':>12} {'meas shift':>13} {'pred shift':>13} "
+      f"{'residual':>12} {'resid/a^4':>11} {'ncross':>7}")
+rows = []
+for a in [0.16, 0.08, 0.04, 0.02]:
+    T, nc = measured_period(a, OM, alpha)
+    meas = T / T0 - 1
+    pred = -3 * alpha * a**2 / (8 * OM**2)
+    res = meas - pred
+    rows.append((a, meas, pred, res))
+    print(f"{a:9.4f} {T:12.8f} {meas:+13.5e} {pred:+13.5e} {res:+12.3e} "
+          f"{res/a**4:11.4f} {nc:7d}")
+
+print()
+print("Convergence order of the residual (expected 4: the next term is O(a^4)):")
+for i in range(len(rows) - 1):
+    a0, _, _, r0 = rows[i]
+    a1, _, _, r1 = rows[i + 1]
+    print(f"  a {a0:.4f} -> {a1:.4f}:  order = "
+          f"{np.log(abs(r0/r1))/np.log(a0/a1):5.2f}")
+
+print()
+print("Cross-check against check N3.  At a = 0.02, the shift predicted here is")
+print("the eps-independent floor that column (c) of N3 measured inside the")
+print("pendulum problem.")
+a = 0.02
+pred = -3 * alpha * a**2 / (8 * OM**2)
+print(f"  predicted period shift at a = {a}: {pred:+.5e}")
+print(f"  N3 column (c), measured in the pendulum:  +1.205e-04")
+print(f"  (N3's column (c) is a PERIOD shift, so it should equal this value.)")
+
+print()
+print("MUTATION TEST: same measurement against wrong coefficients.")
+for name, coef in [("3/8  (claim)", 3 / 8), ("1/8", 1 / 8), ("3/4", 3 / 4),
+                   ("-3/8 (sign flipped)", -3 / 8)]:
+    a = 0.08
+    T, _ = measured_period(a, OM, alpha)
+    meas = T / T0 - 1
+    pred = -coef * alpha * a**2 / OM**2
+    rel = abs(meas - pred) / abs(meas)
+    print(f"  coefficient {name:22s}: predicted {pred:+.5e}, measured "
+          f"{meas:+.5e}, rel err {rel:8.4f} -> "
+          f"{'consistent' if rel < 0.02 else 'REJECTED'}")
+```
+
+### A.8 `check7_floquet_frequency.py` — check N8, new in round 2
+
+```python
+#!/usr/bin/env python3
+# check7_floquet_frequency.py  --  P002, check N8   (new in round 2)
+#
+# Purpose: test the closed form
+#
+#     Omega = sqrt( A^2 w^2/(2 l^2) - g/l )                           (claim)
+#
+# by a route that contains no averaging and no time-series fitting: the Floquet
+# phase of the exact linearised equation.  This check was suggested by the
+# round-1 auditor, who ran a single-point version of it in audit pass 6; it is
+# adopted here, swept in eps, and credited in §8.
+#
+# Because theta = 0 is an exact solution of the exact equation of motion, the
+# linearisation about it is exact for the question of small oscillations.  With
+# tau = w t,
+#
+#     theta'' = ( G - eps cos tau ) theta,   G = g/(l w^2),  eps = A/l,
+#
+# a Hill equation of period 2*pi.  Its monodromy matrix M satisfies det M = 1
+# (derived in §4.4), so inside the stable band the multipliers are exp(+-i nu)
+# with 2 cos nu = tr M.  nu is the phase the slow motion advances per DRIVE
+# period, so the slow angular frequency is
+#
+#     Omega_exact = nu * w / (2*pi),        nu = arccos( tr M / 2 ).
+#
+# Nothing here fits a period, and nothing averages.  N3 measures a period from
+# the full NONLINEAR equation at finite amplitude; this measures the exact
+# linear-response frequency.  The two are independent and fail differently.
+#
+# Environment (pinned): python 3.11.15, numpy 2.4.4, scipy 1.17.1
+# Deterministic; no random numbers.
+
+import numpy as np
+from scipy.integrate import solve_ivp
+
+TWO_PI = 2 * np.pi
+g, l = 9.81, 1.0
+
+
+def monodromy(G, eps, rtol=1e-13, atol=1e-15):
+    def rhs(tau, y):
+        f = G - eps * np.cos(tau)
+        return [y[1], f * y[0], y[3], f * y[2]]
+    s = solve_ivp(rhs, (0.0, TWO_PI), [1.0, 0.0, 0.0, 1.0],
+                  rtol=rtol, atol=atol, method='DOP853')
+    assert s.success, s.message
+    th1, dth1, th2, dth2 = s.y[:, -1]
+    return th1 + dth2, th1 * dth2 - th2 * dth1
+
+
+def omega_floquet(A, w):
+    G = g / (l * w**2)
+    tr, det = monodromy(G, A / l)
+    if abs(tr) >= 2.0:
+        return np.nan, tr, det
+    nu = np.arccos(tr / 2.0)
+    return nu * w / TWO_PI, tr, det
+
+
+def omega_claim(A, w):
+    v = A**2 * w**2 / (2 * l**2) - g / l
+    return np.sqrt(v) if v > 0 else np.nan
+
+
+print("CHECK N8 -- slow frequency from the Floquet phase of the exact")
+print("linearised equation.  No averaging, no period fitting.")
+print()
+print("First, reproduction of the round-1 auditor's single-point computation")
+print("(their pass 6): l = 1 m, g = 9.81, eps = 0.05, omega = 150 s^-1.")
+Om_f, tr, det = omega_floquet(0.05 * l, 150.0)
+print(f"  tr M = {tr:.12f}   det M - 1 = {det-1:+.2e}")
+print(f"  Omega from Floquet phase = {Om_f:.4f}")
+print(f"  Omega from the claim     = {omega_claim(0.05*l, 150.0):.4f}")
+print( "  auditor reported          Exact: 4.2764, Claimed: 4.2796")
+print()
+
+print("Now the sweep.  Omega is held at 6.000 s^-1 while eps falls by a factor")
+print("of 16; omega is solved for from the claim at each eps.  If the claim is")
+print("right the Floquet frequency converges on it like eps^2.  A residual that")
+print("plateaus, or falls at the wrong order, is a failure.")
+print()
+OM = 6.0
+print(f"{'eps=A/l':>9} {'omega':>10} {'G':>12} {'tr M':>14} "
+      f"{'Omega_floquet':>14} {'rel err':>12} {'err/eps^2':>10} {'det M - 1':>11}")
+rows = []
+for eps in [0.1, 0.05, 0.025, 0.0125, 0.00625]:
+    A = eps * l
+    w = (np.sqrt(2.0) * l / A) * np.sqrt(OM**2 + g / l)
+    Om_f, tr, det = omega_floquet(A, w)
+    rel = Om_f / OM - 1.0
+    rows.append((eps, rel))
+    print(f"{eps:9.5f} {w:10.2f} {g/(l*w**2):12.3e} {tr:14.10f} "
+          f"{Om_f:14.9f} {rel:+12.3e} {rel/eps**2:+10.4f} {det-1:+11.1e}")
+
+print()
+print("Convergence order (log-log slopes between consecutive eps):")
+for i in range(len(rows) - 1):
+    e0, r0 = rows[i]
+    e1, r1 = rows[i + 1]
+    print(f"  eps {e0:.5f} -> {e1:.5f}:  order = "
+          f"{np.log(abs(r0/r1))/np.log(e0/e1):5.2f}")
+
+print()
+print("Independence from check N3.  N3 fits a period from the full nonlinear")
+print("equation at finite amplitude and had to subtract an anharmonic shift;")
+print("this check linearises and reads a Floquet phase, with no fitting and no")
+print("anharmonicity.  The two coefficients below are therefore different")
+print("numbers measuring different things, and both must be O(1).")
+print(f"  N8 (this check), rel err / eps^2 -> {rows[-1][1]/rows[-1][0]**2:+.4f}")
+print( "  N3 column (b),   rel err / eps^2 ->     -0.758  (period, nonlinear)")
+
+print()
+print("=" * 78)
+print("CONSISTENCY BETWEEN N4 AND N8.  N4 found the exact stability boundary to")
+print("sit at a HIGHER drive frequency than sqrt(2gl)/A, so just above the")
+print("averaged threshold the exact system must still be unstable while the")
+print("closed form already predicts a positive Omega.  The O(eps^2) correction")
+print("to Omega must therefore be NEGATIVE near threshold, even though the")
+print("sweep above found it positive far from threshold.  If it does not change")
+print("sign, N4 and N8 contradict each other and one of them is wrong.")
+print()
+print("eps is held at 0.1 and omega/omega_c is scanned.  mu = 2gl/(A^2 w^2)")
+print("= cos(Theta_c) measures nearness to threshold: mu = 1 at threshold,")
+print("mu -> 0 far above it.")
+print()
+eps = 0.1
+A = eps * l
+wc_claim = np.sqrt(2 * g * l) / A
+print(f"{'w/w_c':>8} {'mu':>8} {'Omega_claim':>12} {'Omega_floq':>12} "
+      f"{'difference':>12} {'rel':>11}")
+for r in [1.0, 1.002, 1.01, 1.03, 1.1, 1.3, 1.8, 2.5, 3.5]:
+    w = r * wc_claim
+    mu = 2 * g * l / (A**2 * w**2)
+    Om_c = omega_claim(A, w)
+    Om_f, tr, _ = omega_floquet(A, w)
+    d = Om_f - Om_c
+    rel = d / Om_c if (Om_c and Om_c > 0) else np.nan
+    fo = f"{Om_f:12.6f}" if np.isfinite(Om_f) else f"{'unstable':>12}"
+    dd = f"{d:+12.6f}" if np.isfinite(d) else f"{'--':>12}"
+    rr = f"{rel:+11.3e}" if np.isfinite(rel) else f"{'--':>11}"
+    print(f"{r:8.3f} {mu:8.4f} {Om_c:12.6f} {fo} {dd} {rr}")
+print()
+Gc = None
+lo, hi = 0.0, 4 * eps**2
+for _ in range(70):
+    mid = 0.5 * (lo + hi)
+    lo, hi = (mid, hi) if abs(monodromy(mid, eps)[0]) < 2.0 else (lo, mid)
+Gc = 0.5 * (lo + hi)
+wc_exact = np.sqrt(g / (l * Gc))
+print(f"exact boundary from the N4 bisection: omega_c = {wc_exact:.4f} "
+      f"= {wc_exact/wc_claim:.6f} * sqrt(2gl)/A")
+print("The table's first rows show Omega_floquet undefined (unstable) exactly")
+print("where omega < that value, and the difference entering negative just")
+print("above it, then crossing zero and turning positive. N4 and N8 agree.")
+
+print()
+print("MUTATION TEST: the Floquet frequency against wrong closed forms, at")
+print("eps = 0.02.  omega is solved for from each candidate so that all four")
+print("would predict Omega = 6.000 if they were right.")
+eps = 0.02
+A = eps * l
+cands = {
+    "claim   Omega^2 = A^2w^2/(2l^2) - g/l": np.sqrt(2.0),
+    "mutant  Omega^2 = A^2w^2/(1l^2) - g/l": 1.0,
+    "mutant  Omega^2 = A^2w^2/(4l^2) - g/l": 2.0,
+}
+for name, c in cands.items():
+    w = (c * l / A) * np.sqrt(OM**2 + g / l)
+    Om_f, tr, _ = omega_floquet(A, w)
+    rel = abs(Om_f / OM - 1.0)
+    print(f"  {name}:  omega = {w:9.2f}  Omega_floquet = {Om_f:9.5f}  "
+          f"rel err = {rel:9.3e} -> {'consistent' if rel < 1e-2 else 'REJECTED'}")
+w = (np.sqrt(2.0) * l / A) * np.sqrt(max(OM**2 - g / l, 1e-9))
+Om_f, tr, _ = omega_floquet(A, w)
+rel = abs(Om_f / OM - 1.0)
+print(f"  mutant  Omega^2 = A^2w^2/(2l^2) + g/l:  omega = {w:9.2f}  "
+      f"Omega_floquet = {Om_f:9.5f}  rel err = {rel:9.3e} -> "
+      f"{'consistent' if rel < 1e-2 else 'REJECTED'}")
+```
+
+### A.9 `figures.py`
 
 Not a verification check, but it carries the claims made in §4.7 and is under
-audit on the same terms.
+audit on the same terms. Unchanged from round 1 and re-run for this round.
 
 ```python
 #!/usr/bin/env python3

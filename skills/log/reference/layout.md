@@ -21,7 +21,6 @@ problems/P007-hawking-temperature-tfd/
 ├── audits/
 │   ├── audit-report-1.md         # Part A, verbatim auditor output
 │   ├── audit-report-2.md
-│   ├── compliance-probe.md       # the probe as sent, the reply, the outcome
 │   └── findings.yaml             # every finding id, severity, disposition, round closed
 ├── final/
 │   ├── final.md

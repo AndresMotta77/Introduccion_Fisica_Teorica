@@ -1,0 +1,118 @@
+# Findings ledger — P002
+#
+# Every finding id raised in any audit round, its severity, its disposition, and
+# the round in which it was closed. Finding ids are stable across the whole
+# problem per CONVENTIONS.md §8.
+#
+# Disposition values: accepted | rejected-with-rebuttal | partial | deferred.
+
+rounds_audited: 1
+
+findings:
+  - id: F1.1
+    round_raised: 1
+    severity: MINOR
+    location: "answers/answer-1.md §3.3, size-counting table"
+    claim: >-
+      The table states that omega_0^2 sin(Theta) is << eps^2 omega^2 near
+      threshold. That is false: at the boundary A^2 omega^2 = 2 g l, so
+      eps^2 omega^2 = 2 omega_0^2 exactly and the two are the same order.
+    fix_supplied_by_auditor: true
+    disposition: accepted
+    round_closed: 1
+    where_fixed: "answers/answer-2.md §3.3"
+    what_changed: >-
+      Section rewritten. mu = 2 g l / (A^2 omega^2) = 2 omega_0^2 /
+      (eps^2 omega^2) introduced as the measure of nearness to threshold, so
+      that omega_0^2 = (1/2) mu eps^2 omega^2 with 0 < mu <= 1 throughout the
+      stable region. The table now carries coefficients rather than an
+      inequality, and the prose states what the corrected counting establishes:
+      all three slow terms are O(eps^2 omega^2) and none may be dropped. mu is
+      the same combination that appears in eq. (34) as cos(Theta_c).
+    solver_note: >-
+      The false line was in the justification, not in a step. omega_0^2 sin
+      Theta was kept in eq. (28) throughout round 1 and every downstream result
+      depends on its being kept. Had the line been true and acted on, the
+      averaged equation would have lost gravity, Theta = 0 would have been
+      stable for every omega, and there would have been no threshold to derive.
+    load_bearing: false
+
+  - id: F1.2
+    round_raised: 1
+    severity: MINOR
+    location: "answers/answer-1.md §4.3 and §4.4"
+    claim: >-
+      Standard results are invoked without the [R] or [S] tags required by
+      CONVENTIONS.md §1: the amplitude-frequency relation for a quartic well in
+      §4.3, and Floquet theory, the monodromy matrix construction and det M = 1
+      in §4.4.
+    fix_supplied_by_auditor: false
+    disposition: accepted
+    round_closed: 1
+    where_fixed: "answers/answer-2.md §3.9, §4.4, §4.8, §4.9, risk register"
+    what_changed: >-
+      Both results were derived rather than tagged, which removes the recall
+      from the chain instead of labelling it. The amplitude-frequency relation
+      is derived by Lindstedt-Poincare in the new §3.9 as eqs. (47)-(56) and
+      tagged [D]; risk-register entry R2 is retired; new check N7 tests it
+      directly on the bare Duffing equation. det M = 1 (58) and the
+      |tr M| < 2 criterion (59) are each derived in three lines and tagged [D].
+      Floquet's theorem itself is tagged [V] against E. Folkers, Floquet's
+      Theorem (2018), Theorem 2.8 §2.4, retrieved this session. The remaining
+      recalled item, existence-uniqueness for linear ODEs, is named and entered
+      as R3.
+    load_bearing: false
+
+# Items raised by the solver against the audit rather than the reverse.
+# Not findings in the audit's sense; recorded so the exchange is traceable.
+solver_raised:
+  - id: S1.1
+    round: 1
+    about: "audits/audit-report-1.md, pass 6"
+    claim: >-
+      The pass-6 output reported as "Exact: 4.2764" is not what the pass-6
+      script produces. Run verbatim it prints "Exact: 4.2867". RK45 at the
+      script's own tolerances, RK45 with a step cap, DOP853, Radau and LSODA all
+      return tr M = 1.967843917562 and Omega = 4.286734, with det M - 1 at the
+      1e-14 level.
+    consequence: >-
+      The audit's conclusion survives - the Floquet frequency does agree with
+      the closed form to O(eps^2) - but the sign of the deviation is reversed.
+      The exact frequency is above the closed form at those parameters, not
+      below.
+    disposition: >-
+      Recorded as a note at the foot of audits/audit-report-1.md. The audit text
+      itself is left verbatim, per the log skill's rule that a wrong number in an
+      audit report is an accurate record of what the auditor said.
+    status: open-to-auditor
+    where: "answers/answer-2.md 'Response to audit 1'; assets/code/out_check7.txt"
+
+  - id: S1.2
+    round: 1
+    about: "answers/answer-1.md §3.8, last sentence"
+    claim: >-
+      A stale cross-reference: the text points at §4.4 where it should point at
+      §4.3. Present in round 1, not a consequence of round 2.
+    disposition: >-
+      Not corrected. §3.8 is on the frozen list, and silently editing a frozen
+      section is the failure mode the freeze exists to prevent. Reported in
+      answer-2's Response section instead, with an invitation to unfreeze that
+      one word.
+    severity: NIT
+    status: open
+
+summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 2, accepted: 2, rebutted: 0}
+  nit:      {raised: 0, accepted: 0, rebutted: 0}
+  question: {raised: 0, answered: 0}
+  rebuttals_upheld: 0
+
+# rebuttals_upheld is 0 and that is worth reading carefully rather than as a
+# clean sheet. claude/workflow-feedback.md §5 warns that a solver which never
+# disagrees is exhibiting sycophantic drift. Here both findings were correct and
+# conceding them was right, so the count is uninformative for this problem --
+# but it is the count to watch across problems, and P002 contributes a zero.
+# The nearest thing to a disagreement in this round is S1.1, which goes against
+# the audit rather than against a finding.

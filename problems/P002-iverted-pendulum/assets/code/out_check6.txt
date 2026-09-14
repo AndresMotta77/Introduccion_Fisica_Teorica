@@ -1,0 +1,30 @@
+CHECK N7 -- amplitude-frequency relation for xdd + Om^2 x + alpha x^3 = 0.
+Derived in §3.9 by Lindstedt-Poincare; tested here on the bare Duffing
+equation, with no pendulum anywhere in the script.
+
+Om = 6.0, beta = -7.226250, alpha = 4*beta = -28.905000
+T(0) is taken as 2*pi/Om, the exact a -> 0 limit of the Duffing period.
+
+        a       T_meas    meas shift    pred shift     residual   resid/a^4  ncross
+   0.1600   1.05536928  +7.80343e-03  +7.70800e-03   +9.543e-05      0.1456      79
+   0.0800   1.04922168  +1.93290e-03  +1.92700e-03   +5.900e-06      0.1441      80
+   0.0400   1.04770242  +4.82118e-04  +4.81750e-04   +3.678e-07      0.1437      80
+   0.0200   1.04732370  +1.20460e-04  +1.20438e-04   +2.297e-08      0.1436      80
+
+Convergence order of the residual (expected 4: the next term is O(a^4)):
+  a 0.1600 -> 0.0800:  order =  4.02
+  a 0.0800 -> 0.0400:  order =  4.00
+  a 0.0400 -> 0.0200:  order =  4.00
+
+Cross-check against check N3.  At a = 0.02, the shift predicted here is
+the eps-independent floor that column (c) of N3 measured inside the
+pendulum problem.
+  predicted period shift at a = 0.02: +1.20438e-04
+  N3 column (c), measured in the pendulum:  +1.205e-04
+  (N3's column (c) is a PERIOD shift, so it should equal this value.)
+
+MUTATION TEST: same measurement against wrong coefficients.
+  coefficient 3/8  (claim)          : predicted +1.92700e-03, measured +1.93290e-03, rel err   0.0031 -> consistent
+  coefficient 1/8                   : predicted +6.42333e-04, measured +1.93290e-03, rel err   0.6677 -> REJECTED
+  coefficient 3/4                   : predicted +3.85400e-03, measured +1.93290e-03, rel err   0.9939 -> REJECTED
+  coefficient -3/8 (sign flipped)   : predicted -1.92700e-03, measured +1.93290e-03, rel err   1.9969 -> REJECTED

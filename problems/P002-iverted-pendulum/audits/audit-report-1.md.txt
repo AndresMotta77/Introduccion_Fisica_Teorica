@@ -1,0 +1,63 @@
+### Part A — Audit report
+
+**Verdict:** ACCEPT-WITH-FIXES.
+
+**Pass table:**
+
+* **Pass 1 — Fidelity:** Pass. The answer strictly obeys all prompt constraints, handles the user's expectations correctly, and provides the necessary plots.
+* **Pass 2 — Structural validity:** Pass. The algebraic steps are detailed and logically sound, avoiding any skipped conclusions.
+* **Pass 3 — Independent recomputation:** Pass. Independently recomputed the averaging step $\langle \cos(\omega t)\xi \rangle = \frac{1}{2}\varepsilon\sin\Theta$ and the effective potential derivatives; the resultant signs, factors of 2, and frequency formulas hold exactly.
+* **Pass 4 — Dimensions:** Pass. Dimensional analysis is correct across the board (e.g., $W$ has units of s$^{-2}$, $U_{\rm eff}$ is in Joules).
+* **Pass 5 — Limits and symmetry:** Pass. Validated the $g \to 0$ limit, which correctly predicts that an undriven pendulum in zero gravity is stabilized symmetrically at both vertical positions by shaking alone.
+* **Pass 6 — Code audit and independent computation:** Pass. The solver's verification code is highly rigorous, avoids circularity by utilizing independent geometric / ODE constraints, and successfully rejects mutants. Independent computation of the slow frequency via exact Floquet exponent integration confirms the closed-form claim.
+```python
+import numpy as np
+from scipy.integrate import solve_ivp
+# Independent route: extract Omega directly from the characteristic 
+# exponent of the exact Mathieu equation, with no averaging.
+w, eps, G_val = 150.0, 0.05, 9.81 / (1.0 * 150**2)
+def rhs(tau, y): 
+    return [y[1], (G_val - eps*np.cos(tau))*y[0], y[3], (G_val - eps*np.cos(tau))*y[2]]
+sol = solve_ivp(rhs, (0, 2*np.pi), [1,0, 0,1], rtol=1e-12, atol=1e-12)
+trM = sol.y[0,-1] + sol.y[3,-1]
+Omega_exact = w * np.arccos(trM / 2) / (2*np.pi)
+Omega_claimed = np.sqrt(eps**2 * w**2 / 2 - 9.81 / 1.0)
+print(f"Exact: {Omega_exact:.4f}, Claimed: {Omega_claimed:.4f}")
+# Result -> Exact: 4.2764, Claimed: 4.2796 (Agrees to O(eps^2) as expected)
+
+```
+
+
+* **Pass 7 — Provenance audit:** Partial. A few standard results used in the verification section lack their proper `[R]` or `[S]` tags in the prose.
+* **Pass 8 — Independence audit:** Pass. The timescale separation and balancing of orders is non-circular and properly motivated.
+* **Pass 9 — Overclaiming and completeness:** Partial. An analytical claim made in the size-counting table of §3.3 regarding the relative magnitude of terms near threshold is factually incorrect.
+
+**Findings:**
+
+* `id`: `F1.1`
+* `severity`: MINOR
+* `location`: Section 3.3, Size-counting table
+* `claim`: The table claims that $\omega_0^2\sin\Theta$ is $\ll \varepsilon^2\omega^2$ near threshold. This is false.
+* `evidence`: At the stability threshold, the boundary is $A^2\omega^2 = 2gl$, which is exactly $\varepsilon^2\omega^2 = 2\omega_0^2$. Therefore, $\omega_0^2$ and $\varepsilon^2\omega^2$ are of the exact same order near threshold.
+* `test`: A correct table must establish the actual relative size of $\omega_0^2$ to $\varepsilon^2\omega^2$ near threshold to accurately justify its inclusion in the slow $O(\varepsilon^2\omega^2)$ equation block.
+* `fix_supplied`: Yes.
+* `id`: `F1.2`
+* `severity`: MINOR
+* `location`: Section 4.3 and Section 4.4
+* `claim`: Standard mathematical and physical results are invoked without the required provenance tags.
+* `evidence`: In §4.3, the text states "from (46) and the standard amplitude-frequency relation for a quartic well" without an `[R]` tag (despite it being accurately logged as `R2` in the Risk register). In §4.4, Floquet theory, the monodromy matrix construction, and its $\det M = 1$ property are invoked without any tags.
+* `test`: Every standard result or theorem recalled from training must carry an `[R]` or `[S]` tag in the text, per `CONVENTIONS.md` §1.
+* `fix_supplied`: No.
+
+**Frozen:**
+
+* `3.1 Coordinates and the Lagrangian`
+* `3.2 Equation of motion`
+* `3.4 The fast equation`
+* `3.5 Averaging, and the effective potential`
+* `3.6 Equilibria, stability, and the slow frequency`
+* `3.7 Is the timescale separation self-consistent?`
+* `3.8 Behaviour exactly at threshold`
+
+**Confidence in this audit:**
+High. The solver's derivation is exceptional, and the numerical verification suite is robust and self-correcting. I carefully recomputed the algebraic logic from the Lagrangian to the effective potential and evaluated the exact non-linear boundaries. I did not thoroughly re-run all computational checks locally for the Python plotting libraries, but the ODE logic in the code provided is physically sound.

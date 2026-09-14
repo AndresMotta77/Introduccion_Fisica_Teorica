@@ -1,4 +1,4 @@
-# Conventions — v1.3
+# Conventions — v1.5
 
 Shared vocabulary for every prompt, answer, audit and log in this repository.
 Both the solver and the auditor are given this file. Changing it means bumping
@@ -101,9 +101,12 @@ The Sources section is split in two and the split is not optional.
   for want of it. What gives it its value is that it predates the model's
   answer, so if it was written or tidied up afterwards, say so in `meta.yaml`
   rather than letting it look like a prior.
-- **After the loop.** The compliance probe (`templates/compliance-probe.md`) is
-  run once on a claim known to be right, and its outcome recorded. The final
-  result is taken from the last pre-probe answer.
+- **After the loop.** Write your own account of how the model behaved while
+  being corrected, in the problem's `README.md`. Not a test, not a gate, and
+  nothing else in the method produces it: whether a concession was persuasion or
+  just the cooperative move is a judgement only the person in the conversation
+  can make, and it is gone a week later. One honest paragraph, or nothing if
+  there was nothing to say.
 - **Ground truth.** Where an external check exists — a professor's correction,
   an answer key, a measurement — record it in `meta.yaml` along with *when* it
   arrived relative to the loop. Ground truth that arrived mid-loop shaped the

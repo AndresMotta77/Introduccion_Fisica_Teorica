@@ -1,0 +1,72 @@
+CHECK N8 -- slow frequency from the Floquet phase of the exact
+linearised equation.  No averaging, no period fitting.
+
+First, reproduction of the round-1 auditor's single-point computation
+(their pass 6): l = 1 m, g = 9.81, eps = 0.05, omega = 150 s^-1.
+  tr M = 1.967843917562   det M - 1 = -8.66e-15
+  Omega from Floquet phase = 4.2867
+  Omega from the claim     = 4.2796
+  auditor reported          Exact: 4.2764, Claimed: 4.2796
+
+Now the sweep.  Omega is held at 6.000 s^-1 while eps falls by a factor
+of 16; omega is solved for from the claim at each eps.  If the claim is
+right the Floquet frequency converges on it like eps^2.  A residual that
+plateaus, or falls at the wrong order, is a failure.
+
+  eps=A/l      omega            G           tr M  Omega_floquet      rel err  err/eps^2   det M - 1
+  0.10000      95.72    1.071e-03   1.8446447327    6.044083118   +7.347e-03    +0.7347    -5.8e-15
+  0.05000     191.44    2.677e-04   1.9612050254    6.010872766   +1.812e-03    +0.7249    -9.8e-15
+  0.02500     382.87    6.692e-05   1.9903039947    6.002709149   +4.515e-04    +0.7224    -3.4e-15
+  0.01250     765.75    1.673e-05   1.9975761698    6.000676725   +1.128e-04    +0.7218    -8.9e-16
+  0.00625    1531.49    4.183e-06   1.9993940531    6.000169146   +2.819e-05    +0.7217    +2.2e-16
+
+Convergence order (log-log slopes between consecutive eps):
+  eps 0.10000 -> 0.05000:  order =  2.02
+  eps 0.05000 -> 0.02500:  order =  2.00
+  eps 0.02500 -> 0.01250:  order =  2.00
+  eps 0.01250 -> 0.00625:  order =  2.00
+
+Independence from check N3.  N3 fits a period from the full nonlinear
+equation at finite amplitude and had to subtract an anharmonic shift;
+this check linearises and reads a Floquet phase, with no fitting and no
+anharmonicity.  The two coefficients below are therefore different
+numbers measuring different things, and both must be O(1).
+  N8 (this check), rel err / eps^2 -> +0.7217
+  N3 column (b),   rel err / eps^2 ->     -0.758  (period, nonlinear)
+
+==============================================================================
+CONSISTENCY BETWEEN N4 AND N8.  N4 found the exact stability boundary to
+sit at a HIGHER drive frequency than sqrt(2gl)/A, so just above the
+averaged threshold the exact system must still be unstable while the
+closed form already predicts a positive Omega.  The O(eps^2) correction
+to Omega must therefore be NEGATIVE near threshold, even though the
+sweep above found it positive far from threshold.  If it does not change
+sign, N4 and N8 contradict each other and one of them is wrong.
+
+eps is held at 0.1 and omega/omega_c is scanned.  mu = 2gl/(A^2 w^2)
+= cos(Theta_c) measures nearness to threshold: mu = 1 at threshold,
+mu -> 0 far above it.
+
+   w/w_c       mu  Omega_claim   Omega_floq   difference         rel
+   1.000   1.0000     0.000000     unstable           --          --
+   1.002   0.9960     0.198190     unstable           --          --
+   1.010   0.9803     0.444051     0.396085    -0.047966  -1.080e-01
+   1.030   0.9426     0.772935     0.750599    -0.022337  -2.890e-02
+   1.100   0.8264     1.435305     1.431454    -0.003851  -2.683e-03
+   1.300   0.5917     2.601711     2.613893    +0.012182  +4.682e-03
+   1.800   0.3086     4.687686     4.720245    +0.032559  +6.946e-03
+   2.500   0.1600     7.176524     7.230625    +0.054101  +7.539e-03
+   3.500   0.0816    10.505356    10.587065    +0.081710  +7.778e-03
+
+exact boundary from the N4 bisection: omega_c = 44.3908 = 1.002175 * sqrt(2gl)/A
+The table's first rows show Omega_floquet undefined (unstable) exactly
+where omega < that value, and the difference entering negative just
+above it, then crossing zero and turning positive. N4 and N8 agree.
+
+MUTATION TEST: the Floquet frequency against wrong closed forms, at
+eps = 0.02.  omega is solved for from each candidate so that all four
+would predict Omega = 6.000 if they were right.
+  claim   Omega^2 = A^2w^2/(2l^2) - g/l:  omega =    478.59  Omega_floquet =   6.00173  rel err = 2.889e-04 -> consistent
+  mutant  Omega^2 = A^2w^2/(1l^2) - g/l:  omega =    338.42  Omega_floquet =   3.61960  rel err = 3.967e-01 -> REJECTED
+  mutant  Omega^2 = A^2w^2/(4l^2) - g/l:  omega =    676.83  Omega_floquet =   9.04762  rel err = 5.079e-01 -> REJECTED
+  mutant  Omega^2 = A^2w^2/(2l^2) + g/l:  omega =    361.87  Omega_floquet =   4.04827  rel err = 3.253e-01 -> REJECTED

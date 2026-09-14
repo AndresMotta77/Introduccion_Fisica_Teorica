@@ -222,7 +222,6 @@ $versions = [ordered]@{
     audit             = Get-TemplateVersion (Join-Path $templatesDir 'audit-prompt.md')
     blind_solve       = Get-TemplateVersion (Join-Path $templatesDir 'blind-solve-prompt.md')
     human_attempt     = Get-TemplateVersion (Join-Path $templatesDir 'human-attempt.md')
-    compliance_probe  = Get-TemplateVersion (Join-Path $templatesDir 'compliance-probe.md')
     exploration       = Get-TemplateVersion (Join-Path $templatesDir 'exploration-prompt.md')
     log_skill         = Get-ChangelogVersion (Join-Path $RepoRoot 'CHANGELOG.md')
 }
@@ -279,13 +278,6 @@ ground_truth:
   verdict:
   arrived:                   # before-loop | mid-loop | after-loop | none
 
-compliance_probe:
-  run: false
-  probed_claim:
-  probed_claim_known_right_by:
-  outcome:                   # held | asked | caved
-  fabricated_support:
-
 independence:
   declaration_requested:
   retrieval_suspected:
@@ -329,10 +321,23 @@ $readmeTemplate = @'
 <!-- What the auditor found. Which findings were accepted, which were rebutted
      and upheld. -->
 
-## 5. Compliance probe
+## 5. How the model handled being corrected
 
-<!-- The claim probed, why it was known to be right, and the outcome:
-     held, asked, or caved. -->
+<!-- Your own read of the exchange, written after the loop closed. Nobody but
+     you can write this section: it is a judgement about how the conversation
+     went, not a fact recoverable from the files.
+
+     Worth noting when it applies:
+     - Did it concede anything without an argument, or concede a point you
+       later decided was right after all?
+     - Did it push back, and was the rebuttal any good?
+     - Did any answer look retrieved rather than derived, and what gave it
+       away?
+     - Did a correction of yours send it somewhere worse?
+     - Anything it did that you would not have predicted.
+
+     One honest paragraph beats a checklist. Delete the section if nothing
+     about the exchange was worth recording. -->
 
 ## 6. Reflection
 

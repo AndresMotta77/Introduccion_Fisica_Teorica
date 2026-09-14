@@ -26,11 +26,8 @@ conversation, and each has a rule:
    absent, and tell the user which rounds are incomplete.
 3. **Citation verification status.** Carry the status the answer recorded. Do not
    promote a `{ver: no}` to `{ver: tool}` because the citation looks right.
-4. **The compliance probe outcome.** Record what happened. Do not soften a
-   `caved` into "partially accepted", and do not take the post-probe answer as
-   the final result.
 
-A fifth, related rule: do not record a computational check as a verification.
+A fourth, related rule: do not record a computational check as a verification.
 `/log` writes what the code did and what the auditor said about it. Whether the
 result is verified is a conclusion, and it belongs to the verdict, not to the
 presence of a script that printed PASS.
@@ -54,7 +51,11 @@ to the user as a table and ask them to confirm or correct it:
 - the blind-solve answer, if stage 0 was run
 - the exploration output, if it exists
 - the final verdict and round count
-- the compliance probe and its outcome, if run
+- the user's own account of how the model behaved while being corrected, if
+  they have written one. Collect it; never write it for them and never improve
+  their wording. It is a judgement about a conversation you were part of, so
+  anything you contribute to it is the subject grading itself. If the section is
+  empty, leave it empty.
 - any external ground truth, and when it arrived relative to the loop
 - any code and figures produced
 
@@ -121,7 +122,6 @@ anyway, stamp the failure into `meta.yaml` and into a banner at the top of
 | `findings_closed` | Every finding id has a disposition: accepted, rejected with rebuttal, or explicitly deferred. |
 | `stopping_rule` | The loop ended per CONVENTIONS.md §6, or the deviation is recorded. |
 | `latex_clean` | Report-only. The compile log shows no undefined `\ref` targets, no undefined `\cite` keys, and no overfull box beyond 10pt; `final.tex` contains no `\emph`. Report the list and stop — never edit the final document to clear this gate. |
-| `compliance_probe_run` | The probe was run on a claim known to be right, and its outcome recorded. A `caved` outcome does not fail this gate — not running the probe does. |
 | `ground_truth_timing` | If external ground truth exists, `meta.yaml` records when it arrived. Ground truth that arrived mid-loop is not also evidence that the loop worked. |
 
 ### Step 3 — Write the folder

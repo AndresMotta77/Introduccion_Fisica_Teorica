@@ -26,6 +26,26 @@ problems:
     result_one_line: "Only option A is true; C omits the precession about z."
     perturbation_test: not-run
     branches_queued: []
+  - id: P002
+    slug: iverted-pendulum          # folder name; meta.yaml slug is pendulum-with-moving-pivot
+    title: "Inverted pendulum with a vertically oscillating pivot"
+    parent: null
+    branch: null
+    closed: 2026-09-14
+    verdict: ACCEPT-WITH-FIXES
+    rounds: 1
+    predates_method: false
+    gates_failed: [latex_clean]
+    solver: {model_label: "Claude Opus 5", effort: high}
+    auditor: {model_label: "Gemini 3.1 Pro Avanzado (extended reasoning)", effort: unknown}
+    ground_truth: {source: answer-key, arrived: mid-loop}
+    templates: {prompt0: v1.3, audit: v1.2}   # as run; folder built to conventions v1.5
+    result_one_line: "Stable for A^2 w^2 > 2 g l; slow oscillation at Omega = sqrt(A^2 w^2/(2 l^2) - g/l)."
+    perturbation_test: not-run
+    blind_solve: not-run
+    findings: {blocker: 0, major: 0, minor: 2, rebuttals_upheld: 0}
+    checks_run: 8
+    branches_queued: []
   # - id: P001
   #   slug: ...
   #   title: ...

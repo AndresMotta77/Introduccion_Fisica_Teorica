@@ -17,11 +17,10 @@ The logbook is not a record of final answers. What it tries to capture is:
 - Personal reflections on the process.
 
 The working method in `templates/` grew out of the first problem in this
-repository, where two things happened that are worth naming. The model did not
-derive the result; it found the solution on the web and transcribed it. And when
-it was told, without any argument, that a correct option was wrong, it agreed.
-The same behaviour produced a useful correction once and a wrong answer once,
-which is why both are now measured rather than judged case by case.
+repository, where the model did not derive the result: it found the solution on
+the web and transcribed it, and the transcribed answer was wrong. That is what
+the prior-knowledge declaration, the convergence check and the perturbation test
+are for.
 
 ## Method
 
@@ -42,7 +41,7 @@ solver → answer-(k+1), with rebuttals
   ↓
 stop at no BLOCKER and no MAJOR; escalate at round 4
   ↓
-compliance probe                        templates/compliance-probe.md
+your notes on how the model handled being corrected
   ↓
 /log P###                               skills/log/SKILL.md
   ↓
@@ -54,9 +53,8 @@ exploration → next problems queued      templates/exploration-prompt.md
 | `templates/CONVENTIONS.md` | Provenance tags, citation locator format, severity levels, verdicts, loop control. Given to every model in the loop. |
 | `templates/human-attempt.md` | Your own attempt, in whatever form it exists. Optional. |
 | `templates/prompt0.md` | The initial prompt. Sections 0–5 per problem, 6–8 invariant. |
-| `templates/audit-prompt.md` | Nine audit passes. Output splits into a report for me and a corrector prompt for the solver. |
+| `templates/audit-prompt.md` | Ten audit passes. Output splits into a report for me and a corrector prompt for the solver. |
 | `templates/blind-solve-prompt.md` | Optional: the auditor solves the problem cold before seeing the answer. |
-| `templates/compliance-probe.md` | One bare assertion against a claim known to be right, to measure how readily the model folds. |
 | `templates/exploration-prompt.md` | Turns a closed problem into a queue of structured next problems. |
 | `skills/log/SKILL.md` | The `/log` skill: collects, gates, builds `final.md/.tex/.pdf`, commits. |
 | `scripts/New-Problem.ps1` | Creates the folder structure for a new problem. |
@@ -80,15 +78,14 @@ Four things carry most of the weight.
    no}`. An `[S]` that cannot be confirmed becomes an honest `[R]`. A general
    reference is not a citation: the chapter, section and equation actually used
    are recorded.
-4. **The compliance probe and a mechanical stopping rule.** No BLOCKER and no
-   MAJOR in one full round, escalate at round 4, and one probe at the end to see
-   whether the agreement along the way meant anything.
+4. **A mechanical stopping rule.** No BLOCKER and no MAJOR in one full round;
+   escalate at round 4 regardless.
 
 ## Problems
 
-| ID | Title | Verdict | Rounds | Probe |
-|----|-------|---------|--------|-------|
-| [P001](problems/P001-rolling-discs/) | Two discs rolling without slipping | A only (professor) | 2 | caved |
+| ID | Title | Verdict | Rounds |
+|----|-------|---------|--------|
+| [P001](problems/P001-rolling-discs/) | Two discs rolling without slipping | A only (professor) | 2 |
 
 ## Starting a problem
 
@@ -112,5 +109,6 @@ It does not create `prompts/prompt0.md`, on purpose. Then:
 2. Fill `prompts/prompt0.md` from `templates/prompt0.md`: sections 0–5 per
    problem, 6–8 verbatim.
 3. Run the loop until a round yields no BLOCKER and no MAJOR. Escalate at 4.
-4. Run the compliance probe.
+4. Write §5 of the problem README: your own read of how the model handled being
+   corrected. Nothing else in the method captures it.
 5. `/log P###`.
