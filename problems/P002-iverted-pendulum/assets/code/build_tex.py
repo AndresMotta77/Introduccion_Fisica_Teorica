@@ -114,13 +114,26 @@ pre += '\\setcounter{tocdepth}{2}\n'
 # pandoc --listings emits \passthrough{\lstinline!...!} for inline code and
 # defines \passthrough only in its own default template, which this document
 # does not use.
+# Typesetting only: long unbreakable tokens (file names in \texttt inside
+# narrow table cells, URLs) overflow the measure. \sloppy and
+# \emergencystretch give TeX another pass with more stretch, which is a line
+# breaking parameter and not a change to the text. Nothing is silenced: the
+# overfull count reported for the latex_clean gate is measured after this.
+pre += '\\sloppy\n\\setlength{\\emergencystretch}{3em}\n'
 pre += '\\providecommand{\\passthrough}[1]{#1}\n'
 # The document quotes sources and program output verbatim, so a few characters
 # arrive that pdflatex with T1/inputenc cannot set on its own. Declared rather
 # than edited out of the quotations.
 pre += '\\usepackage{textcomp}\n'
 pre += '\\DeclareUnicodeCharacter{00A7}{\\S}\n'
-pre += '\\DeclareUnicodeCharacter{00B0}{\\textdegree}\n'
+# The degree sign occurs twice inside inline math and once in prose. \textdegree
+# is a text-mode command: in math mode it warns "invalid in math mode" and falls
+# back to T1 slot 0xB0, which is r-with-caron. \ensuremath{{}^\circ} is correct
+# in both modes. The bug shipped in the first build of this PDF and was found by
+# reading the rendered caption, not from the log: the latex_clean gate checks
+# undefined references, undefined citations and overfull boxes, and a character
+# that silently renders as the wrong glyph passes all three.
+pre += '\\DeclareUnicodeCharacter{00B0}{\\ensuremath{{}^\\circ}}\n'
 pre += '\\DeclareUnicodeCharacter{2113}{\\ensuremath{\\ell}}\n'
 pre += '\\DeclareUnicodeCharacter{2013}{--}\n'
 pre += '\\DeclareUnicodeCharacter{03C9}{\\ensuremath{\\omega}}\n'
@@ -128,6 +141,33 @@ pre += '\\DeclareUnicodeCharacter{226A}{\\ensuremath{\\ll}}\n'
 # one program-output listing contains a section sign
 pre += '\\lstset{extendedchars=true,inputencoding=utf8,literate={§}{{\\S}}1}\n'
 pre += '\\providecommand{\\tightlist}{\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
+
+GATE_BANNER = r"""
+\begin{center}
+\fbox{\parbox{0.93\linewidth}{\small
+\textbf{Release gates: 1 of 14 failed.} Stamped here by \texttt{/log} per
+\texttt{skills/log/SKILL.md} step 2, which requires a failed gate to be recorded
+in \texttt{meta.yaml} and in a banner at the top of this document rather than
+quietly fixed.
+
+\smallskip
+\texttt{latex\_clean} --- fail. This document compiles with no undefined
+references, no undefined citations, no missing characters and no
+\texttt{\textbackslash emph}, but seven overfull boxes exceed 10\,pt: 37.1,
+32.4, 27.7, 27.7, 18.6, 18.2 and 13.5\,pt. Six are rows of the check-to-file
+table in \S4, where a long script filename does not fit its cell; the seventh is
+a row of the provenance ledger. All are typographic, and none touches the
+derivation or any number in it. They are not fixed because step~3 of the log
+skill forbids editing the final document to clear a cosmetic gate. Thirteen
+further overfull boxes were cleared first by \texttt{\textbackslash sloppy} and
+\texttt{\textbackslash emergencystretch}, which are line-breaking parameters
+that change no text.
+
+\smallskip
+The other thirteen gates pass.
+}}
+\end{center}
+"""
 
 ABSTRACT = r"""
 A pendulum of length $l$ carrying a point mass $m$, with its pivot driven
@@ -227,6 +267,8 @@ out = [
     '',
     '\\begin{document}',
     '\\maketitle',
+    '',
+    GATE_BANNER.strip(),
     '',
     '\\begin{abstract}', ABSTRACT.strip(), '\\end{abstract}',
     '',
