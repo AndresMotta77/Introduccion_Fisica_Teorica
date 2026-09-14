@@ -20,7 +20,7 @@ rounds: 3
 templates:
   conventions: v1.3
   prompt0: v1.3
-  audit: v1.2
+  audit: v1.4
   exploration: v1.0
   human_attempt: v1.1
   compliance_probe: v1.0
@@ -81,6 +81,7 @@ gates:
   ground_truth_timing: pass
   findings_closed: pass
   stopping_rule: pass
+  latex_clean: fail               # eq. (37) referenced but never numbered
 
 findings_summary:
   blocker: {raised: 1, accepted: 1, rebutted: 0}

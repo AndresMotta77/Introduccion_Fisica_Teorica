@@ -1,4 +1,4 @@
-# Audit prompt template — v1.2
+# Audit prompt template — v1.4
 
 Sent to the auditor model (Gemini Pro, or whichever model is on rotation) in a
 fresh context, together with `CONVENTIONS.md`. Everything below is pasted
@@ -46,15 +46,42 @@ You have code execution. Use it.
 7. **You may be wrong.** Where you are unsure, use `QUESTION` rather than
    inflating it to `MAJOR`. The solver is instructed to rebut you, and a
    confident wrong finding costs a full round.
+8. **Never report a computation you did not run.** Passes 3, 5 and 6b assume you
+   can execute code. If you cannot in this session, say so in the run header
+   (`code_executed: no`), mark those passes "not performed", and say what you
+   checked by reasoning instead. Do not present a reasoned estimate as program
+   output. Do not write a value into a code comment as though the program
+   printed it unless you saw it print. An audit with three passes honestly
+   skipped is usable; one with three passes fabricated is worse than no audit,
+   because it manufactures exactly the false confidence this workflow exists to
+   remove.
 
 ## Inputs
 
+Attach these where your interface takes attachments, and paste only where it
+does not. The typed message is this audit prompt; the material under review is
+attached. Inverting that makes the audit prompt read as background documentation
+rather than as the task.
+
 ```
 [PROMPT0]
-⟨paste prompt0 verbatim⟩
+prompt0.md — the complete prompt as sent, sections 0 through 8, protocol
+included. Not the problem statement alone: passes 1, 7, 9 and 10 check the
+answer against requirements that live in §4, §5 and §6, and cannot run without
+them.
 
 [ANSWER k]
-⟨paste answer-k verbatim⟩
+answer-k.md, complete.
+
+[CONVENTIONS]
+CONVENTIONS.md — tags, locator format, severity levels, verdicts.
+
+[CODE]                   ⟨when the scripts were uploaded separately⟩
+The verification scripts from assets/code/ and their .out files. These are the
+same artifacts as the answer's Verification section, and pass 6a applies to
+them. If a script differs from the code shown inline in the answer, that is a
+finding: the check was edited after the run, which prompt0 §6.4 requires to be
+disclosed.
 
 [PRIOR ROUNDS]           ⟨omit on round 1⟩
 Resolved findings: ⟨ids and one-line summaries, from earlier audits⟩
@@ -68,7 +95,7 @@ checked, a citation you want resolved. Leave empty for a full audit.⟩
 
 ## Audit passes
 
-Work through all nine. Report the outcome of each, including the ones that pass.
+Work through all ten. Report the outcome of each, including the ones that pass.
 
 **Pass 1 — Fidelity.** Does the answer solve the problem as stated in prompt0,
 under the conventions stated there? Are all deliverables from prompt0 §4
@@ -173,6 +200,46 @@ arguments. Missing domains of validity. Claims stated with more confidence than
 the derivation supports. Confidence levels that do not match the Risk register.
 Unstated assumptions that the derivation quietly uses.
 
+**Pass 10 — Presentation: LaTeX, notation and typos.** The answer is markdown
+with LaTeX inside it, and it will be converted to a `.tex` document later.
+Problems that are invisible in a chat window become broken output there, and a
+symbol typo is a physics error wearing a formatting disguise.
+
+Check, in this order of importance:
+
+- **Symbol consistency.** The same quantity written two ways, or two quantities
+  written the same way: `Θ` where `θ` was meant, `ω` against `w`, a subscript
+  that changes between sections, a vector that loses its bold. Where the
+  ambiguity could change the meaning of an equation, this is MAJOR, not a
+  presentation nit.
+- **Symbols used before they are defined**, or missing from the symbol table.
+- **Math delimiters.** Unclosed `$` or `$$`, a mix of `$…$` and `\(…\)`, display
+  math that should be inline or the reverse, `\left` without a matching
+  `\right`.
+- **Markdown eating LaTeX.** Underscores outside math turning into italics, `*`
+  meant as multiplication read as emphasis, a backslash swallowed by the
+  markdown parser, a table cell breaking on a pipe inside math.
+- **Grouping.** `x^10` and `a_ij` where `x^{10}` and `a_{ij}` were meant. These
+  compile and render wrongly, which is the worst case.
+- **Macros the document cannot define.** Anything outside `amsmath`, `physics`
+  and `siunitx`, which is what the final template loads.
+- **Equation numbering.** Every equation referred to later is numbered, and
+  every reference points at something that exists.
+- **Units.** Missing thin space before a unit, units set in italic rather than
+  upright, inconsistent unit style.
+- **Typos in prose.** Last, and least.
+
+Two rules for this pass, so that it does not drown the report:
+
+1. **Collapse.** One finding for all prose typos, with the list inside it. One
+   finding for all delimiter problems. Do not raise a separate finding per typo.
+2. **Report, do not rewrite.** Give the location and what is wrong. The solver
+   owns the text and fixes it in the next round; an auditor that returns a
+   corrected document defeats the point of having rounds.
+
+Presentation findings are almost always NIT or MINOR. Promote one only when it
+changes what an equation means.
+
 ## Output format
 
 Produce exactly two parts.
@@ -181,8 +248,26 @@ Produce exactly two parts.
 
 For the human. Structure:
 
+- **Run header**, first, before anything else:
+
+  ```
+  auditor_model:   ⟨the model you are, as specifically as you can state it⟩
+  model_source:    self-reported
+  effort:          ⟨thinking or effort level, if you know it⟩
+  effort_source:   self-reported
+  tools:           ⟨code execution: yes/no; web: yes/no⟩
+  code_executed:   ⟨yes / no / partially — did you actually run anything⟩
+  date:            ⟨today⟩
+  ```
+
+  Write `unknown` for anything you cannot state with confidence. You may not be
+  able to report your own version reliably, and a guessed value is worse than an
+  honest `unknown`: this header is copied into `meta.yaml` and used to compare
+  runs across problems, so a wrong entry silently corrupts that comparison.
+  Do not infer your effort level from how hard the task felt.
+
 - **Verdict**: ACCEPT / ACCEPT-WITH-FIXES / REVISE / REJECT, with one sentence.
-- **Pass table**: each of the nine passes, pass/fail/partial, one line each.
+- **Pass table**: each of the ten passes, pass/fail/partial, one line each.
 - **Findings**, most severe first. One block each:
   - `id`: `F<round>.<n>`
   - `severity`: BLOCKER / MAJOR / MINOR / NIT / QUESTION

@@ -3,6 +3,60 @@
 Template versions are recorded per problem in `meta.yaml`. Bump on every change,
 so that runs stay comparable.
 
+## v1.5 — 2026-09-14
+
+Three of the six changes proposed on 2026-09-13, plus the `latex_clean` gate.
+
+- `audit-prompt.md` v1.4 — new ground rule 8: never report a computation you did
+  not run. If code execution is unavailable, say so in the run header, mark
+  passes 3, 5 and 6b "not performed", and say what was checked by reasoning
+  instead. Prompted by the P002 round-1 audit, which reported a Floquet value of
+  4.2764 from a snippet that prints 4.2867 when actually executed.
+- `audit-prompt.md` v1.4 — INPUTS rewritten: attachments first, pasting as the
+  fallback, with the typed message reserved for the audit prompt itself.
+  prompt0 is named as the complete prompt, sections 0 through 8, since the
+  compliance passes check against §4, §5 and §6. New `[CODE]` entry for scripts
+  uploaded separately, which pass 6a otherwise has no instruction to read, and
+  which flags a script that diverges from the code shown inline in the answer.
+- `/log` v1.5 — new Step 1a: how to split the auditor's pasted reply into
+  `audits/audit-report-k.md` and `prompts/corrector-prompt-k.md`, verbatim,
+  including not correcting the auditor's arithmetic. This is how Part A reaches
+  the repository now that both parts go to the solver, and it replaces the
+  proposed template change that would have had the auditor append Part A to
+  Part B.
+- `/log` v1.5 — new `latex_clean` gate, report-only: undefined references,
+  undefined citations, overfull boxes past 10pt, and `\emph` in `final.tex`,
+  parsed from the compile log after a successful build. Report-only because
+  Step 3 forbids rewriting the final document; prose typos are raised as audit
+  pass 10 findings in a round instead of being patched at log time.
+
+Still queued from the 2026-09-13 proposal: the pass 1 drift fix, the
+partial-answer verdict rule, and the findings cap. The Part A record change is
+now handled in `/log` instead, and the compliance-delegation refactor remains
+out of scope.
+
+## v1.4 — 2026-09-14
+
+- `audit-prompt.md` v1.3 — new pass 10, presentation: LaTeX-inside-markdown
+  problems, symbol consistency, grouping, delimiters, macros outside the
+  template's packages, equation numbering, units, and prose typos. Ordered by
+  importance rather than by visibility, since a symbol typo is a physics error
+  in disguise while a misspelt word is not. Two rules attached: collapse typos
+  into one finding rather than one finding each, and report without rewriting,
+  because the solver owns the text.
+- `audit-prompt.md` v1.3 — Part A now opens with a run header stating the
+  auditor's model, effort, tools and whether it actually executed code, with
+  `unknown` required rather than a guess. This is the auditor half of the
+  model-and-effort record; previously it could only come from the user.
+- `/log` — takes the auditor's model and effort from that header when present,
+  recorded as `self-reported`, and says so rather than presenting it as
+  confirmed.
+
+Not included, still queued: the six changes proposed on 2026-09-13 (attachments
+in INPUTS, the pass 1 drift fix, no-un-run-computations, the partial-answer
+verdict rule, Part A reaching the record, and the findings cap), plus the
+`latex_clean` report-only gate for `/log`.
+
 ## v1.3 — 2026-09-13
 
 The human attempt stops being a requirement. It was never the file that

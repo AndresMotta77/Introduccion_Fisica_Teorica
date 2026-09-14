@@ -58,11 +58,44 @@ to the user as a table and ask them to confirm or correct it:
 - any external ground truth, and when it arrived relative to the loop
 - any code and figures produced
 
-Then ask for the metadata you cannot know, in one message, with your best guess
-pre-filled so the user only has to correct it:
+### Step 1a — Split the auditor's reply
+
+The user pastes the auditor's whole reply into the conversation, both parts
+together. Split it and file each half verbatim, before doing anything else with
+it:
+
+- From the "Part A" heading to the "Part B" heading →
+  `audits/audit-report-k.md`. That includes the run header, the pass table,
+  every finding with its evidence, the auditor's own code snippets, the frozen
+  list and the confidence statement.
+- From the "Part B" heading to the end → `prompts/corrector-prompt-k.md`.
+
+Verbatim means verbatim. Do not merge the finding blocks that appear in both
+halves, do not renumber them, do not drop a code snippet for being long, and do
+not correct the auditor's arithmetic. A wrong number in an audit report is an
+accurate record of what the auditor said, and it is often the most useful thing
+in the file.
+
+If the reply did not split into two parts, save the whole thing as
+`audit-report-k.md`, note the format deviation in one line at the top, and
+record that `corrector-prompt-k.md` was assembled by the user rather than
+produced by the auditor.
+
+From audit-prompt v1.3 onward Part A opens with a run header giving the
+auditor's model, effort, tools and whether it executed code. Take the metadata
+from there.
+
+### Step 1b — Metadata you cannot know
+
+Ask for the rest in one message, with your best guess pre-filled so the user
+only has to correct it:
 
 - solver model label and effort, per round if it changed
-- auditor model label and effort, per round
+- auditor model label and effort, per round. From audit-prompt v1.3 the report
+  carries a run header stating these; use it, record `model_source` and
+  `effort_source` as `self-reported`, and say you took them from the report so
+  the user can correct it. A model's self-report of its own version is better
+  than nothing and still not authoritative.
 - exploration model label and effort
 - tools available to each
 
@@ -87,6 +120,7 @@ anyway, stamp the failure into `meta.yaml` and into a banner at the top of
 | `audit_trail_complete` | An audit report exists for every round. |
 | `findings_closed` | Every finding id has a disposition: accepted, rejected with rebuttal, or explicitly deferred. |
 | `stopping_rule` | The loop ended per CONVENTIONS.md §6, or the deviation is recorded. |
+| `latex_clean` | Report-only. The compile log shows no undefined `\ref` targets, no undefined `\cite` keys, and no overfull box beyond 10pt; `final.tex` contains no `\emph`. Report the list and stop — never edit the final document to clear this gate. |
 | `compliance_probe_run` | The probe was run on a claim known to be right, and its outcome recorded. A `caved` outcome does not fail this gate — not running the probe does. |
 | `ground_truth_timing` | If external ground truth exists, `meta.yaml` records when it arrived. Ground truth that arrived mid-loop is not also evidence that the loop worked. |
 
@@ -124,6 +158,19 @@ Compile with `latexmk -pdf` (fall back to `tectonic`). If compilation fails,
 fix the LaTeX and retry up to three times, then report the error and ship
 `final.md` and `final.tex` without the PDF rather than mangling the content to
 make it compile.
+
+Keep the compile log. Once it builds, parse the log for the `latex_clean` gate:
+undefined references, undefined citations, and overfull boxes past 10pt. Grep
+`final.tex` for `\emph` while you are there. A document can compile cleanly and
+still ship `??` where a cross-reference should be, which is why this is checked
+after a successful build rather than only on failure.
+
+Report what you find as a list and stop. Step 3 forbids rewriting the final
+document, and that rule does not bend for cosmetics: the final is the last
+answer cleaned up, and a silent fix is the beginning of a final document that
+nobody can trace to an answer. The user fixes or waves through; either way the
+gate result goes into `meta.yaml`. Typos in the prose belong to the solver and
+are raised as audit pass 10 findings in a round, not patched here.
 
 ### Step 5 — Metadata and index
 
