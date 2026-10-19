@@ -1,0 +1,18 @@
+beta = 1.0
+  m=  100  m^2*err_hat=+0.09660970  m^2*err_prim=-0.09688389  m^2*(sum)=-2.742e-04
+  m=  200  m^2*err_hat=+0.09674725  m^2*err_prim=-0.09688524  m^2*(sum)=-1.380e-04  local order of (err_hat+err_prim): 2.991
+  m=  400  m^2*err_hat=+0.09681636  m^2*err_prim=-0.09688558  m^2*(sum)=-6.922e-05  local order of (err_hat+err_prim): 2.995
+  m=  800  m^2*err_hat=+0.09685099  m^2*err_prim=-0.09688566  m^2*(sum)=-3.467e-05  local order of (err_hat+err_prim): 2.998
+  m= 1600  m^2*err_hat=+0.09686833  m^2*err_prim=-0.09688568  m^2*(sum)=-1.735e-05  local order of (err_hat+err_prim): 2.999
+beta = 5.0
+  m=  100  m^2*err_hat=+1.51412193  m^2*err_prim=-1.54739746  m^2*(sum)=-3.328e-02
+  m=  200  m^2*err_hat=+1.53094746  m^2*err_prim=-1.54794508  m^2*(sum)=-1.700e-02  local order of (err_hat+err_prim): 2.969
+  m=  400  m^2*err_hat=+1.53949259  m^2*err_prim=-1.54808205  m^2*(sum)=-8.589e-03  local order of (err_hat+err_prim): 2.985
+  m=  800  m^2*err_hat=+1.54379882  m^2*err_prim=-1.54811629  m^2*(sum)=-4.317e-03  local order of (err_hat+err_prim): 2.992
+  m= 1600  m^2*err_hat=+1.54596042  m^2*err_prim=-1.54812485  m^2*(sum)=-2.164e-03  local order of (err_hat+err_prim): 2.996
+beta = 10.0
+  m=  100  m^2*err_hat=+5.98217210  m^2*err_prim=-6.23698079  m^2*(sum)=-2.548e-01
+  m=  200  m^2*err_hat=+6.11265989  m^2*err_prim=-6.24574740  m^2*(sum)=-1.331e-01  local order of (err_hat+err_prim): 2.937
+  m=  400  m^2*err_hat=+6.17995654  m^2*err_prim=-6.24794333  m^2*(sum)=-6.799e-02  local order of (err_hat+err_prim): 2.969
+  m=  800  m^2*err_hat=+6.21413568  m^2*err_prim=-6.24849258  m^2*(sum)=-3.436e-02  local order of (err_hat+err_prim): 2.985
+  m= 1600  m^2*err_hat=+6.23136024  m^2*err_prim=-6.24862991  m^2*(sum)=-1.727e-02  local order of (err_hat+err_prim): 2.992
