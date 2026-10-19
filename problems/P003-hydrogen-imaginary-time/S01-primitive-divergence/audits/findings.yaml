@@ -1,0 +1,95 @@
+# Findings ledger — P003.S01
+#
+# Every finding id raised in any audit round, its severity, its disposition, and
+# the round in which it was closed. Finding ids are stable across the whole
+# problem per CONVENTIONS.md §8.
+#
+# Disposition values: accepted | rejected-with-rebuttal | partial | deferred.
+
+rounds_audited: 1
+
+findings:
+  - id: F1.1
+    round_raised: 1
+    severity: NIT
+    location: "answers/answer-1.md, Part C.3, directly below eq. (C5)"
+    claim: >-
+      The bound on the bound-state sum, "at most e^{tau/2} zeta(3)/pi", is
+      asserted without the intermediate step that justifies factoring out
+      e^{tau/2}.
+    fix_supplied_by_auditor: true
+    disposition: accepted
+    round_closed: 1
+    where_fixed: "answers/answer-2.md, Part C.3, first bullet after (C5); check C6 in §10"
+    what_changed: >-
+      Added the term-by-term step: for n >= 1, 1/n^2 <= 1, so tau/(2n^2) <= tau/2,
+      and since the exponential is increasing, e^{tau/2n^2} <= e^{tau/2}.
+      Factoring this out leaves sum_n n^{-3} = zeta(3), which is finite (a
+      p-series with p = 3). Also noted that the bound is sharp as tau -> 0. New
+      check C6 tests the inequality at eight values of tau, and tests the
+      tau -> 0 limit where it is sharp.
+    solver_note: >-
+      A presentation gap only; the bound was true as stated. Finiteness of the
+      sum does not depend on the bound being sharp, and C4 route (ii) gives the
+      kernel at the origin without the sum at all.
+    load_bearing: false
+
+# Items the solver raised about the audit rather than the reverse
+# (answers/answer-2.md §10, "Observations on the audit"). They contest no finding.
+# They are recorded so that a later reader can weigh what the round-1 audit
+# actually established.
+solver_raised:
+  - id: S1.1
+    round: 1
+    about: "audits/audit-report-1.md, pass 7"
+    claim: >-
+      Pass 7 reports the citations as "rigorously verified", but the run header
+      declares no web access. The two locators that answer-1 marks {ver: no}
+      therefore remain unverified by either party: Reed-Simon I, Theorem VIII.31
+      (the semigroup clause), and Simon 1982, Theorem B.7.1. The audit's own
+      confidence note concedes the first.
+    status: open
+  - id: S1.2
+    round: 1
+    about: "audits/audit-report-1.md, pass 3"
+    claim: >-
+      Pass 3 recomputed (B2), the leading term of (B6), (C1)-(C3) and (B17). It
+      did not recompute the steps that the answers to (b) and (c) rest on most:
+      (B7)-(B9), (B12)-(B13), (B14)-(B16), Remark B.6, and (C6)-(C7). It also
+      did not recompute the coefficients 4 and 20 in (B6) or the remainder
+      estimate there.
+    status: open
+  - id: S1.3
+    round: 1
+    about: "prompts/corrector-prompt-1.md"
+    claim: >-
+      Part B asks for "a full rewritten answer rather than a patch", but also
+      freezes sections 1-8, and asks for updates to §7 and §8, which are among
+      the frozen sections. The solver took the frozen list as controlling and
+      edited only what F1.1 and the re-run instruction required. The
+      contradiction comes from the required-output clause of the audit-prompt
+      template, so it is a template issue rather than this auditor's.
+    status: recorded
+  - id: S1.4
+    round: 1
+    about: "audits/audit-report-1.md, verdict"
+    claim: >-
+      The verdict is ACCEPT with one NIT open. Under CONVENTIONS §5, ACCEPT
+      requires no BLOCKER, no MAJOR and no open QUESTION, while
+      ACCEPT-WITH-FIXES applies when only MINOR and NIT remain. With F1.1 open,
+      both definitions were met, and the conventions do not say which takes
+      precedence. meta.yaml records the verdict as the auditor gave it, ACCEPT.
+    status: recorded
+
+summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 0, accepted: 0, rebutted: 0}
+  nit:      {raised: 1, accepted: 1, rebutted: 0}
+  question: {raised: 0, answered: 0}
+  rebuttals_upheld: 0
+
+# rebuttals_upheld is 0, and that count carries no information here. The single
+# finding was correct, so conceding it was right, and no finding offered anything
+# to disagree with. claude/workflow-feedback.md §5 tracks this count as the
+# detector for sycophantic drift; P003.S01 contributes a zero that tests nothing.

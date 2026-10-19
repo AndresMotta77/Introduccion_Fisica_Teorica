@@ -46,6 +46,27 @@ problems:
     findings: {blocker: 0, major: 0, minor: 2, rebuttals_upheld: 0}
     checks_run: 8
     branches_queued: []
+  - id: P003.S01
+    slug: primitive-divergence
+    title: "Failure of the primitive path integral at r = 0 for the Coulomb potential"
+    parent: P003                    # container (Guide 15, Project 04), not an exploration branch
+    branch: null
+    folder: problems/P003-hydrogen-imaginary-time/S01-primitive-divergence
+    closed: 2026-10-19
+    verdict: ACCEPT                 # given with one NIT open; see the S01 meta.yaml note on CONVENTIONS §5
+    rounds: 1
+    predates_method: false
+    gates_failed: [no_unflagged_recall, code_audited, latex_clean]
+    solver: {model_label: "Claude Opus 5.5", effort: extra}      # effort user-reported (prompt0 §0)
+    auditor: {model_label: "Gemini", effort: high}              # both self-reported; no code, no web
+    ground_truth: {source: none, arrived: none}
+    templates: {prompt0: v1.3, audit: v1.4}
+    result_one_line: "Z_N = +inf for every N, dtau (bead at the nucleus; chain at infinity); exact kernel finite; imaginary-time Trotter needs V bounded below."
+    perturbation_test: not-run
+    blind_solve: not-run
+    findings: {blocker: 0, major: 0, minor: 0, nit: 1, rebuttals_upheld: 0}
+    checks_run: 7
+    branches_queued: []
   # - id: P001
   #   slug: ...
   #   title: ...

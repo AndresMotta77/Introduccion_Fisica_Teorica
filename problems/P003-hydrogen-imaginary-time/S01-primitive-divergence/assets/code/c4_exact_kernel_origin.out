@@ -1,0 +1,30 @@
+route (i): closed form
+  tau=0.5  bound part=0.4760580540  continuum part=0.6693036422  total=1.1453616962  free=0.1795871221  ratio=6.3777
+  tau=1.0  bound part=0.5953441704  continuum part=0.3242252408  total=0.9195694112  free=0.0634936359  ratio=14.4829
+  tau=2.0  bound part=0.9427694300  continuum part=0.1599918269  total=1.1027612570  free=0.0224483903  ratio=49.1243
+  tau=4.0  bound part=2.4461191758  continuum part=0.0796630394  total=2.5257822153  free=0.0079367045  ratio=318.2407
+
+G4: lowest box eigenstates at h = 0.005, Rbox = 40
+  n=1: E=-0.4999969 (exact -1/(2n^2) = -0.5000000, diff +3.12e-06);  |psi(0)|^2=0.3182901 (1/(pi n^3) = 0.3183099, rel -6.22e-05)
+  n=2: E=-0.1249998 (exact -1/(2n^2) = -0.1250000, diff +1.95e-07);  |psi(0)|^2=0.0397874 (1/(pi n^3) = 0.0397887, rel -3.42e-05)
+  n=3: E=-0.0555542 (exact -1/(2n^2) = -0.0555556, diff +1.36e-06);  |psi(0)|^2=0.0117929 (1/(pi n^3) = 0.0117893, rel +3.06e-04)
+
+G1: free control, box (V = 0) vs (2 pi tau)^(-3/2)
+  tau=0.5  relative error  h=0.02: +2.10e-03  h=0.01: +5.25e-04  h=0.005: +1.31e-04
+  tau=1.0  relative error  h=0.02: +1.05e-03  h=0.01: +2.63e-04  h=0.005: +6.56e-05
+  tau=2.0  relative error  h=0.02: +5.25e-04  h=0.01: +1.31e-04  h=0.005: +3.28e-05
+  tau=4.0  relative error  h=0.02: +2.63e-04  h=0.01: +6.56e-05  h=0.005: +1.64e-05
+
+G2/G3: Coulomb box vs closed form
+  tau=0.5  rel.diff h=0.02: +3.19e-04  h=0.01: +8.16e-05  h=0.005: +2.07e-05   observed order p=1.96   Richardson: -4.64e-07
+  tau=1.0  rel.diff h=0.02: -4.90e-04  h=0.01: -1.23e-04  h=0.005: -3.08e-05   observed order p=1.99   Richardson: +1.27e-07
+  tau=2.0  rel.diff h=0.02: -8.87e-04  h=0.01: -2.23e-04  h=0.005: -5.60e-05   observed order p=1.99   Richardson: +3.69e-07
+  tau=4.0  rel.diff h=0.02: -1.13e-03  h=0.01: -2.84e-04  h=0.005: -7.12e-05   observed order p=1.99   Richardson: +4.62e-07
+
+G5: box size, h = 0.01
+  tau=0.5  Rbox=30: 1.145455211031  Rbox=40: 1.145455211031  rel.change +5.48e-14
+  tau=1.0  Rbox=30: 0.919456275654  Rbox=40: 0.919456275654  rel.change +1.21e-13
+  tau=2.0  Rbox=30: 1.102515033371  Rbox=40: 1.102515033371  rel.change +1.55e-13
+  tau=4.0  Rbox=30: 2.525065089752  Rbox=40: 2.525065089752  rel.change +2.23e-13
+
+FAILURES: none

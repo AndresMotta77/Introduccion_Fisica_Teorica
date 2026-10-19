@@ -4,6 +4,7 @@
 |----|-------|--------|---------|--------|-------|--------|
 | [P001](problems/P001-rolling-discs/) | Two discs rolling without slipping | 2026-09-02 | A only | 2 | 13 failed — predates the method | Only option A is true; C omits the precession about z |
 | [P002](problems/P002-iverted-pendulum/) | Inverted pendulum with a vertically oscillating pivot | 2026-09-14 | ACCEPT-WITH-FIXES | 1 | 1 failed — latex_clean | Stable for $A^2\omega^2>2gl$; slow oscillation at $\Omega=\sqrt{A^2\omega^2/2l^2-g/l}$ |
+| [P003.S01](problems/P003-hydrogen-imaginary-time/S01-primitive-divergence/) | Failure of the primitive path integral at r = 0 for the Coulomb potential | 2026-10-19 | ACCEPT | 1 | 3 failed — no_unflagged_recall, code_audited, latex_clean | $Z_N=+\infty$ for every $N$, $\Delta\tau$ (bead at the nucleus; chain at infinity); exact kernel finite; the imaginary-time Trotter formula needs $V$ bounded below |
 
 Appended by `/log`. One row per closed problem. `index.yaml` carries the same
 information in machine-readable form, plus the branch queue and the parent

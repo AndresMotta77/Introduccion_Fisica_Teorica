@@ -1,0 +1,244 @@
+problem_id: P003.S01
+parent: P003                 # container: problems/P003-hydrogen-imaginary-time/ (see ../PLAN.md)
+# Subproblem ids of the form P003.S01 are proposed in PLAN §7, item 1, and are not
+# yet in CONVENTIONS §8 or in New-Problem.ps1. This folder was laid out by hand to
+# match what New-Problem.ps1 seeds for a top-level problem. /log v1.6 has no
+# container support either; it was applied to this folder as if it were a problem.
+slug: primitive-divergence
+title: "Failure of the primitive path integral at r = 0 for the Coulomb potential"
+# prompt0 narrowed at the user's request on 2026-10-19: the subproblem only (the
+# primitive trace, its divergence at r = 0, comparison with the continuum), with no
+# project context and no trial-function projection, which moves to S05.
+course: "Introduction to Theoretical Physics"
+project: "Guide 15, Project 04: hydrogen by imaginary time"
+phase: 1
+chunks: [K1]                 # ../paper/kole-deraedt-2001/chunks.md
+loop_weight: full            # PLAN §4.3: human attempt, optional blind solve, audit loop, perturbation test
+paper_access: closed-book    # Kole and De Raedt and the course repository withheld (prompt0 §5)
+opened: 2026-10-19
+closed: 2026-10-19
+status: closed               # open | closed | escalated | abandoned
+verdict: ACCEPT              # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
+# The verdict is the auditor's. It was given with one NIT (F1.1) open; CONVENTIONS
+# §5 lets that case be read as ACCEPT or as ACCEPT-WITH-FIXES and does not say which
+# takes precedence (audits/findings.yaml, S1.4). Recorded as given.
+rounds: 1
+
+templates:
+  conventions: v1.5
+  prompt0: v1.3
+  audit: v1.4
+  blind_solve: v1.0
+  exploration: v1.0
+  human_attempt: v1.1
+  log_skill: v1.6
+  # log_skill as in P002: the last version CHANGELOG.md states for /log. The skill
+  # was not installed in the solving session; /log was carried out from the
+  # repository copy, skills/log/SKILL.md.
+
+run_against_templates:
+  conventions: v1.5
+  prompt0: v1.3
+  audit: v1.4
+  # What answer-1, audit-report-1 and answer-2 were produced under. The sent audit
+  # prompt (prompts/audit-prompt-1.md) carries no version header; v1.4 is the
+  # version in templates/ when it was sent.
+
+# One entry per model call. Effort level cannot be observed from inside a
+# session, so it is always user-reported, and `unknown` is a valid value.
+# Never guess one: a guessed field silently poisons comparisons across runs.
+runs:
+  - artifact: answers/answer-1.md
+    role: solver
+    model_id: claude-opus-5-5
+    model_label: "Claude Opus 5.5"
+    model_source: self-reported      # the session's configured model id; the serving model cannot be observed
+    effort: extra
+    effort_source: user-reported     # from prompts/prompt0.md §0, written there as ⟨extra⟩
+    tools: [code, web]
+    context: project                 # Vibe Physics project; the solver read claude/start-here.md (declared in §1)
+    date: 2026-10-19
+
+  - artifact: audits/audit-report-1.md
+    role: auditor
+    model_id: unknown
+    model_label: "Gemini"
+    model_source: self-reported      # run header of the report; the version was not stated
+    effort: high
+    effort_source: self-reported     # run header of the report
+    tools: []                        # run header: code execution no, web no
+    code_executed: false
+    date: 2026-10-19
+    # Verdict ACCEPT, one finding (F1.1, NIT), accepted. Pass 6 was reported as
+    # partial (code read, not run). Pass 7 reports the citations as verified,
+    # although no web access was declared (findings.yaml S1.1). The [FOCUS] block
+    # of the audit prompt was left empty.
+
+  - artifact: answers/answer-2.md
+    role: solver
+    model_id: claude-opus-5-5
+    model_label: "Claude Opus 5.5"
+    model_source: self-reported
+    effort: extra
+    effort_source: user-reported     # prompt0 §0; not restated for round 2
+    tools: [code, web]
+    context: project                 # the same session as answer-1, not a fresh context
+    date: 2026-10-19
+
+gates:
+  locators_complete: pass
+  no_unflagged_recall: fail
+  sources_split: pass
+  general_refs_resolved: pass
+  convergence_check: pass
+  code_output_present: pass
+  code_coverage_notes: pass
+  code_not_circular: pass
+  code_audited: fail
+  audit_trail_complete: pass
+  findings_closed: pass
+  stopping_rule: pass
+  ground_truth_timing: pass
+  latex_clean: fail
+
+gates_failed: [no_unflagged_recall, code_audited, latex_clean]
+
+# Why each non-obvious verdict, so the column can be read later without
+# re-deriving the judgement. The user closed the loop with the failures on record;
+# none was fixed, since step 3 of the log skill forbids editing the final document.
+gates_detail:
+  no_unflagged_recall: >-
+    Fail. Two [R] tags in answer-2 are absent from its Risk register: the proton
+    radius (about 1.6e-5 a_0) in §4.1 item 6, and "R_nl(0) = 0 for l >= 1, and
+    likewise for continuum partial waves" in the coverage note of check C4.
+    Neither is load-bearing. Every load-bearing [R], [A], [S] and {ver: no} item
+    is in the register.
+  general_refs_resolved: >-
+    Pass, with two items noted. The qualitative remark in C.6 cites "Simon 1982,
+    Khas'minskii's lemma" by name, without a number; it is tagged [R] {ver: no}
+    and is not used. The prior-knowledge declaration names "Kleinert's book on
+    path integrals" without a locator, as declared recall; it is in
+    sources/independence.md and not in final.md.
+  code_audited: >-
+    Fail. The audit's pass 6 reads in full "PARTIAL. (Code was audited by
+    reading; execution not performed in this session. Pass 6b performed
+    symbolically)". No check is reviewed for circularity, vacuity, laundered
+    assumptions or wrong quantity. Check C6 did not exist when the audit was
+    written and has never been read by an auditor.
+  code_output_present: >-
+    Pass. Every run is reported, including the failed C5 run 1. answer-2 carries
+    the round-2 outputs, which are byte-identical to round 1's. The only edit to
+    any output is the removal of the sandbox path from scipy's warning lines in C5
+    run 1, which the answer states.
+  audit_trail_complete: >-
+    Pass. One round, one audit report. answer-2 is the fix pass for a NIT, not a
+    further round, so no audit-report-2 is owed. Its new material (the F1.1 step,
+    check C6, §10) is unaudited.
+  stopping_rule: >-
+    Pass. Round 1 returned no BLOCKER and no MAJOR (CONVENTIONS §6), and answer-2
+    closed the NIT.
+  ground_truth_timing: >-
+    Pass, vacuously: there is no external ground truth.
+  latex_clean: >-
+    Fail. final.pdf (44 pages) compiles with zero undefined references, zero
+    undefined citations, zero missing characters and no \emph. Two overfull boxes
+    exceed 10pt: 39.1pt and 34.8pt, the display equations (A3) and (B10), which
+    are wider than the text block. One further overfull box of 3.6pt is below the
+    threshold. Five overfull rows in the provenance appendix (up to 72pt) were
+    cleared first by widening the columns of that table, which /log authors.
+    lmodern was installed in the build sandbox (apt) because the template loads it.
+
+findings_summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 0, accepted: 0, rebutted: 0}
+  nit:      {raised: 1, accepted: 1, rebutted: 0}
+  question: {raised: 0, answered: 0}
+  rebuttals_upheld: 0
+  solver_raised: 4               # observations about the audit, contesting no finding (findings.yaml S1.1-S1.4)
+  # Zero rebuttals is uninformative: the one finding was correct and conceding it
+  # was right.
+
+# Optional. No gate turns on any of this.
+human_attempt:
+  exists: true
+  form: notes                  # handwritten on a tablet, exported to PDF, Spanish
+  file: human/Integrales_de_Camino_de_Feynman_261017_174852_2.pdf
+  recorded: before-answer      # no solver answer for S01 existed when it was added
+  date: 2026-10-10             # user-reported at /log (2026-10-19). The file name carries
+                               # 261017_174852, which reads as 2026-10-17 17:48:52 and is
+                               # probably the export time. human/attempt.md still says
+                               # "2026-10-17, from the file name; to confirm" and is left
+                               # unedited, as that file instructs.
+  authors: team                # "our work"; names not recorded
+  time_spent_min: unknown
+  reached_an_answer: partial   # commits to the divergence (pp. 8-9); stops at the open-path matrix element (p. 9)
+  prediction: >-
+    The primitive weight is unbounded as r -> 0, its radial integral diverges,
+    and the kinetic term does not compensate.
+  prediction_correct: true     # against the final answer, not against external ground truth (there is none)
+  model_found_error_i_missed: true
+  # The final answer finds, in pp. 4-9: beta V where Delta-beta V is meant (p. 6,
+  # H3); a one-dimensional prefactor and coordinates for a three-dimensional problem
+  # (H3, and radial coordinates in the kinetic term on p. 8); ground-state dominance
+  # applied to a trace that is infinite for hydrogen (H1); and the large-volume
+  # divergence not mentioned (H6). See final/final.md Part D.
+  i_found_error_model_missed: unknown
+  consulted: unknown           # human/attempt.md leaves this to fill
+  prior_exposure: >-
+    The user had reviewed the Project 04 proposal (2026-10-04/05), which proves
+    the divergence (its Proposition 1). Whether the notes drew on it: unknown.
+
+ground_truth:
+  available: false
+  source: none               # professor | answer-key | measurement | numerical | none
+  verdict: null
+  arrived: none              # before-loop | mid-loop | after-loop | none
+
+independence:
+  declaration_requested: true
+  recognized_problem: true
+  declared_result_matched: true
+  retrieval_suspected: false
+  # The solver retrieved sources for the Trotter theorem, the Kato class and the
+  # Coulomb data before writing the derivation, and says so. No published
+  # solution of the subproblem was retrieved, and the paper and the course
+  # repository were not opened during the loop.
+  anchoring_steps_self_reported: 10
+  anchoring_steps_found_by_auditor: 0
+  perturbation_test_run: false
+  perturbation_test_passed: null
+  blind_solve_run: false
+  note: >-
+    The auditor found no anchoring step and ran no perturbation test. The decisive
+    test and the perturbation variant for K1 (../paper/kole-deraedt-2001/chunks.md)
+    were meant to go to the auditor in [FOCUS] once answer-1 existed, but [FOCUS]
+    was left empty, so they were not sent. The solver's convergence check analyses
+    the response to -1/r^alpha, to the dimension, to the sign of V and to a
+    different growth law; that is analysis, not a run. The solver session was
+    attached to the project and read claude/start-here.md, which describes
+    P003's context; declared in §1.
+
+sources:
+  used: 10
+  consulted: 5
+  verified_tool: 7
+  verified_human: 0
+  unverified: 2                # Reed-Simon I Thm VIII.31; Simon 1982 Thm B.7.1
+  load_bearing_unverified: 2
+  # Both are load-bearing, both are in the Risk register, and both are supported
+  # by retrieved secondary sources: the Trotter clause by the Encyclopedia of
+  # Mathematics, arXiv:2308.00290 and arXiv:2501.04564; the kernel theorem by the
+  # Broderix-Hundertmark-Leschke abstract. The tenth Used entry is the team's
+  # notes, the object of the assessment, which carry no verification status.
+
+result_one_line: >-
+  Z_N = +infinity for every N >= 1 and Delta-tau > 0, from a bead at the nucleus
+  (time slicing only) and from the chain at infinity (shared with the exact trace);
+  the exact kernel is finite everywhere (K_1(0,0) = 0.91957); the imaginary-time
+  Trotter formula needs V bounded below, and -1/r is not.
+
+checks_run: 7                  # C1-C6 and the failed C5 run 1
+branches_queued: []
+# Exploration was not run. final/final.md §9 lists seven open questions; see
+# explore/exploration-1.md.
