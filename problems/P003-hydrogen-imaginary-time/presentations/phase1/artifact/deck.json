@@ -1,0 +1,64 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-19T11:31:43Z"
+  },
+  "lists": "css",
+  "title": "Hydrogen from imaginary time — Phase 1",
+  "cover": "cover",
+  "order": [
+    "cover",
+    "feynman",
+    "gauss",
+    "free",
+    "plan",
+    "imaginary",
+    "beads",
+    "action",
+    "weight",
+    "onebead",
+    "springs",
+    "continuum",
+    "trotter",
+    "notes",
+    "summary"
+  ],
+  "sections": {
+    "s1": {
+      "description": "Our notes: Feynman's path integral (pp. 1-3)",
+      "start": "cover"
+    },
+    "s2": {
+      "description": "Our notes: imaginary time and the partition function (pp. 4-7)",
+      "start": "plan"
+    },
+    "s3": {
+      "description": "Our notes: the weight of the Coulomb potential (pp. 8-9)",
+      "start": "weight"
+    },
+    "s4": {
+      "description": "Results: the divergence proved",
+      "start": "onebead"
+    },
+    "s5": {
+      "description": "Results: the exact problem and the Trotter formula",
+      "start": "continuum"
+    },
+    "s6": {
+      "description": "What changed in our notes, and summary",
+      "start": "notes"
+    }
+  },
+  "faces": {
+    "source-serif-4": {
+      "family": "Source Serif 4",
+      "href": "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap"
+    },
+    "ibm-plex-sans": {
+      "family": "IBM Plex Sans",
+      "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    }
+  },
+  "designSystems": []
+}

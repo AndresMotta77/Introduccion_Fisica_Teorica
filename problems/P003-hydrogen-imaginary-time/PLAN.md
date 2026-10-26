@@ -18,6 +18,25 @@ This plan, the folder `paper/`, and the proposal in
 attached to a solver prompt. A subproblem whose solver, or whose human attempt, saw any of
 them says so in its `sources/independence.md`.
 
+## Status
+
+Updated 2026-10-26. The plan below is still the draft of 2026-10-18; this section records
+progress against it.
+
+- **S01 is closed** (2026-10-19): ACCEPT after one round, with one NIT, accepted. The release
+  gates `no_unflagged_recall`, `code_audited` and `latex_clean` failed. It was committed and
+  pushed the same day. The entry is `S01-primitive-divergence/README.md`, and the root
+  `index.md` has its row. The K1 decisive test and perturbation variant in
+  `paper/kole-deraedt-2001/chunks.md` were not run, because the `[FOCUS]` block of the audit
+  prompt was left empty. Neither the blind
+  solve nor the exploration step was run.
+- **Phase 1 presentation** (2026-10-19, revised 2026-10-26): `presentations/phase1/`. It
+  walks through the team's notes and then S01's results. It is separate from the first
+  presentation of step 2.4, and the `presentations/` folder is not part of the layout in
+  decision D3.
+- Every other subproblem is open. Of the phase-1 gate (S01, S04, S05 and S07 closed), S01 is
+  done.
+
 ## 1. What this plan covers
 
 Project 04 of the guide asks whether the ground-state energy of V(r) = −1/r can be extracted
@@ -50,6 +69,10 @@ scripts need for that. None of it has been applied yet.
 | D3 | repository layout | container `problems/P003-hydrogen-imaginary-time/` with subfolders `S01-…`; P003 is the next free id | a different id or layout is a `git mv` |
 | D4 | solver and auditor | Claude solver and Gemini auditor, as in P002; closed-book solver runs in a fresh context outside the Vibe Physics project | declare the context in `independence.md` |
 | D5 | precision target | at least 1e-3 hartree with a complete error budget; 1e-4 as the target | statistics in phase 3 scale with it |
+
+Decided on 2026-10-19: D1 set aside by the user as not important, so the calendar stays in
+course weeks; D2, the Kole–De Raedt effective action; D3, this repository, with the P003
+container (S01 laid out by hand until item 1 of Section 7 is applied). D4 and D5 are open.
 
 On D2. The guide asks the team to fix one method in the protocol, guided diffusion Monte
 Carlo or a Coulomb effective action, and does not require both. I recommend the effective
