@@ -1,0 +1,38 @@
+Route A vs route B: eigenvalues of the slice operator
+  tau=0.5   I(+0.00,+0.00) numeric=0.020833333333 hand=0.020833333333 diff=+2.21e-15
+  tau=0.5   I(-2.00,+2.40) numeric=0.434166666667 hand=0.434166666667 diff=+5.10e-14
+  tau=0.5   I(-4.00,+4.00) numeric=1.354166666667 hand=1.354166666667 diff=+1.60e-13
+  tau=0.5   n=0  lambda_A=0.777063595014  lambda_B=0.777063595014  rel=1.43e-14  ok  E_n(tau)=0.5044661702  exact=0.5
+  tau=0.5   n=1  lambda_A=0.468793829540  lambda_B=0.468793829540  rel=4.16e-14  ok  E_n(tau)=1.5151844061  exact=1.5
+  tau=0.5   n=2  lambda_A=0.282818106556  lambda_B=0.282818106556  rel=7.07e-14  ok  E_n(tau)=2.5259026420  exact=2.5
+  tau=0.5   n=3  lambda_A=0.170621020064  lambda_B=0.170621020064  rel=9.87e-14  ok  E_n(tau)=3.5366208779  exact=3.5
+  tau=0.5   n=4  lambda_A=0.102933764893  lambda_B=0.102933764892  rel=1.28e-13  ok  E_n(tau)=4.5473391138  exact=4.5
+  tau=0.25  I(+0.00,+0.00) numeric=0.005208333333 hand=0.005208333333 diff=+5.55e-16
+  tau=0.25  I(-2.00,+2.40) numeric=0.211875000000 hand=0.211875000000 diff=+2.50e-14
+  tau=0.25  I(-4.00,+4.00) numeric=0.671875000000 hand=0.671875000000 diff=+7.92e-14
+  tau=0.25  n=0  lambda_A=0.882231743788  lambda_B=0.882231743788  rel=6.29e-15  ok  E_n(tau)=0.5012020377  exact=0.5
+  tau=0.25  n=1  lambda_A=0.686632433328  lambda_B=0.686632433328  rel=2.17e-14  ok  E_n(tau)=1.5038246459  exact=1.5
+  tau=0.25  n=2  lambda_A=0.534399381815  lambda_B=0.534399381815  rel=3.55e-14  ok  E_n(tau)=2.5064472542  exact=2.5
+  tau=0.25  n=3  lambda_A=0.415917870206  lambda_B=0.415917870206  rel=4.96e-14  ok  E_n(tau)=3.5090698624  exact=3.5
+  tau=0.25  n=4  lambda_A=0.323704855663  lambda_B=0.323704855663  rel=6.26e-14  ok  E_n(tau)=4.5116924706  exact=4.5
+  tau=0.1   I(+0.00,+0.00) numeric=0.000833333333 hand=0.000833333333 diff=+8.83e-17
+  tau=0.1   I(-2.00,+2.40) numeric=0.083500000000 hand=0.083500000000 diff=+9.98e-15
+  tau=0.1   I(-4.00,+4.00) numeric=0.267500000000 hand=0.267500000000 diff=+3.66e-14
+  tau=0.1   n=0  lambda_A=0.951210246405  lambda_B=0.951210246405  rel=3.62e-15  ok  E_n(tau)=0.5002016158  exact=0.5
+  tau=0.1   n=1  lambda_A=0.860654721616  lambda_B=0.860654721616  rel=4.26e-15  ok  E_n(tau)=1.5006187518  exact=1.5
+  tau=0.1   n=2  lambda_A=0.778720112234  lambda_B=0.778720112234  rel=8.27e-15  ok  E_n(tau)=2.5010358877  exact=2.5
+  tau=0.1   n=3  lambda_A=0.704585704311  lambda_B=0.704585704311  rel=1.61e-14  ok  E_n(tau)=3.5014530237  exact=3.5
+  tau=0.1   n=4  lambda_A=0.637508916131  lambda_B=0.637508916130  rel=1.99e-14  ok  E_n(tau)=4.5018701596  exact=4.5
+route A vs B failures: 0
+
+Route C: Zhat_m from the spectrum vs pc1 route B (re-derived eq. (19))
+  beta=1.0  m=1    E_spec=1.1666666667  E_pc1B=1.1666666667  |diff|=2.3e-41
+  beta=1.0  m=10   E_spec=1.0829195400  E_pc1B=1.0829195400  |diff|=4.6e-41
+  beta=1.0  m=50   E_spec=1.0820152418  E_pc1B=1.0820152418  |diff|=0.0e+00
+  beta=1.0  m=100  E_spec=1.0819863678  E_pc1B=1.0819863678  |diff|=2.3e-41
+  beta=1.0  m=500  E_spec=1.0819770942  E_pc1B=1.0819770942  |diff|=2.7e-39
+Traceback (most recent call last):
+  File "/home/claude/pi/pc3_oscillator_levels.py", line 114, in <module>
+    print(f"  beta={float(b):<4} m={m:<4} E_spec={float(eC):.10f}  E_pc1B={float(eB):.10f}  |diff|={float(d):.1e}")
+                                                  ~~~~~^^^^
+TypeError: float() argument must be a string or a real number, not 'mpc'

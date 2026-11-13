@@ -117,7 +117,11 @@ perturbation variant; status.
 - Perturbation: V = −1/r^s for s = 1/2 and s = 3/2. The primitive integral diverges for
   every s > 0, while H is bounded below for s < 2, so the failure is a property of the
   discretisation at every s. A derivation that only works for s = 1 was recalled.
-- Status: not started.
+- Status: prompt0 drafted 2026-10-19 (`../../S01-primitive-divergence/prompts/prompt0.md`),
+  with the team's notes as §3b; not yet sent. At the user's request the prompt was narrowed
+  to the primitive trace Z_N, its failure at r = 0, and the comparison with the continuum,
+  with no project context. The projection A_N with trial-function ends moves to S05 (K9).
+  Decisive tests (2) and (3) apply unchanged; (1) applies to Z_N.
 
 ### K1b — Higher-order product formulas (c7)
 
@@ -154,7 +158,47 @@ perturbation variant; status.
   test covers small τ (ratio → 1) and large τ (bound loose).
 - Perturbation: replace K by an oscillator H0 = −D∇² + ½κx² as the reference, which §V of
   the paper proposes without derivation. The bound must change accordingly.
-- Status: not started.
+- Status: prompt0 drafted 2026-11-12 as P003.S02
+  (`../../S02-jensen-lower-bound/prompts/prompt0.md`); not yet sent. Part (b) adds the
+  m-slice approximant (K4(a)), the trapezium identity (first half of K3) and the order of
+  the error, so that the prompt verifies the bound as a modified product formula. The
+  oscillator test of (d) is the comparison with known results the user asked for.
+- [FOCUS] for round 1, to paste into the audit prompt once answer-1 exists:
+
+  ```
+  [FOCUS]
+  1. Product-formula route of (a). Jensen's inequality must be applied once, to the
+     probability measure on all intermediate beads built from the normalised free kernels.
+     The marginal of bead i must carry the times i*tau/m and (m - i)*tau/m, and the step
+     from the bead integral to the marginals is an equality (marginalisation), not an
+     inequality. An answer that applies Jensen slice by slice, or gives both kernels the
+     time tau/m, has an error.
+  2. Positivity of rho_0 is what makes the normalised path weight a probability measure,
+     which Jensen needs. Check that the answer uses it there.
+  3. (b). For smooth V, ln(exact) - ln(bound) is half the bridge variance of the time
+     integral of V plus higher cumulants. That is O(tau^3) at |x - x'| ~ sqrt(D tau), so the
+     m-slice error is O(1/m^2) at fixed beta. The trapezium identity is exact, because the
+     bridge average at u = 0 and u = tau is V(x) and V(x').
+  4. (c). The regulator must be removed on both sides with a named theorem (monotone
+     convergence or equivalent), and the limit of the right side must be shown finite for
+     -q^2/r. "Extends by continuity" is a gap. The error estimate of (b) uses bounded
+     derivatives and does not carry over to -1/r without a new argument; an answer that
+     says it does has an error.
+  5. (d). The test must cover small tau (ratio -> 1, at the rate of (b)) and large tau
+     (bound loose), and must not compute the right side of (*) from the closed form it is
+     testing. For V = kappa x^2/2 and D = 1/2 the PI gets
+     int_0^tau <V>_u du = kappa [tau (x^2 + x x' + x'^2)/6 + tau^2/12]
+     (pi-checks/pc3, kappa = 1, rebuilt from free kernels to 1e-13).
+  6. Perturbation test (audit pass 8). Replace the free reference K by the oscillator
+     H0 = -D Laplacian + kappa x^2/2 and V by V - kappa x^2/2. Does the derivation of (a)
+     carry over (positivity of the Mehler kernel; the bridge becomes an Ornstein-Uhlenbeck
+     bridge with a different mean and variance)? Ask the solver to state the modified bound
+     and the bead marginal. A derivation that works only for the free bridge was
+     reconstructed, not derived.
+  ```
+
+  For round 2, if it is run open-book on (7)–(14): the comparison should find E1, E2 and
+  E3.
 
 ### K3 — The upper bound and the trapezium remark (c14, c15)
 
@@ -196,8 +240,60 @@ perturbation variant; status.
 - Perturbation: V = λx⁴. The slice weight needs bridge moments up to fourth order and Ẑ_m
   is no longer Gaussian; compare with the exact energy from diagonalisation. Connects to
   Project 01 of the guide.
-- Status: not started. The proposal's check 7 derived the oscillator weight independently
-  and reproduced four rows; it is prior knowledge for whoever has read the proposal.
+- The proposal's check 7 derived the oscillator weight independently and reproduced four
+  rows; it is prior knowledge for whoever has read the proposal.
+- Status: prompt0 drafted 2026-11-12 as P003.S03
+  (`../../S03-oscillator-closed-form/prompts/prompt0.md`); not yet sent. Part (c), the
+  spectrum of the slice operator against n + ½, was added at the user's request to compare
+  with the known oscillator levels. pc3 (2026-11-12) adds the PI's numbers for (c).
+- [FOCUS] for round 1, to paste into the audit prompt once answer-1 exists:
+
+  ```
+  [FOCUS]
+  1. (a). The PI gets w = (2 pi tau)^(-1/2) exp[-(x - x')^2/(2 tau)
+     - tau (x^2 + x x' + x'^2)/6 - tau^2/12], checked against a direct quadrature of the
+     definition from free kernels to 1e-13.
+  2. (b). Per discrete Fourier mode theta_n = 2 pi n/m, the bridge-averaged quadratic form
+     gives 1 - cos(theta_n) + (tau^2/6)(2 + cos(theta_n)), with tau = beta/m. The PI's values
+     (E_m from the closed form, Ehat_m from two independent routes; the spectral trace of
+     item 3 agrees with the Ehat_m column to 1e-38):
+       beta  m    E_m       Ehat_m    exact
+       1     1    1.000000  1.166667  1.081977
+       1     10   1.081010  1.082920
+       1     50   1.081938  1.082015
+       1     100  1.081967  1.081986
+       1     500  1.081976  1.081977
+       5     1    0.200000  1.033333  0.506784
+       5     10   0.491997  0.519403
+       5     50   0.506166  0.507376
+       5     100  0.506629  0.506935
+       5     500  0.506777  0.506790
+       10    1    0.100000  1.766667  0.500045
+       10    10   0.447273  0.543161
+       10    50   0.497565  0.502340
+       10    100  0.499422  0.500644
+       10    500  0.500020  0.500070
+     A disagreement beyond the sixth decimal is a finding against one side; recompute
+     before accepting it.
+  3. (c). The PI gets lambda_n = C sqrt(2 pi sinh(theta)/Omega) exp(-theta (n + 1/2)), with
+     a = 1/tau + tau/3, b = 1/tau - tau/6, C = (2 pi tau)^(-1/2) exp(-tau^2/12),
+     cosh(theta) = a/b, Omega = sqrt(a^2 - b^2). Then
+     E_n(tau) = (n + 1/2)(1 + tau^2/24) - tau^3/144 + (3/1280)(2n + 1) tau^4 + O(tau^5),
+     every level above n + 1/2. For the symmetric primitive kernel,
+     E_n(tau) = (n + 1/2)(1 - tau^2/24) + (3/1280)(2n + 1) tau^4 + O(tau^5).
+     The prompt asks for all tau > 0: for tau > sqrt(6), b < 0 and the odd-n eigenvalues are
+     negative, so E_n(tau) is undefined for odd n; at tau = sqrt(6) the kernel has rank one.
+     The m = 1 rows at beta = 5 and 10 are in that regime. An answer that gives E_n(tau) for
+     every tau without noticing has missed it.
+  4. (b) and (c) are related by Zhat_m = Tr T^m = sum_n lambda_n^m. Check that the answer's
+     comparison of the two is not circular (the same formula on both sides).
+  5. Perturbation test (audit pass 8): V = lambda x^4. The slice weight then needs bridge
+     moments up to fourth order and Zhat_m is no longer Gaussian. Ask whether the route of
+     (a) carries over and what replaces the diagonalisation of (b).
+  ```
+
+  For round 2, open-book with (17)–(20) and Table I: the comparison should find E5, E6
+  and E7.
 
 ### K6 — Why the average of the two approximants works (c25, c26)
 
@@ -211,7 +307,11 @@ perturbation variant; status.
 - Decisive test (PI only): pc2 finds the leading 1/m² coefficients equal and opposite and a
   residual of order m⁻³ coming from Ê_m. An answer that finds a residual of order m⁻⁴ has
   an error somewhere, either in it or in pc2. Literature: unknown to the PI.
-- Status: not started.
+- Status: not started. pc3 (2026-11-12) settles the oscillator half. The τ² terms of the
+  two approximants cancel level by level, and the bridge-averaged levels carry an
+  n-independent −τ³/144. The sum of the two thermal-energy errors is then −β³/(36m³) at
+  every β, which matches pc2 at m = 1600 for β = 1, 5 and 10. The open half is whether a
+  τ³ term of this kind appears for a general smooth V, and for λx⁴.
 
 ### K7 — The bridge average as a Gaussian convolution (c29, c32)
 
@@ -224,7 +324,9 @@ perturbation variant; status.
   two particles with D1 and D2, reducing it to the relative coordinate.
 - Decisive test: covariance 2Du(τ − u)/τ per component; D = D1 + D2 for the pair; a sampled
   bridge test that would catch a factor of 2 in the variance.
-- Status: not started.
+- Status: one-particle part in P003.S04 (prompt0 drafted 2026-11-12, part (a)). The
+  two-particle reduction is left for K13, since only helium needs it. Its [FOCUS] block is
+  under K8.
 
 ### K8 — The Coulomb slice weight and its finiteness (c18, c30, c31)
 
@@ -241,7 +343,48 @@ perturbation variant; status.
   the large-distance limit τq²/|x| when x ≈ x′.
 - Perturbation: Yukawa, V = −q² e^{−κr}/r, for which the Gaussian average has a closed form
   in terms of erfc. Connects to Project 05 of the guide.
-- Status: not started.
+- Status: prompt0 drafted 2026-11-12 as P003.S04
+  (`../../S04-coulomb-slice-weight/prompts/prompt0.md`), with K7's one-particle part as (a);
+  not yet sent. Part (c), the hydrogen levels from the spectrum of the slice operator for
+  l ≤ 2 and n ≤ 3, was added at the user's request to compare with the known hydrogen
+  levels. pc4 (2026-11-12) checks the PI's expectations for (a) and (b).
+- [FOCUS] for round 1 of S04, to paste into the audit prompt once answer-1 exists:
+
+  ```
+  [FOCUS]
+  1. (a). Mean ((tau - u) x + u x')/tau and covariance 2 D u (tau - u)/tau per component.
+     The check should be able to catch a factor of 2 in the variance.
+  2. (b). The Gaussian average of q^2/|y| is q^2 erf(|mu|/(2 s))/|mu|, with mu the mean of
+     item 1 and s^2 = D u (tau - u)/tau. The PI gets I_V(0, 0) = -q^2 sqrt(pi tau/D), the
+     uniform bound |I_V| <= q^2 sqrt(pi tau/D) (attained at the origin), and
+     I_V(x, x) ~ -tau q^2/|x| for large |x|. All three were checked against a direct
+     quadrature from free kernels at 18 points (pi-checks/pc4). The PI's own first
+     quadrature failed near the nucleus, where the 1/|y| point singularity sits inside the
+     Gaussian. Check that the solver's direct quadrature resolves it, by its coordinates or
+     by convergence shown, rather than agreeing to a loose tolerance.
+  3. (c). E_1s(tau) >= -1/2 for every tau. By Jensen, w lies pointwise below the exact
+     kernel and both are positive, so the top eigenvalue of T_tau in the l = 0 sector is at
+     most exp(tau/2). An answer with E_1s(tau) below -1/2 by more than its stated numerical
+     error has an error. No such ordering follows for l >= 1, because the partial-wave
+     projection with P_l is not positivity preserving; check that the answer does not
+     claim one without proof.
+  4. (c). The order in tau of E_nl(tau) + 1/(2 n^2) is not known to the PI. For the
+     oscillator, the same construction gives tau^2 (S03; pi-checks/pc3). A different order
+     for hydrogen is a result to examine, not an error in itself. Check that it was measured
+     from local slopes over at least four tau, with grid and box errors well below the
+     differences being fitted.
+  5. (c). The control run with a known spectrum, and the partial-wave normalisation (the
+     2 pi, P_l, and the symmetrisation with u = r psi), are where a wrong factor would hide.
+     Run with V = 0, every eigenvalue must be at most 1.
+  6. Scope. The two-particle reduction of the paper's eqs. (23)-(24) was removed from this
+     subproblem on purpose; its absence is not a gap.
+  7. Perturbation test (audit pass 8): Yukawa, V = -q^2 exp(-kappa r)/r. The Gaussian
+     average has a closed form in erfc. Ask whether the reduction and the finiteness proof
+     of (b) carry over, and what happens to the value at the origin.
+  ```
+
+  For round 2, open-book with (25): compare with the PI's hand derivation, N1 in
+  `errata.md`.
 
 ### K9 — Is the hydrogen weight a probability measure? (c34, c35)
 

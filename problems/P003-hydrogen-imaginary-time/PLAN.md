@@ -20,7 +20,7 @@ them says so in its `sources/independence.md`.
 
 ## Status
 
-Updated 2026-10-26. The plan below is still the draft of 2026-10-18; this section records
+Updated 2026-11-12. The plan below is still the draft of 2026-10-18; this section records
 progress against it.
 
 - **S01 is closed** (2026-10-19): ACCEPT after one round, with one NIT, accepted. The release
@@ -34,6 +34,28 @@ progress against it.
   walks through the team's notes and then S01's results. It is separate from the first
   presentation of step 2.4, and the `presentations/` folder is not part of the layout in
   decision D3.
+- **S02, S03 and S04: prompt0s drafted** (2026-11-12), not yet sent. The user asked for the
+  Kole–De Raedt bound, eqs. (14) and (16), to be verified algebraically and against the
+  known oscillator and hydrogen levels, through the loop with a clean-context solver rather
+  than as a PI check. The folders are laid out by hand like S01, with `meta.yaml`,
+  `README.md` and `human/attempt.md` seeded and §6–8 of each prompt0 copied verbatim from
+  the template. Scope changes against the draft statements in `chunks.md`, recorded in each
+  `meta.yaml`:
+  - S02 (K2) adds the m-slice approximant (K4(a)), the trapezium identity (the first half
+    of K3) and the order of the error.
+  - S03 (K5) adds the spectrum of the slice operator and its levels against n + ½.
+  - S04 (K7, K8) drops the two-particle reduction, which only helium needs (K13). It adds
+    the hydrogen levels from the spectrum of the slice operator for l ≤ 2 and n ≤ 3, a
+    deterministic computation. S04 is now at the chunk-size limit of §4.1; if round 1
+    shows it does not fit, part (c) becomes its own subproblem. The order in Δτ that it
+    measures overlaps RQ3, so the phase-3 sweep will test a prediction rather than measure
+    blind.
+
+  Ready-to-paste `[FOCUS]` blocks for the three audits are in `chunks.md` under K2, K5 and
+  K8, so that the decisive tests reach the auditor this time (S01 README §7). Two PI checks
+  were run to back them, `pc3` (oscillator levels) and `pc4` (the Coulomb exponent), both
+  passing in their final runs with the failed runs kept. pc3 also settles the oscillator
+  half of K6 (see `chunks.md`, K6).
 - Every other subproblem is open. Of the phase-1 gate (S01, S04, S05 and S07 closed), S01 is
   done.
 

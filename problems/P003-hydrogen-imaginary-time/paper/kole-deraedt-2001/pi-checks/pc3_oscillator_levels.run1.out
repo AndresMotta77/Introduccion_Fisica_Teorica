@@ -1,0 +1,31 @@
+/home/claude/pi/pc3_oscillator_levels.py:65: RuntimeWarning: invalid value encountered in divide
+  I = num / R0
+Route A vs route B: eigenvalues of the slice operator
+  tau=0.5   I(+0.00,+0.00) numeric=0.020833333333 hand=0.020833333333 diff=+2.21e-15
+  tau=0.5   I(-2.00,+2.40) numeric=0.434166666667 hand=0.434166666667 diff=+5.10e-14
+  tau=0.5   I(-4.00,+4.00) numeric=1.354166666667 hand=1.354166666667 diff=+1.60e-13
+  tau=0.5   n=0  lambda_A=0.777063595014  lambda_B=0.777063595014  rel=1.43e-14  ok  E_n(tau)=0.5044661702  exact=0.5
+  tau=0.5   n=1  lambda_A=0.468793829540  lambda_B=0.468793829540  rel=4.16e-14  ok  E_n(tau)=1.5151844061  exact=1.5
+  tau=0.5   n=2  lambda_A=0.282818106556  lambda_B=0.282818106556  rel=7.07e-14  ok  E_n(tau)=2.5259026420  exact=2.5
+  tau=0.5   n=3  lambda_A=0.170621020064  lambda_B=0.170621020064  rel=9.87e-14  ok  E_n(tau)=3.5366208779  exact=3.5
+  tau=0.5   n=4  lambda_A=0.102933764893  lambda_B=0.102933764892  rel=1.28e-13  ok  E_n(tau)=4.5473391138  exact=4.5
+  tau=0.25  I(+0.00,+0.00) numeric=0.005208333333 hand=0.005208333333 diff=+5.55e-16
+  tau=0.25  I(-2.00,+2.40) numeric=0.211875000000 hand=0.211875000000 diff=+2.50e-14
+  tau=0.25  I(-4.00,+4.00) numeric=0.671875000000 hand=0.671875000000 diff=+7.92e-14
+  tau=0.25  n=0  lambda_A=0.882231743788  lambda_B=0.882231743788  rel=6.29e-15  ok  E_n(tau)=0.5012020377  exact=0.5
+  tau=0.25  n=1  lambda_A=0.686632433328  lambda_B=0.686632433328  rel=2.17e-14  ok  E_n(tau)=1.5038246459  exact=1.5
+  tau=0.25  n=2  lambda_A=0.534399381815  lambda_B=0.534399381815  rel=3.55e-14  ok  E_n(tau)=2.5064472542  exact=2.5
+  tau=0.25  n=3  lambda_A=0.415917870206  lambda_B=0.415917870206  rel=4.96e-14  ok  E_n(tau)=3.5090698624  exact=3.5
+  tau=0.25  n=4  lambda_A=0.323704855663  lambda_B=0.323704855663  rel=6.26e-14  ok  E_n(tau)=4.5116924706  exact=4.5
+Traceback (most recent call last):
+  File "/home/claude/pi/pc3_oscillator_levels.py", line 73, in <module>
+    evB, I, x = lam_numeric(tau)
+                ~~~~~~~~~~~^^^^^
+  File "/home/claude/pi/pc3_oscillator_levels.py", line 67, in lam_numeric
+    ev = np.linalg.eigvalsh(h * 0.5 * (W + W.T))[::-1]
+         ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/numpy/linalg/_linalg.py", line 1359, in eigvalsh
+    w = gufunc(a, signature=signature)
+  File "/usr/local/lib/python3.13/site-packages/numpy/linalg/_linalg.py", line 150, in _raise_linalgerror_eigenvalues_nonconvergence
+    raise LinAlgError("Eigenvalues did not converge")
+numpy.linalg.LinAlgError: Eigenvalues did not converge

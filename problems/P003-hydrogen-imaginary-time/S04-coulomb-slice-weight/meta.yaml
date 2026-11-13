@@ -1,0 +1,95 @@
+problem_id: P003.S04
+parent: P003                 # container: problems/P003-hydrogen-imaginary-time/ (see ../PLAN.md)
+# Laid out by hand on 2026-11-12 to match what New-Problem.ps1 seeds for a top-level
+# problem, as S01 was: the script has no container support yet (PLAN §7, item 1).
+slug: coulomb-slice-weight
+title: "The Coulomb slice weight: finiteness and the hydrogen levels"
+course: "Introduction to Theoretical Physics"
+project: "Guide 15, Project 04: hydrogen by imaginary time"
+phase: 1
+chunks: [K7, K8]              # ../paper/kole-deraedt-2001/chunks.md
+loop_weight: full            # PLAN §4.3
+paper_access: closed-book          # round 1; round 2 open-book with eq. (25) through the corrector prompt (chunks.md, K8)
+# Scope, decided 2026-11-12 when the prompt0 was drafted. Two changes to the draft
+# statements of K7 and K8 in chunks.md. (1) The two-particle reduction of K7 (the paper's
+# eqs. (23)-(24), D = D1 + D2) was removed: it is needed only for helium (K13, an option).
+# (2) Part (c), the hydrogen levels from the spectrum of the one-slice operator for l <= 2
+# and n <= 3, was added. The user asked for the formula to be compared with the known
+# hydrogen levels. It is a deterministic computation, not the phase-2 sampler. Two
+# consequences: S04 is at the chunk-size limit of PLAN §4.1 (three checks), so if round 1
+# shows it does not fit, (c) moves to a subproblem of its own that takes (b) through §3a.
+# And the order in tau that (c) measures overlaps RQ3, which the PLAN leaves to the phase-3
+# sweep; the sweep then tests a prediction instead of measuring blind.
+# The decisive test and perturbation variant go to the auditor in the [FOCUS] block once
+# answer-1 exists: paste the block "[FOCUS] for round 1" under this subproblem's chunk in
+# ../paper/kole-deraedt-2001/chunks.md. In S01 the block was left empty and the test never
+# ran (S01 README §7). The solver never sees it.
+opened: 2026-11-12
+closed:
+status: open                 # open | closed | escalated | abandoned
+verdict:                     # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
+rounds: 0
+
+templates:
+  conventions: v1.5
+  prompt0: v1.3
+  audit: v1.4
+  blind_solve: v1.0
+  human_attempt: v1.1
+  exploration: v1.0
+  log_skill: v1.6
+  # log_skill as in S01: the last version CHANGELOG.md states for /log. New-Problem.ps1
+  # would write v1.7, the newest CHANGELOG heading, which is the method version.
+
+# One entry per model call. Effort level cannot be observed from inside a
+# session, so it is always user-reported, and `unknown` is a valid value.
+# Never guess one: a guessed field silently poisons comparisons across runs.
+runs: []
+#  - artifact: answers/answer-1.md
+#    role: solver              # solver | auditor | blind-solver | explorer
+#    model_id:
+#    model_label:
+#    model_source: user-reported
+#    effort:
+#    effort_source: user-reported
+#    tools: []
+#    context:                  # clean | project (PLAN §7, item 8)
+#    date:
+
+# Filled by /log. See skills/log/SKILL.md for what each one checks.
+gates: {}
+
+# Optional. No gate turns on any of this. Every field may be `unknown`, and the
+# whole block can be deleted if there was no attempt. `recorded` is the one
+# worth being accurate about: an attempt written up after reading the answer is
+# still useful, but it is not a prior.
+human_attempt:
+  exists:
+  form:                        # markdown | scan | photo | notes | none
+  recorded:                    # before-answer | after-answer | unknown
+  time_spent_min:
+  reached_an_answer:
+  prediction:
+  prediction_correct:
+
+ground_truth:
+  available:
+  source:                    # professor | answer-key | measurement | numerical | none
+  verdict:
+  arrived:                   # before-loop | mid-loop | after-loop | none
+
+independence:
+  declaration_requested: true
+  retrieval_suspected:
+  perturbation_test_run:
+  # PI checks that exist for this chunk and must not reach the solver: pc4
+
+sources:
+  used: 0
+  consulted: 0
+  verified_tool: 0
+  verified_human: 0
+  unverified: 0
+
+result_one_line:
+branches_queued: []
