@@ -1,0 +1,6 @@
+numpy 2.5.3
+N8 xbar=0.4: a_fit=+6.318586e-03 a_pred=+6.318610e-03 | b_fit=+2.18716e-03 b_pred=+2.18563e-03 (b without Delta terms: +1.09282e-03) -> PASS
+N8 xbar=0.8: a_fit=+2.144119e-02 a_pred=+2.144166e-02 | b_fit=-5.85666e-03 b_pred=-5.87999e-03 (b without Delta terms: -2.94000e-03) -> PASS
+N8 xbar=1.2: a_fit=+3.619514e-02 a_pred=+3.619570e-02 | b_fit=-1.37210e-02 b_pred=-1.37488e-02 (b without Delta terms: -6.87441e-03) -> PASS
+N8 xbar=2.0: a_fit=+3.445124e-02 a_pred=+3.445091e-02 | b_fit=-1.28341e-02 b_pred=-1.28183e-02 (b without Delta terms: -6.40913e-03) -> PASS
+N8 xbar=2.8: a_fit=+4.675900e-03 a_pred=+4.675711e-03 | b_fit=+3.05342e-03 b_pred=+3.06184e-03 (b without Delta terms: +1.53092e-03) -> PASS

@@ -1,0 +1,153 @@
+problem_id: P003.S02
+parent: P003                 # container: problems/P003-hydrogen-imaginary-time/ (see ../PLAN.md)
+# Laid out by hand on 2026-11-12 to match what New-Problem.ps1 seeds for a top-level
+# problem, as S01 was: the script has no container support yet (PLAN §7, item 1).
+slug: jensen-lower-bound
+title: "A lower bound on the imaginary-time propagator from Jensen's inequality"
+course: "Introduction to Theoretical Physics"
+project: "Guide 15, Project 04: hydrogen by imaginary time"
+phase: 1
+chunks: [K2]              # ../paper/kole-deraedt-2001/chunks.md
+loop_weight: standard            # PLAN §4.3
+paper_access: closed-book          # both rounds, in fact (recorded by /log): the planned open-book round 2 on eqs. (7)-(14) did not happen, because corrector-prompt-1 carried no paper material
+# Scope, decided 2026-11-12 when the prompt0 was drafted. The user asked for the
+# "modified Trotter-Suzuki formula" of Kole and De Raedt (their eqs. (14) and (16)) to be
+# verified algebraically and against the known oscillator and hydrogen levels, run through
+# the loop. Beyond the draft statement of K2 in chunks.md, part (b) adds the m-slice
+# approximant (the K4(a) inequality), the trapezium identity (the first half of the K3
+# remark) and the order of the error. These are the parts that make the bound a modified
+# product formula. The upper bound (15) stays in K3, and the m = 1 comparison stays in K4.
+# The decisive test and perturbation variant go to the auditor in the [FOCUS] block once
+# answer-1 exists: paste the block "[FOCUS] for round 1" under this subproblem's chunk in
+# ../paper/kole-deraedt-2001/chunks.md. In S01 the block was left empty and the test never
+# ran (S01 README §7). The solver never sees it.
+# /log, 2026-11-13: in prompts/audit-prompt-01.md the [FOCUS] block was again left as the
+# template placeholder, so the decisive test and perturbation variant did not run in S02 either.
+opened: 2026-11-12
+closed: 2026-11-13
+status: closed               # open | closed | escalated | abandoned
+verdict: ACCEPT              # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
+# Verdict as given by audit-report-1. CONVENTIONS v1.5 §5 defines ACCEPT as "no open QUESTION";
+# F1.1 (QUESTION) was open when it was given. Recorded as given.
+rounds: 1                    # audit rounds
+answers: 2                   # answer-1 (audited), answer-2 (reply to corrector-prompt-1, not audited)
+final_answer: answers/answer-2.md
+final_answer_audited: false  # loop ended after audit 1 by the user's decision ("Answer 2 has no audit because it wasn't necessary")
+
+templates:
+  conventions: v1.5
+  prompt0: v1.3
+  audit: v1.4
+  blind_solve: v1.0
+  human_attempt: v1.1
+  exploration: v1.0
+  log_skill: v1.6
+  # log_skill as in S01: the last version CHANGELOG.md states for /log. New-Problem.ps1
+  # would write v1.7, the newest CHANGELOG heading, which is the method version.
+
+# One entry per model call. Effort level cannot be observed from inside a
+# session, so it is always user-reported, and `unknown` is a valid value.
+# Never guess one: a guessed field silently poisons comparisons across runs.
+runs:
+  - artifact: answers/answer-1.md
+    role: solver
+    model_id: claude-opus-5-5
+    model_label: "Claude Opus 5.5"
+    model_source: self-reported
+    effort: unknown
+    effort_source: unknown        # not stated by the user when asked during /log
+    tools: [code, web]
+    context: clean                # no claude.ai project; account memory on, holding nothing about this problem
+    date: 2026-11-12
+  - artifact: audits/audit-report-1.md
+    role: auditor
+    model_id: gemini-2.5-pro
+    model_label: "Gemini 2.5 Pro"
+    model_source: self-reported   # from the report's run header
+    effort: low
+    effort_source: self-reported  # from the report's run header
+    tools: []                     # run header: code execution no; web no
+    code_executed: no
+    date: 2026-11-13
+  - artifact: answers/answer-2.md
+    role: solver
+    model_id: claude-opus-5-5
+    model_label: "Claude Opus 5.5"
+    model_source: self-reported
+    effort: unknown
+    effort_source: unknown
+    tools: [code, web]
+    context: clean                # same conversation as answer-1
+    date: 2026-11-13
+
+gates:
+  locators_complete: pass         # every [V] carries a section/theorem/equation locator; the answer uses no [S] tags
+  no_unflagged_recall: fail       # answer-2 §9 item 3: `[R]` Golden–Thompson/Araki–Lieb–Thirring upper bound is not in the Risk register (not load-bearing)
+  sources_split: pass
+  general_refs_resolved: fail     # C5 "Feynman & Hibbs ... ch. 11", "Feynman ... ch. 3" (also in the Prior-knowledge declaration); §3.2 remark "Simon, J. Funct. Anal. 28, 377 (1978)" with no locator (frozen section); C2 Kato pp. 185-195 (whole paper); C6 Colbert-Miller (no equation)
+  convergence_check: pass
+  code_output_present: pass       # round-2 outputs verbatim in answer-2 §4.5; round-1 runs in answer-1 §4.5; all runs, including failed and crashed ones, in assets/code/ (crashed run-3 attempts: fragments only, marked PARTIAL)
+  code_coverage_notes: fail       # D1-D3 (check_diagnostics.py): the answer states what they do but not what they would miss; same for debug_S7.py (answer-1)
+  code_not_circular: fail         # no circular check found, but positivity assumptions inside the code are not all restated as [A] in the text: sympy symbols U, V (S4), uu (S5), v (S9) are declared positive=True and are missing from the [A] list in answer-2 §4.2 (all are integration variables in (0, tau); harmless, but laundered by the gate's definition)
+  code_audited: fail              # audit-report-1: "Pass 6 — Code audit and independent computation: not performed (code execution disabled in this session)"; no pass 6a review exists
+  audit_trail_complete: pass      # one audit round, report captured; note final_answer_audited: false
+  ground_truth_timing: pass       # no external ground truth
+  findings_closed: pass           # F1.1 accepted in answer-2 (closure not confirmed by an auditor)
+  stopping_rule: pass             # audit 1: no BLOCKER, no MAJOR (CONVENTIONS §6)
+  latex_clean: fail               # 0 undefined refs, 0 undefined cites, no \emph; 34 overfull hboxes > 10 pt (largest 175 pt: one-line display equations from §3.1 and §3.5.1, long inline formulas, \texttt paths, provenance-table cells). Log: final/final.log. Not edited, per /log.
+# Gate failures were stamped, not fixed: the user closed the loop ("Log now ... this audit loop is over").
+# Clearing any gate other than latex_clean would need a new answer (answer-3), from a context
+# that has not read this folder.
+
+findings_summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 0, accepted: 0, rebutted: 0}
+  nit:      {raised: 0, accepted: 0, rebutted: 0}
+  question: {raised: 1, answered: 1}
+  rebuttals_upheld: 0
+
+# Optional. No gate turns on any of this. Every field may be `unknown`, and the
+# whole block can be deleted if there was no attempt. `recorded` is the one
+# worth being accurate about: an attempt written up after reading the answer is
+# still useful, but it is not a prior.
+human_attempt:
+  exists: false                # human/attempt.md is the untouched template
+  form: none                   # markdown | scan | photo | notes | none
+  recorded: unknown            # before-answer | after-answer | unknown
+  time_spent_min:
+  reached_an_answer:
+  prediction:
+  prediction_correct:
+
+ground_truth:
+  available: false
+  source: none               # professor | answer-key | measurement | numerical | none
+  verdict:
+  arrived: none              # before-loop | mid-loop | after-loop | none
+
+independence:
+  declaration_requested: true
+  recognized_problem: true                # "In outline, yes" (sources/independence.md)
+  declared_result_matched: true
+  anchoring_steps_self_reported: 7        # answer-2 §6 list
+  anchoring_steps_found_by_auditor: 0     # audit-report-1 Pass 8: pass, no finding
+  retrieval_suspected:                    # your judgement; the auditor raised none
+  perturbation_test_run: false            # [FOCUS] block left empty in audit-prompt-01.md
+  perturbation_test_passed:
+  # PI checks that exist for this chunk and must not reach the solver: none specific; pc3 (oscillator slice weight) bears on part (d)
+  # /log note: during logging, after both answers were final, the solver session read this file's
+  # planning comments (they name Kole-De Raedt eqs. (14)-(16) and the upper bound (15)). Any further
+  # answer on this problem should come from a fresh context.
+
+sources:
+  used: 6                    # U1-U6 (entries; U3, U4, U6 bundle several theorems)
+  consulted: 7               # C1-C7
+  verified_tool: 3           # U1, U2, U5
+  verified_human: 0
+  unverified: 3              # U3, U4, U6 (Reed–Simon I, II; Rudin): {ver: no}, most locators corroborated by retrieved papers citing them
+  load_bearing_unverified: 3 # U3 (VI.23, VIII.20(b), VIII.25(a)), U4 (X.15, IX.28), U6 (1.26, 1.34) — all in the Risk register
+
+result_one_line: "⟨x|e^{-τH}|x'⟩ ≥ ρ0 exp(−∫0^τ⟨V⟩_u du), ⟨V⟩_u the free-bridge Gaussian average; local defect Dτ³|∇V(x̄)|²/12, so Ẑ_m ≤ Z with relative error Dβ³⟨|∇V|²⟩/(12m²); Coulomb by truncation + monotone convergence."
+
+branches_queued: []          # no exploration step was run

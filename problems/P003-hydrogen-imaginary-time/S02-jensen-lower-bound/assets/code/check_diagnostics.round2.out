@@ -1,0 +1,9 @@
+numpy 2.5.3
+D1 x=x'=0: run-1 I - bound = +2.25e-12   run-2 I - bound = -1.33e-15
+D2 tau=0.2: nonpositive DVR entries inside tested region: 0, outside: 6110; min |x-x'| among them: 3.56; largest |K| among them: 4.4e-14
+D2 tau=0.4: nonpositive DVR entries inside tested region: 0, outside: 3406; min |x-x'| among them: 5.00; largest |K| among them: 2.1e-14
+D2 tau=1.0: nonpositive DVR entries inside tested region: 0, outside: 12; min |x-x'| among them: 7.92; largest |K| among them: 6.0e-15
+D2 tau=2.0: nonpositive DVR entries inside tested region: 0, outside: 0; min |x-x'| among them: nan; largest |K| among them: 0.0e+00
+D2 tau=4.0: nonpositive DVR entries inside tested region: 0, outside: 0; min |x-x'| among them: nan; largest |K| among them: 0.0e+00
+D3 seed=20261113 paths=2000000: z = -2.23 -1.61 +0.28 +0.07 +0.78 +1.64 +0.64 +0.11 -0.46 +0.05 -0.94 -0.55 -0.17 -0.13 +0.25  max|z|=2.23 -> PASS
+D3 seed=20261114 paths=2000000: z = -0.32 -0.07 +0.87 +0.33 -0.32 +0.09 +0.37 +0.54 +1.03 +0.63 +0.33 -0.03 +0.09 +1.31 +1.10  max|z|=1.31 -> PASS

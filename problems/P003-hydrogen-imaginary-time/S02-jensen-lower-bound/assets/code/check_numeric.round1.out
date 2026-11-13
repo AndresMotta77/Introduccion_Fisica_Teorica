@@ -1,0 +1,135 @@
+/home/claude/checks/check_numeric.py:85: IntegrationWarning: The occurrence of roundoff error is detected, which prevents 
+  the requested tolerance from being achieved.  The error may be 
+  underestimated.
+  num = integrate.quad(lambda y: f(y)*Vfun(kind, y, par), lo, hi, points=pts, limit=400, epsabs=0, epsrel=1e-13)[0]
+/home/claude/checks/check_numeric.py:257: RuntimeWarning: invalid value encountered in log
+  L = (logR - np.log(Kcos[t][np.ix_(cen, cen)]))[near]
+numpy 2.5.3 scipy 1.18.1
+
+=== N1  <V>_u: quadrature from the definition vs closed form ===
+N1 quad     draws=150  max rel err=1.32e-13  max |norm-1|=1.31e-13  -> PASS
+N1 cos      draws=150  max rel err=1.56e-13  max |norm-1|=1.57e-13  -> PASS
+N1 quartic  draws=150  max rel err=9.84e-14  max |norm-1|=8.79e-14  -> PASS
+
+=== N2  weighted free-walk Monte Carlo (definition of the bridge) ===
+N2 z-scores, j=1..15: +0.15 +1.83 +0.96 -0.07 +0.46 +0.40 -0.43 -0.49 +0.03 -0.48 -2.15 -2.23 -3.19 -2.47 -1.64
+N2 effective sample size: 109598  max|z| = 3.19 -> PASS
+
+=== N3  finite-m Trotter inequality (T6) on a grid ===
+N3 cos  m= 2: min log(K_m/R_m)=+2.245e-02  max=5.382e-02  h-vs-h/2 disc=3.1e-15  -> PASS
+N3 cos  m= 4: min log(K_m/R_m)=+2.038e-02  max=7.211e-02  h-vs-h/2 disc=2.7e-15  -> PASS
+N3 cos  m= 8: min log(K_m/R_m)=+1.861e-02  max=7.764e-02  h-vs-h/2 disc=2.9e-15  -> PASS
+N3 cos  m=16: min log(K_m/R_m)=+1.805e-02  max=7.912e-02  h-vs-h/2 disc=3.6e-15  -> PASS
+N3 quad m= 2: min log(K_m/R_m)=+3.608e-03  max=2.536e-01  h-vs-h/2 disc=2.7e-15  -> PASS
+N3 quad m= 4: min log(K_m/R_m)=+2.980e-03  max=3.208e-01  h-vs-h/2 disc=3.6e-15  -> PASS
+N3 quad m= 8: min log(K_m/R_m)=+2.713e-03  max=3.378e-01  h-vs-h/2 disc=2.7e-15  -> PASS
+N3 quad m=16: min log(K_m/R_m)=+2.639e-03  max=3.421e-01  h-vs-h/2 disc=2.9e-15  -> PASS
+
+=== N4  oscillator: (*) against the exact (Mehler) kernel ===
+ tau     max L        min L         at x=x'=0: L        large-tau asympt.
+  0.05  -1.736e-08  -4.688e-05  -1.735836e-08  +1.176084e+00  -> PASS
+  0.10  -2.776e-07  -3.749e-04  -2.776015e-07  +8.538856e-01  -> PASS
+  0.20  -4.433e-06  -2.992e-03  -4.433191e-06  +5.548120e-01  -> PASS
+  0.50  -1.709e-04  -4.590e-02  -1.709060e-04  +2.291667e-01  -> PASS
+  1.00  -2.614e-03  -3.436e-01  -2.613653e-03  +7.009308e-02  -> PASS
+  2.00  -3.572e-02  -2.181e+00  -3.572324e-02  -2.648051e-02  -> PASS
+  5.00  -7.346e-01  -1.436e+01  -7.346486e-01  -7.346259e-01  -> PASS
+ 10.00  -4.831e+00  -4.083e+01  -4.831199e+00  -4.831199e+00  -> PASS
+
+N4b small tau: -L compared with the leading term of part (b), Dk^2 tau^3 xbar^2/12,
+    and with leading + next (eq. (30)); points with |x-x'| <= 2 sqrt(2 D tau), |xbar| >= 0.5
+   tau=0.400  npts= 4508  max|(-L)/P1 - 1|=1.855e-01  max|(-L)/P2 - 1|=1.573e-02
+   tau=0.200  npts= 3234  max|(-L)/P1 - 1|=9.184e-02  max|(-L)/P2 - 1|=3.982e-03
+   tau=0.100  npts= 2372  max|(-L)/P1 - 1|=4.965e-02  max|(-L)/P2 - 1|=9.987e-04
+   tau=0.050  npts= 1646  max|(-L)/P1 - 1|=2.375e-02  max|(-L)/P2 - 1|=2.499e-04
+   tau=0.025  npts= 1272  max|(-L)/P1 - 1|=1.260e-02  max|(-L)/P2 - 1|=6.251e-05
+   at xbar = 1, Delta = 0:  -L/tau^3 -> 0.042055, 0.041903, 0.041795, 0.041734, 0.041701    prediction D k^2/12 = 0.041667
+
+=== N5  cosine potential, exact kernel by sinc-DVR diagonalization ===
+N5 validation tau=0.025: max|log K_dvr - log rho0|=4.1e-12   max|log K_dvr - log K_Mehler|=1.0e-12  -> PASS
+N5 validation tau=0.050: max|log K_dvr - log rho0|=2.3e-12   max|log K_dvr - log K_Mehler|=4.6e-13  -> PASS
+N5 validation tau=0.100: max|log K_dvr - log rho0|=1.8e-12   max|log K_dvr - log K_Mehler|=7.9e-13  -> PASS
+N5 validation tau=0.200: max|log K_dvr - log rho0|=2.6e-12   max|log K_dvr - log K_Mehler|=1.9e-12  -> PASS
+N5 validation tau=0.400: max|log K_dvr - log rho0|=3.9e-12   max|log K_dvr - log K_Mehler|=4.9e-12  -> PASS
+N5 validation tau=1.000: max|log K_dvr - log rho0|=7.1e-12   max|log K_dvr - log K_Mehler|=1.4e-11  -> PASS
+
+N5b small-tau coefficient at Delta = 0: y(tau) = log(K/R)/tau^3, fit y = a + b tau + c tau^2
+    predictions: a = D V'(xbar)^2/12, b = D^2 (V''^2/90 + V' V'''/30)   [eqs. (26), (29)]
+   xbar=0.4: a_fit=+6.318462e-03 a_pred=+6.318610e-03 | b_fit=+1.09786e-03 b_pred=+1.09282e-03 | y(0.025)=+6.346076e-03
+   xbar=0.8: a_fit=+2.144021e-02 a_pred=+2.144166e-02 | b_fit=-2.89190e-03 b_pred=-2.94000e-03 | y(0.025)=+2.136923e-02
+   xbar=1.2: a_fit=+3.619401e-02 a_pred=+3.619570e-02 | b_fit=-6.81884e-03 b_pred=-6.87441e-03 | y(0.025)=+3.602516e-02
+   xbar=1.6: a_fit=+4.163082e-02 a_pred=+4.163114e-02 | b_fit=-8.31388e-03 b_pred=-8.32386e-03 | y(0.025)=+4.142360e-02
+   xbar=2.0: a_fit=+3.445220e-02 a_pred=+3.445091e-02 | b_fit=-6.45200e-03 b_pred=-6.40913e-03 | y(0.025)=+3.429026e-02
+   xbar=2.8: a_fit=+4.676079e-03 a_pred=+4.675711e-03 | b_fit=+1.51909e-03 b_pred=+1.53092e-03 | y(0.025)=+4.713455e-03
+
+N5c inequality (*) for the cosine at moderate/large tau; region |x|,|x'|<=4, |x-x'|<=3 sqrt(2 D tau)
+   tau=0.2: max L = -4.257e-06   min L = -3.203e-04  -> PASS
+   tau=0.4: max L = -6.477e-05   min L = -2.463e-03  -> PASS
+   tau=1.0: max L = -2.142e-03   min L = -3.423e-02  -> PASS
+   tau=2.0: max L = -2.525e-02   min L = -2.254e-01  -> PASS
+   tau=4.0: max L = -2.208e-01   min L = -1.198e+00  -> PASS
+
+=== N6  oscillator partition-function approximant Zhat_m ===
+N6a beta=4 m= 1: log Zhat circulant=-2.719627694453  grid=-2.719627694453  diff=-2.4e-14
+N6a beta=4 m= 2: log Zhat circulant=-2.196802064012  grid=-2.196802064012  diff=-4.3e-14
+N6a beta=4 m= 4: log Zhat circulant=-2.047331120742  grid=-2.047331120742  diff=-8.5e-14
+N6a beta=4 m= 8: log Zhat circulant=-2.000161919043  grid=-2.000161919042  diff=-1.7e-13
+N6a beta=4 m=16: log Zhat circulant=-1.986517385831  grid=-1.986517385830  diff=-3.4e-13
+
+N6b beta=1.0: Z=9.5951737567e-01, predicted A = 0.04508236
+   m=    1  Zhat/Z=0.958861650618  m^2(1-Zhat/Z)=0.04113835  Zprim/Z=1.042190610987
+   m=    2  Zhat/Z=0.989405070226  m^2(1-Zhat/Z)=0.04237972  Zprim/Z=1.011073404971
+   m=    4  Zhat/Z=0.997278535555  m^2(1-Zhat/Z)=0.04354343  Zprim/Z=1.002805029432
+   m=    8  Zhat/Z=0.999308369616  m^2(1-Zhat/Z)=0.04426434  Zprim/Z=1.000703618513
+   m=   64  Zhat/Z=0.999989019861  m^2(1-Zhat/Z)=0.04497465  Zprim/Z=1.000011006242
+   m=  512  Zhat/Z=0.999999828076  m^2(1-Zhat/Z)=0.04506884  Zprim/Z=1.000000171975
+   m= 2048  Zhat/Z=0.999999989252  m^2(1-Zhat/Z)=0.04508132  Zprim/Z=1.000000010748
+   Richardson 2f(2048)-f(1024) = 0.04508681   rel. dev. from A = 9.87e-05
+   all Zhat_m <= Z: True   all Zprim_m >= Z: True  -> PASS
+
+N6b beta=4.0: Z=1.3786028239e-01, predicted A = 1.38308629
+   m=    1  Zhat/Z=0.478015011927  m^2(1-Zhat/Z)=0.52198499  Zprim/Z=1.813430203924
+   m=    2  Zhat/Z=0.806309584104  m^2(1-Zhat/Z)=0.77476166  Zprim/Z=1.282288794403
+   m=    4  Zhat/Z=0.936302596803  m^2(1-Zhat/Z)=1.01915845  Zprim/Z=1.081320855580
+   m=    8  Zhat/Z=0.981525420587  m^2(1-Zhat/Z)=1.18237308  Zprim/Z=1.021263361088
+   m=   64  Zhat/Z=0.999669027436  m^2(1-Zhat/Z)=1.35566362  Zprim/Z=1.000337580242
+   m=  512  Zhat/Z=0.999994737169  m^2(1-Zhat/Z)=1.37961969  Zprim/Z=1.000005276034
+   m= 2048  Zhat/Z=0.999999670453  m^2(1-Zhat/Z)=1.38222095  Zprim/Z=1.000000329753
+   Richardson 2f(2048)-f(1024) = 1.38309012   rel. dev. from A = 2.77e-06
+   all Zhat_m <= Z: True   all Zprim_m >= Z: True  -> PASS
+
+N6b beta=10.0: Z=6.7382529153e-03, predicted A = 20.83522508
+   m=    1  Zhat/Z=0.003567237375  m^2(1-Zhat/Z)=0.99643276  Zprim/Z=14.840642115558
+   m=    2  Zhat/Z=0.131033430714  m^2(1-Zhat/Z)=3.47586628  Zprim/Z=5.511676112826
+   m=    4  Zhat/Z=0.485971982819  m^2(1-Zhat/Z)=8.22444827  Zprim/Z=2.247485001725
+   m=    8  Zhat/Z=0.794072797280  m^2(1-Zhat/Z)=13.17934097  Zprim/Z=1.321654570042
+   m=   64  Zhat/Z=0.995176568157  m^2(1-Zhat/Z)=19.75677683  Zprim/Z=1.005085695127
+   m=  512  Zhat/Z=0.999921037054  m^2(1-Zhat/Z)=20.69966242  Zprim/Z=1.000079479824
+   m= 2048  Zhat/Z=0.999995040578  m^2(1-Zhat/Z)=20.80132288  Zprim/Z=1.000004967503
+   Richardson 2f(2048)-f(1024) = 20.83522020   rel. dev. from A = 2.34e-07
+   all Zhat_m <= Z: True   all Zprim_m >= Z: True  -> PASS
+
+=== N7  Coulomb: Gaussian average of 1/|y| in d = 3 ===
+N7a mu=0.0 s=0.2: closed=3.9894228040  quad rel err=2.2e-16  MC z=-0.62  -> PASS
+N7a mu=0.0 s=1.0: closed=0.7978845608  quad rel err=3.3e-16  MC z=-0.65  -> PASS
+N7a mu=0.3 s=0.2: closed=2.8879519915  quad rel err=2.2e-16  MC z=-1.96  -> PASS
+N7a mu=0.3 s=1.0: closed=0.7860761479  quad rel err=2.2e-16  MC z=-0.93  -> PASS
+N7a mu=1.0 s=0.5: closed=0.9544997361  quad rel err=2.2e-16  MC z=-0.10  -> PASS
+N7a mu=3.0 s=1.0: closed=0.3324334013  quad rel err=0.0e+00  MC z=-2.14  -> PASS
+
+N7b  I(x,x') = int_0^tau <1/r>_u du vs bound sqrt(pi tau/D) (eq. (46)); D = 0.5, tau = 1
+   x=[0. 0. 0.], x'=[0. 0. 0.]:  I=2.5066282746   bound=2.5066282746   I-bound=-1.3e-15  I<=bound(+1e-12): True
+   x=[0.3 0.  0. ], x'=[0. 0. 0.]:  I=2.2401862525   bound=2.5066282746   I-bound=-2.7e-01  I<=bound(+1e-12): True
+   x=[0.5 0.  0. ], x'=[-0.5  0.   0. ]:  I=1.8038160253   bound=2.5066282746   I-bound=-7.0e-01  I<=bound(+1e-12): True
+   x=[1. 1. 0.], x'=[1. 0. 1.]:  I=0.7725925307   bound=2.5066282746   I-bound=-1.7e+00  I<=bound(+1e-12): True
+   x=[3. 0. 0.], x'=[3. 0. 0.]:  I=0.3333333332   bound=2.5066282746   I-bound=-2.2e+00  I<=bound(+1e-12): True
+
+N7c  monotone convergence of the truncation, x = x' = 0, D = 0.5, tau = 1:
+     int_0^tau <min(1/r, N)>_u du  (radial quadrature) should increase to sqrt(2 pi) = 2.5066282746
+     N=     1: 0.9787169647
+     N=     3: 1.8635976587
+     N=    10: 2.3072922841
+     N=    30: 2.4399862884
+     N=   100: 2.4866289416
+     N=  1000: 2.5046266558
+     N= 10000: 2.5064377802

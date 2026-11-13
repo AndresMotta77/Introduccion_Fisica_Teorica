@@ -1,0 +1,27 @@
+# Every finding id raised in the loop, with its disposition.
+# Source of the finding text: audits/audit-report-1.md (verbatim auditor output).
+findings:
+  - id: F1.1
+    severity: QUESTION
+    raised_round: 1
+    raised_by: auditor (gemini-2.5-pro, self-reported)
+    location: "Section 3.5.4, eq. (28)"
+    summary: "Tensor notation ∇V·∇³V[Δ,Δ,·] ambiguous without component indices."
+    fix_supplied: no
+    disposition: accepted
+    response: "answers/answer-2.md, 'Response to audit 1' (copy in audits/response-to-audit-1.md)"
+    change: "§3.5.4 rewritten in index notation, intended contraction stated as Σ ∂_iV ∂_i∂_j∂_kV Δ_jΔ_k; new check S9 (d = 2, exact Var S) tests every contraction of eq. (27); no coefficient, sign or power changed."
+    closed_round: 2
+    closure_confirmed_by_auditor: false   # the loop ended after audit 1; answer-2 was not audited
+
+summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 0, accepted: 0, rebutted: 0}
+  nit:      {raised: 0, accepted: 0, rebutted: 0}
+  question: {raised: 1, answered: 1}
+  rebuttals_upheld: 0
+
+notes:
+  - "audit-report-1 verdict is ACCEPT with F1.1 (QUESTION) open; CONVENTIONS v1.5 §5 defines ACCEPT as 'no open QUESTION'. Recorded as given."
+  - "The auditor's reply had no literal 'Part A' heading; it was split at 'Part B — Corrector prompt'. The pass table arrived flattened onto one line and is filed as pasted."

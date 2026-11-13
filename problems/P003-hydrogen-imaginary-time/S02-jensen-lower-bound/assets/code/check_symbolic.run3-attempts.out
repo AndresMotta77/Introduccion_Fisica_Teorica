@@ -1,0 +1,26 @@
+PARTIAL: full tracebacks were not preserved; the fragments below are as quoted in answers/answer-1.md §4.5.2.
+
+Attempt 1 (PYTHONHASHSEED unpinned, S8 appended, before the S6 fix). First 19 output lines identical to check_symbolic.run2.out, then:
+  File "/usr/local/lib/python3.13/site-packages/sympy/series/gruntz.py", line 513, in mrv_leadterm
+    f, logw = rewrite(exps, Omega, x, w)
+              ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/sympy/series/gruntz.py", line 611, in rewrite
+    raise NotImplementedError('Result depends on the sign of %s' % sig)
+NotImplementedError: Result depends on the sign of -sign(X**2)
+(traceback pointed at check_symbolic.py line 138, the S7a sp.series call)
+
+Attempt 2 (PYTHONHASHSEED=1,2,3, S7a wrapped, before the S6 fix):
+== PYTHONHASHSEED=1
+    raise PoleError("Cannot expand %s around 0" % (self))
+sympy.core.function.PoleError: Cannot expand exp((x - xp)**2/(4*_t*D)) around 0
+    raise PoleError("Cannot expand %s around 0" % (self))
+sympy.core.function.PoleError: Cannot expand exp((x - xp)**2/(4*_t*D)) around 0
+    raise NotImplementedError('Result depends on the sign of %s' % sig)
+NotImplementedError: Result depends on the sign of sign(x**2)
+== PYTHONHASHSEED=2
+[... same PoleError lines ...]
+NotImplementedError: Result depends on the sign of -sign(x*xp)
+== PYTHONHASHSEED=3
+[... same PoleError lines ...]
+NotImplementedError: Result depends on the sign of -sign(x*xp)
+(in all three seeds the last line passed was "S6 Mehler PDE residual / K: residual = 0   -> PASS"; traceback at line 117, the S6 limit)

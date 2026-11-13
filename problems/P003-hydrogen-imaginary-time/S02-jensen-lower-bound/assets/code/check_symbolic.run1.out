@@ -1,0 +1,23 @@
+sympy 1.14.0
+S1 log(marginal) - log(claimed Gaussian): residual = 0   -> PASS
+S2 Chapman-Kolmogorov ratio - 1: residual = 0   -> PASS
+S3 Cov[00] - claimed: residual = 0   -> PASS
+S3 Cov[01] - claimed: residual = 0   -> PASS
+S3 Cov[10] - claimed: residual = 0   -> PASS
+S3 Cov[11] - claimed: residual = 0   -> PASS
+S3 mean(y1) - m(u1): residual = 0   -> PASS
+S3 mean(y2) - m(u2): residual = 0   -> PASS
+S4 I1 - D t^3/6: residual = 0   -> PASS
+S4 I2 (odd moment) - 0: residual = 0   -> PASS
+S4 I3 - D t^3/360: residual = 0   -> PASS
+S4 I4 - 2 D^2 t^4/45: residual = 0   -> PASS
+S4 I5 - D^2 t^4/15: residual = 0   -> PASS
+S5 int <V>_u du - claimed: residual = 0   -> PASS
+S5 lim u->0 <V>_u - V(x): residual = 0   -> PASS
+S5 lim u->tau <V>_u - V(x'): residual = 0   -> PASS
+S6 Mehler PDE residual / K: residual = 0   -> PASS
+S6 ln K - ln rho0 at O(s^0): residual = 0   -> PASS
+S7 series of ln(K/RHS) through e^10 (tau^5):
+    X**2*e**2*kappa/2 + e**8*(D**2*kappa**2/90 + D*d**2*kappa**2/720)
+S7 residual through tau^4 (e^0..e^9): residual = X**2*e**2*kappa*(-D*e**4*kappa + 6)/12   -> FAIL
+S7 first term beyond prediction (e^10 = tau^5): 0
