@@ -1,0 +1,37 @@
+67	2.3 Problem restated, and how I read it	0	D	Plane waves $e^{ikx}$ are eigenfunctions of $K$ with eigenvalue $k^2/2$, and Fourier inve
+75	2.3 Problem restated, and how I read it	G	D	This comes from writing $-pk^2/2+Jk = -\tfrac p2(k - J/p)^2 + J^2/2p$ and using $\int e^{
+85	3.1 Part (a): the slice weight	G	A1	The $y$-integral is evaluated for $0<u<\tau$ strictly. It buys finite variances $u$ and $
+118	3.1 Part (a): the slice weight	2	D	Now compute $R$. Over the common denominator $\tau u(\tau-u)$,
+137	3.1 Part (a): the slice weight	3	D	Insert (2) and (3) into (1) and divide by $\rho_0(x,x';\tau) = (2\pi\tau)^{-1/2}e^{-(x-x'
+149	3.1 Part (a): the slice weight	5	D	Here I used $\int p_u = 1$, $\int (y-\bar y)p_u = 0$ (odd integrand), and $\int(y-\bar y)
+169	3.1 Part (a): the slice weight	8	D	Hence
+185	3.1 Part (a): the slice weight	10	R	By the Feynman–Kac formula the exact kernel is $\rho(x,x';\tau) = \rho_0\,\mathbb E_{\rm
+196	3.2 Part (b): the closed-ring Gaussian i	11	D	With the cyclic shift $(Px)_n = x_{n+1}$ and the $m\times m$ identity matrix $\mathbf 1$,
+225	3.2 Part (b): the closed-ring Gaussian i	13	D	The middle equality holds for real symmetric positive-definite $\hat A$ (positivity is sh
+247	3.2 Part (b): the closed-ring Gaussian i	15	D	With $|z|<1$ both $1\pm z$ are positive, so the positive square roots give $\sqrt C(1+z)
+261	3.2 Part (b): the closed-ring Gaussian i	17	D	This holds for $z\ne0$, and for $z=0$ it is trivial. The set $\{e^{-i\theta_k}\}$ equals
+281	3.2 Part (b): the closed-ring Gaussian i	19a	D	Here $\alpha_P = 2+\tau^2$, $\gamma_P = 2$, $\alpha_P+\gamma_P = 4\kappa_P^2$, $\alpha_P
+293	3.2 Part (b): the closed-ring Gaussian i	20	D	The step uses $\partial_\tau D_m = m[s_+^{m-1}(\kappa'+\tfrac12) - s_-^{m-1}(\kappa'-\tfr
+299	3.2 Part (b): the closed-ring Gaussian i	21	D	The second form follows from $\partial_\beta[m\operatorname{arcsinh}(\beta/2m)] = \tfrac1
+331	3.3 Part (c): spectra of $T_\tau$ and $T	21	S	By the Hermite generating function (DLMF 18.12.15, $e^{2\xi z - z^2} = \sum_nH_n(\xi)z^n/
+351	3.3 Part (c): spectra of $T_\tau$ and $T	22	A2	Next, differentiate (22) $n$ times in $s$ at $s=0$, passing $\partial_s^n$ under the $x'$
+353	3.3 Part (c): spectra of $T_\tau$ and $T	22	S	DLMF §18.18(i) states that every $f$ in $L^2(\mathbb R, e^{-\xi^2}d\xi)$ has a Hermite ex
+355	3.3 Part (c): spectra of $T_\tau$ and $T	22	D	with `[R]` operator facts. $T_\tau$ is Hilbert–Schmidt (square-integrable Gaussian kernel
+355	3.3 Part (c): spectra of $T_\tau$ and $T	22	R	operator facts. $T_\tau$ is Hilbert–Schmidt (square-integrable Gaussian kernel, $A>|B|$)
+355	3.3 Part (c): spectra of $T_\tau$ and $T	22	R	For $m\ge2$, $T^m$ is trace class with $\operatorname{Tr}T^m = \sum_j\mu_j^m$ over all it
+390	3.3 Part (c): spectra of $T_\tau$ and $T	25	D	The second form uses $\ln s_+ = \tfrac12\ln(s_+/s_-) + \tfrac12\ln(s_+s_-)$, $\ln s_- = -
+392	3.3 Part (c): spectra of $T_\tau$ and $T	25	D	
+402	3.3 Part (c): spectra of $T_\tau$ and $T	26	D	By hand to the leading terms:
+413	3.3 Part (c): spectra of $T_\tau$ and $T	27	N	). The odd terms are $n$-independent: they come entirely from the shift $\tau/12 + \ln(1-\
+421	3.3 Part (c): spectra of $T_\tau$ and $T	28	D	The first two terms are by hand, the $\tau^6$ term from check S6.
+427	3.4 Relation between (b) and (c), and th	28	D	The $m$-fold integral in $\hat Z_m$ is the trace of the $m$-fold composition of the kerne
+443	3.4 Relation between (b) and (c), and th	30	D	+ `[A3]`. From (25), $\tau E_n = (n+\tfrac12)(\tau + \tau^3/24) - \tau^4/144 + O(\tau^5)$
+443	3.4 Relation between (b) and (c), and th	30	A3	. From (25), $\tau E_n = (n+\tfrac12)(\tau + \tau^3/24) - \tau^4/144 + O(\tau^5)$, so $\va
+443	3.4 Relation between (b) and (c), and th	30	A3	I expand in $\tau$ inside the sum over $n$; the sum is dominated by geometric weights $e^
+970	4.3 Checks, code and output	31	A	. [A1] ($0<u<\tau$) is encoded in S1 by declaring $u,v>0$ with $\tau = u+v$. No other posi
+1133	A: `check_a.py` — $w$ against direct num	31	N	
+1274	C: `check_c.py` — spectra `[N]`	31	N	
+1286	C: `check_c.py` — spectra `[N]`	31	R	(not retrieved); a wrong norm would make that line fail rather than pass.
+1564	B: `check_b.py` — partition functions an	31	N	
+1855	P1: `check_p1.py` — the math under the h	31	N	(new in round 2)
+2138	6. Convergence check	31	R	trace identities for Hilbert–Schmidt operators.

@@ -1,0 +1,10 @@
+1,4d0
+< /home/claude/p003/r2/check_b_run1.py:74: RuntimeWarning: divide by zero encountered in log
+<   return -np.log(w)
+< /home/claude/p003/r2/check_b_run1.py:78: RuntimeWarning: divide by zero encountered in log
+<   return -np.log(w)
+63a60,63
+> 
+> real	1m23.918s
+> user	0m57.163s
+> sys	0m0.034s

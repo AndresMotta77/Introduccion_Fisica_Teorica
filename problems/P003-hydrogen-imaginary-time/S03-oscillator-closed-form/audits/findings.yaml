@@ -1,0 +1,32 @@
+# findings.yaml -- P003.S03. Every finding id, its severity, disposition and round closed.
+# Dispositions are the solver's (answer-2 §10, filed as audits/response-to-audit-1.md).
+# No auditor has reviewed them: answer-2 was not audited (gate audit_trail_complete failed).
+
+- id: F1.1
+  raised_round: 1
+  raised_by: auditor (Gemini, audits/audit-report-1.md)
+  severity: MINOR
+  location: "answer-1 eqs. (12), (19a)"
+  claim: "\\mathbb 1 for the identity matrix does not render under the allowed packages (amsmath, physics, siunitx)"
+  disposition: partial
+  accepted: >-
+    The defect: under the house template, \mathbb 1 prints the msbm glyph \nVdash, silently.
+    Fixed in answer-2 by \mathbf 1 at all 8 occurrences (one of the supplied fixes), with the
+    symbol defined at first use and in the symbol table. New check P1.
+  rejected: >-
+    (1) the stated package set: the house template also loads amssymb, amsthm and mathtools;
+    (2) "amssymb loaded by amsmath or physics": neither loads it;
+    (3) the suggested fix \mathbb{I}: it would be undefined under the finding's own package set;
+    (4) "illegible glyph or blank space": what prints is a legible wrong glyph.
+  closed_round: 2
+  auditor_response: none   # answer-2 not audited
+
+- id: SR2.1
+  raised_round: 2
+  raised_by: solver (answer-2 §10)
+  severity: NIT
+  location: "pandoc build of answer-2 under the house preamble: eqs. (6), (13), (14), long table rows"
+  claim: "displays and table rows overflow the right margin in the PDF build"
+  disposition: deferred   # frozen sections; left for a later round or for the /log build
+  closed_round:
+  auditor_response: none

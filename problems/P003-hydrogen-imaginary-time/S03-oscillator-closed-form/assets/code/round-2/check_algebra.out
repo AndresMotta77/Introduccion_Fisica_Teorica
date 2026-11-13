@@ -1,0 +1,37 @@
+S1 inner y-integral (sympy): (tau**2*u + tau**2*x**2 - tau*u**2 - 2*tau*u*x**2 + 2*tau*u*x*xp + u**2*x**2 - 2*u**2*x*xp + u**2*xp**2)/(2*tau**2)
+S1 u-integral (sympy): tau**2/12 + tau*x**2/6 + tau*x*xp/6 + tau*xp**2/6
+S1 claimed           : tau**2/12 + tau*x**2/6 + tau*x*xp/6 + tau*xp**2/6
+S1 difference simplifies to: 0
+S2 log(bridge ratio) - log(Gaussian(ybar, sig2)) = 0
+S3 bridge    m=1: det(tau*A) - D_m^2 = 0
+S3 bridge    m=2: det(tau*A) - D_m^2 = 0
+S3 bridge    m=3: det(tau*A) - D_m^2 = 0
+S3 bridge    m=4: det(tau*A) - D_m^2 = 0
+S3 bridge    m=5: det(tau*A) - D_m^2 = 0
+S3 bridge    m=6: det(tau*A) - D_m^2 = 0
+S3 bridge    m=7: det(tau*A) - D_m^2 = 0
+S4 primitive m=1: det(tau*A) - D_m^2 = 0
+S4 primitive m=2: det(tau*A) - D_m^2 = 0
+S4 primitive m=3: det(tau*A) - D_m^2 = 0
+S4 primitive m=4: det(tau*A) - D_m^2 = 0
+S4 primitive m=5: det(tau*A) - D_m^2 = 0
+S4 primitive m=6: det(tau*A) - D_m^2 = 0
+S4 primitive m=7: det(tau*A) - D_m^2 = 0
+S5 kappa^2 - (1+tau^2/12) = 0
+S5 tau(A+kappa) - (kappa+tau/2)^2 = 0
+S5 B/(A+kappa) - (kappa-tau/2)/(kappa+tau/2) = 0
+S5 primitive: AP^2-BP^2 - (1+tau^2/4) = 0
+S5 primitive: tau(AP+kapP) - (kapP+tau/2)^2 = 0
+S5 primitive: BP/(AP+kapP) - (kapP-tau/2)/(kapP+tau/2) = 0
+S6 bridge   E_n-(n+1/2) = 103*tau**6*(2*n + 1)/387072 - tau**5/1296 + 3*tau**4*(2*n + 1)/1280 - tau**3/144 + tau**2*(2*n + 1)/48
+S6 primitive E_n-(n+1/2) = -5*tau**6*(2*n + 1)/14336 + 3*tau**4*(2*n + 1)/1280 - tau**2*(2*n + 1)/48
+S6 alt-form difference at tau=1/10, n=0: -0E-167
+S6 alt-form difference at tau=1/10, n=3: -0E-165
+S6 alt-form difference at tau=7/5, n=0: -0E-165
+S6 alt-form difference at tau=7/5, n=3: 0E-165
+S6 alt-form difference at tau=12/5, n=0: -0E-166
+S6 alt-form difference at tau=12/5, n=3: 0E-165
+
+real	0m10.299s
+user	0m6.051s
+sys	0m0.104s

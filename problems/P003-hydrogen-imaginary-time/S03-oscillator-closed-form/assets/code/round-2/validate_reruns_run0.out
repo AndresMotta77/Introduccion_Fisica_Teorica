@@ -1,0 +1,14 @@
+out_algebra.txt      lines=  33  identical to round-1 record: True
+out_a.txt            lines=  20  identical to round-1 record: True
+out_a_run1.txt       lines=  20  identical to round-1 record: True
+out_a_run2.txt       lines=  20  identical to round-1 record: True
+out_c.txt            lines=  81  identical to round-1 record: True
+out_c_run1.txt       lines=  81  identical to round-1 record: True
+out_c_run0_C5.txt    lines=  12  identical to round-1 record: True
+out_b.txt            lines=  59  identical to round-1 record: True
+out_b_run1.txt       lines=  63  identical to round-1 record: True
+out_table.txt        lines=  17  identical to round-1 record: True
+out_dbg_a.txt        lines=   8  identical to round-1 record: False
+out_dbg_a2.txt       lines=   3  identical to round-1 record: False
+check_c run 0, sections C1-C4: identical to the final run's C1-C4: True
+NUMBER OF MISMATCHES: 2

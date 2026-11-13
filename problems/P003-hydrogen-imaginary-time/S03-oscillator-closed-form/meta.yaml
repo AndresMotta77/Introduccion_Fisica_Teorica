@@ -1,0 +1,164 @@
+problem_id: P003.S03
+parent: P003                 # container: problems/P003-hydrogen-imaginary-time/ (see ../PLAN.md)
+# Laid out by hand on 2026-11-12 to match what New-Problem.ps1 seeds for a top-level
+# problem, as S01 was: the script has no container support yet (PLAN §7, item 1).
+slug: oscillator-closed-form
+title: "The harmonic oscillator under a bridge-averaged slice weight: closed form and levels"
+course: "Introduction to Theoretical Physics"
+project: "Guide 15, Project 04: hydrogen by imaginary time"
+phase: 1
+chunks: [K5]              # ../paper/kole-deraedt-2001/chunks.md
+loop_weight: standard            # PLAN §4.3
+paper_access: closed-book          # round 1; round 2 open-book with eqs. (17)-(20) and Table I through the corrector prompt (chunks.md, K5)
+paper_access_actual: closed-book   # /log 2026-11-13: corrector-prompt-1 (Part B of audit 1) carried no paper equations or Table I, so round 2 was also closed-book
+# Scope, decided 2026-11-12 when the prompt0 was drafted. Part (c), the spectrum of the
+# one-slice operator and its levels E_n(tau) against n + 1/2, was added to the draft
+# statement of K5 in chunks.md. The user asked for the formula to be compared with the known
+# oscillator levels, and Table I of the paper compares thermal energies only. The positive
+# control for the phase-2 code is unchanged.
+# The decisive test and perturbation variant go to the auditor in the [FOCUS] block once
+# answer-1 exists: paste the block "[FOCUS] for round 1" under this subproblem's chunk in
+# ../paper/kole-deraedt-2001/chunks.md. In S01 the block was left empty and the test never
+# ran (S01 README §7). The solver never sees it.
+opened: 2026-11-12
+closed: 2026-11-13
+status: closed               # open | closed | escalated | abandoned
+verdict: ACCEPT-WITH-FIXES   # ACCEPT | ACCEPT-WITH-FIXES | REVISE | REJECT | ESCALATED
+# verdict of audit 1 (on answer-1). answer-2 applies the fix and was not audited; the user closed
+# the loop on 2026-11-13 (stopping rule met: no BLOCKER, no MAJOR in audit 1).
+rounds: 1                    # audit rounds; answers: 2 (answer-1, answer-2)
+
+templates:
+  conventions: v1.5
+  prompt0: v1.3
+  audit: v1.4
+  blind_solve: v1.0
+  human_attempt: v1.1
+  exploration: v1.0
+  log_skill: v1.6
+  # log_skill as in S01: the last version CHANGELOG.md states for /log. New-Problem.ps1
+  # would write v1.7, the newest CHANGELOG heading, which is the method version.
+
+# One entry per model call. Effort level cannot be observed from inside a
+# session, so it is always user-reported, and `unknown` is a valid value.
+# Never guess one: a guessed field silently poisons comparisons across runs.
+runs:
+  - artifact: answers/answer-1.md
+    role: solver
+    model_id: claude-opus-5-5
+    model_label: "Claude Opus 5.5"
+    model_source: self-reported
+    effort: extra              # user's label "Extra", given at /log on 2026-11-13
+    effort_source: user-reported
+    tools: [code, web]
+    context: clean             # no claude.ai project; account memory (profile, preferences) was on
+    date: 2026-11-12
+
+  - artifact: audits/audit-report-1.md
+    role: auditor
+    model_id:
+    model_label: "Gemini"
+    model_source: self-reported   # run header of audit-report-1
+    effort: high
+    effort_source: self-reported  # run header of audit-report-1
+    tools: []                     # run header: code execution no, web no
+    code_executed: false
+    context:
+    date: 2026-11-13
+
+  - artifact: answers/answer-2.md
+    role: solver
+    model_id: claude-opus-5-5
+    model_label: "Claude Opus 5.5"
+    model_source: self-reported
+    effort: extra              # user-reported at /log; same session as answer-1
+    effort_source: user-reported
+    tools: [code, web]
+    context: clean             # same conversation as answer-1
+    date: 2026-11-13
+
+# template of a run entry, kept from the seeded file:
+#  - artifact: answers/answer-1.md
+#    role: solver              # solver | auditor | blind-solver | explorer
+#    model_id:
+#    model_label:
+#    model_source: user-reported
+#    effort:
+#    effort_source: user-reported
+#    tools: []
+#    context:                  # clean | project (PLAN §7, item 8)
+#    date:
+
+# Filled by /log. See skills/log/SKILL.md for what each one checks.
+gates:
+  locators_complete: pass
+  no_unflagged_recall: pass
+  sources_split: pass
+  general_refs_resolved: pass     # the one "Kleinert (chapter 2)" mention is in the prior-knowledge declaration (moved to sources/independence.md) and is explicitly not a citation
+  convergence_check: pass
+  code_output_present: pass       # every run, failures included; round-2 re-runs identical to round 1
+  code_coverage_notes: pass
+  code_not_circular: pass         # solver's own assessment, auditor pass 6a concurs; note: C1-C4 and B2 take w from (a) as input, (a) itself checked against its definition by A and S1; S2, S5, S6 are declared algebra-only checks
+  code_audited: pass              # audit 1 pass 6a read the round-1 code; the auditor executed none, and the round-2 code (check_p1, reconstruct/validate) was never audited
+  audit_trail_complete: fail      # answer-2 not audited; user chose to close and stamp (2026-11-13); banner on final.md
+  findings_closed: pass           # F1.1 partial (accepted + rebutted parts), rebuttal unreviewed; SR2.1 deferred
+  stopping_rule: pass             # CONVENTIONS §6: audit 1 had no BLOCKER and no MAJOR
+  latex_clean: fail               # report-only: 17 overfull hboxes > 10pt (largest 121 pt); 0 undefined refs, 0 undefined cites, no \emph; see assets/code/log/latex_clean.out; not fixed (step 4)
+  ground_truth_timing: pass       # ground truth exists and arrived after the loop (user-reported); verdict not yet recorded
+
+findings_summary:
+  blocker:  {raised: 0, accepted: 0, rebutted: 0}
+  major:    {raised: 0, accepted: 0, rebutted: 0}
+  minor:    {raised: 1, accepted: 1, rebutted: 0}   # F1.1: defect accepted and fixed; parts of its evidence and one suggested fix rebutted (disposition "partial")
+  nit:      {raised: 1, accepted: 0, rebutted: 0}   # SR2.1, solver-raised, deferred
+  question: {raised: 0, answered: 0}
+  rebuttals_upheld: 0            # no auditor response to the round-2 rebuttal
+
+# Optional. No gate turns on any of this. Every field may be `unknown`, and the
+# whole block can be deleted if there was no attempt. `recorded` is the one
+# worth being accurate about: an attempt written up after reading the answer is
+# still useful, but it is not a prior.
+human_attempt:
+  exists: false                # human/attempt.md left as the unfilled template (user, 2026-11-13)
+  form: none                   # markdown | scan | photo | notes | none
+  recorded:                    # before-answer | after-answer | unknown
+  time_spent_min:
+  reached_an_answer:
+  prediction:
+  prediction_correct:
+
+ground_truth:
+  available: true            # user-reported at /log, 2026-11-13; not shown to the solver
+  source:                    # professor | answer-key | measurement | numerical | none
+  verdict:                   # to be filled by the user after comparison
+  arrived: after-loop        # before-loop | mid-loop | after-loop | none
+
+independence:
+  declaration_requested: true
+  recognized_problem: true          # in outline (answer §1)
+  declared_result_matched: true     # (a) and the primitive results matched the declaration; no bridge formula was declared
+  anchoring_steps_self_reported: 5  # convergence check, items 1-5
+  anchoring_steps_found_by_auditor: 0
+  retrieval_suspected: false        # audit 1 pass 8 (independence) reported pass; no forbidden source retrieved (sources/independence.md)
+  perturbation_test_run: unknown    # not reported in audit-report-1; audit-prompt-1 (with any [FOCUS] block) not read by the solver/logger
+  perturbation_test_passed: unknown
+  # PI checks that exist for this chunk and must not reach the solver: pc1, pc1b, pc2, pc3
+
+sources:
+  used: 6                    # DLMF 18.12.15, DLMF 18.18(i); 4 round-2 entries load-bearing only for the Response to audit 1
+  consulted: 2               # DLMF 18.18.28 (used inside check C2 only), van Neerven arXiv:2112.11166
+  verified_tool: 7
+  verified_human: 0
+  unverified: 1              # van Neerven, consulted only
+  load_bearing_unverified: 0
+
+result_one_line: "w = rho0 exp[-tau(x^2+xx'+x'^2)/6 - tau^2/12]; Zhat_m = e^{-beta^2/12m}/[(k+tau/2)^m-(k-tau/2)^m], k = sqrt(1+tau^2/12); lambda_n = e^{-tau^2/12}(k-tau/2)^n/(k+tau/2)^{n+1}, so E_n-(n+1/2) = (2n+1)tau^2/48 - tau^3/144 + ... (primitive: -(2n+1)tau^2/48); T_tau not positive for tau > sqrt6."
+branches_queued: []          # no exploration step was run
+
+# Recorded by /log (2026-11-13), solver-run, folder-restricted session:
+log_notes:
+  index_rows_written: false      # index.md / index.yaml are at the repository root, outside the folder the user granted; rows supplied in the /log report
+  committed_by_log: false        # no shell on the user's machine; git commands supplied in the /log report
+  final_md_derivation: "answer-2 with sections 1 and 10 moved out; two cross-references redirected (assets/code/log/make_final.py)"
+  final_tex_deviation: "body uses final.md's own sections 2-9 instead of the template's placeholder sections; pandoc additions (array, \\tightlist, \\passthrough, secnumdepth 0) marked in the preamble"
+  audit_prompt_1_read_by_logger: false

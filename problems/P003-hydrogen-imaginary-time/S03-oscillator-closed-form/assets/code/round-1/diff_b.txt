@@ -1,0 +1,5 @@
+1,4d0
+< /home/claude/p003/check_b.py:74: RuntimeWarning: divide by zero encountered in log
+<   return -np.log(w)
+< /home/claude/p003/check_b.py:78: RuntimeWarning: divide by zero encountered in log
+<   return -np.log(w)

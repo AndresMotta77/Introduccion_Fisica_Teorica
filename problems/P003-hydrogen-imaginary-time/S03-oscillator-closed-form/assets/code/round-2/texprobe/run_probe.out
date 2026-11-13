@@ -1,0 +1,13 @@
+=== probe_house: PDF produced: yes
+    TeX errors: 0; missing-character warnings: 0
+=== probe_auditor: PDF produced: yes
+    TeX errors: 8; missing-character warnings: 0
+    error at l.12 (a) \verb|\mathbb 1|: $2\mathbb
+    error at l.13 (b) \verb|\mathbb{1}|: $\mathbb
+    error at l.15 (d) \verb|\mathbb{I}|: $\mathbb
+    error at l.16 (e) \verb|\mathbb R|: $L^2(\mathbb
+    error at l.17 ...verb|\square, \lesssim, \gtrsim|: $\square
+    error at l.17 ...re, \lesssim, \gtrsim|: $\square\ \lesssim
+    error at l.17 ...sim, \gtrsim|: $\square\ \lesssim\ \gtrsim
+    error at l.18 (g) \verb|\mathbb E|: $\rho_0\,\mathbb
+rendered probe_house.pdf to probe_house-1.png (inspected visually)

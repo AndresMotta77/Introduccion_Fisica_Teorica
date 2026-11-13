@@ -1,0 +1,81 @@
+C1 grid diagonalisation: max_n |lam_grid - lam_closed|/lam_0 over n < 8 (h and h/2), sign pattern of grid eigenvalues
+  bridge tau= 0.05000 q=+0.951224 N=  860 err(h)=8.88e-15 err(h/2)=2.36e-14 grid signs ++++++++  ok
+  bridge tau= 0.20000 q=+0.818457 N=  481 err(h)=4.17e-15 err(h/2)=1.50e-14 grid signs ++++++++  ok
+  bridge tau= 0.50000 q=+0.603289 N=  481 err(h)=4.14e-15 err(h/2)=1.33e-14 grid signs ++++++++  ok
+  bridge tau= 1.00000 q=+0.351000 N=  481 err(h)=4.09e-15 err(h/2)=1.41e-14 grid signs ++++++++  ok
+  bridge tau= 2.00000 q=+0.071797 N=  481 err(h)=3.67e-15 err(h/2)=1.44e-14 grid signs ++++++++  ok
+  bridge tau= 2.44949 q=+0.000000 N=  481 err(h)=3.81e-15 err(h/2)=1.40e-14 grid signs +-++--++  ok
+  bridge tau= 3.00000 q=-0.062746 N=  481 err(h)=3.98e-15 err(h/2)=1.26e-14 grid signs +-+-+-+-  ok
+  bridge tau= 5.00000 q=-0.174828 N=  481 err(h)=4.27e-15 err(h/2)=1.35e-14 grid signs +-+-+-+-  ok
+  bridge tau=10.00000 q=-0.241457 N=  481 err(h)=3.52e-15 err(h/2)=1.42e-14 grid signs +-+-+-+-  ok
+  prim   tau= 0.05000 q=+0.951234 N=  860 err(h)=1.22e-14 err(h/2)=1.34e-14 grid signs ++++++++  ok
+  prim   tau= 0.20000 q=+0.819002 N=  481 err(h)=5.03e-15 err(h/2)=1.45e-14 grid signs ++++++++  ok
+  prim   tau= 0.50000 q=+0.609612 N=  481 err(h)=3.98e-15 err(h/2)=1.37e-14 grid signs ++++++++  ok
+  prim   tau= 1.00000 q=+0.381966 N=  481 err(h)=3.05e-15 err(h/2)=1.42e-14 grid signs ++++++++  ok
+  prim   tau= 2.00000 q=+0.171573 N=  481 err(h)=3.62e-15 err(h/2)=1.43e-14 grid signs ++++++++  ok
+  prim   tau= 2.44949 q=+0.127017 N=  481 err(h)=3.58e-15 err(h/2)=1.42e-14 grid signs ++++++++  ok
+  prim   tau= 3.00000 q=+0.091673 N=  481 err(h)=3.85e-15 err(h/2)=1.41e-14 grid signs ++++++++  ok
+  prim   tau= 5.00000 q=+0.037088 N=  481 err(h)=3.60e-15 err(h/2)=1.43e-14 grid signs ++++++++  ok
+  prim   tau=10.00000 q=+0.009805 N=  481 err(h)=3.36e-15 err(h/2)=1.43e-14 grid signs ++++++++  ok
+  bridge tau=sqrt6: |lam_1/lam_0| on grid = 3.84e-16 (closed form: 0)
+C2 Mehler reconstruction of the kernel from the claimed spectrum (max relative error)
+  bridge tau= 0.05000: 7.48e-13 ok
+  bridge tau= 0.20000: 2.60e-14 ok
+  bridge tau= 0.50000: 6.66e-15 ok
+  bridge tau= 1.00000: 1.78e-15 ok
+  bridge tau= 2.00000: 1.78e-15 ok
+  bridge tau= 2.44949: 2.22e-15 ok
+  bridge tau= 3.00000: 1.55e-15 ok
+  bridge tau= 5.00000: 1.89e-15 ok
+  bridge tau=10.00000: 1.21e-14 ok
+  prim   tau= 0.05000: 2.67e-13 ok
+  prim   tau= 0.20000: 4.17e-14 ok
+  prim   tau= 0.50000: 9.33e-15 ok
+  prim   tau= 1.00000: 1.78e-15 ok
+  prim   tau= 2.00000: 4.00e-15 ok
+  prim   tau= 2.44949: 2.33e-15 ok
+  prim   tau= 3.00000: 2.66e-15 ok
+  prim   tau= 5.00000: 4.22e-15 ok
+  prim   tau=10.00000: 4.00e-15 ok
+  explicit 60-term spectral sum, bridge tau=5 (q<0): rel. err = 2.22e-16
+C3 Hilbert-Schmidt norm: grid int int kernel^2 vs sum_n lam_n^2 = lam_0^2/(1-q^2)
+  bridge tau= 0.20: grid 2.479260103155154e+00 closed 2.479260103155370e+00 rel 8.7e-14 ok
+  bridge tau= 1.00: grid 4.066366675094277e-01 closed 4.066366675094392e-01 rel 2.8e-14 ok
+  bridge tau= 3.00: grid 2.811175779765446e-02 closed 2.811175779765525e-02 rel 2.8e-14 ok
+  bridge tau=10.00: grid 9.456060691663023e-10 closed 9.456060691663292e-10 rel 2.8e-14 ok
+  prim   tau= 0.20: grid 2.487592975524755e+00 closed 2.487592975524971e+00 rel 8.7e-14 ok
+  prim   tau= 1.00: grid 4.472135954999454e-01 closed 4.472135954999579e-01 rel 2.8e-14 ok
+  prim   tau= 3.00: grid 9.245003270420225e-02 closed 9.245003270420485e-02 rel 2.8e-14 ok
+  prim   tau=10.00: grid 9.805806756908925e-03 closed 9.805806756909204e-03 rel 2.9e-14 ok
+C4 Tr (hW)^m on the grid vs closed forms of (b)
+  bridge beta= 1 m= 1 tau= 1.000: Tr=9.200444146293e-01 closed=9.200444146293e-01 rel=1.4e-14 ok
+  prim   beta= 1 m= 1 tau= 1.000: Tr=1.000000000000e+00 closed=1.000000000000e+00 rel=1.4e-14 ok
+  bridge beta= 1 m= 2 tau= 0.500: Tr=9.493513564557e-01 closed=9.493513564557e-01 rel=2.8e-14 ok
+  prim   beta= 1 m= 2 tau= 0.500: Tr=9.701425001453e-01 closed=9.701425001453e-01 rel=2.8e-14 ok
+  bridge beta= 1 m= 5 tau= 0.200: Tr=9.578355183050e-01 closed=9.578355183050e-01 rel=7.1e-14 ok
+  prim   beta= 1 m= 5 tau= 0.200: Tr=9.612426945555e-01 closed=9.612426945555e-01 rel=7.1e-14 ok
+  bridge beta= 5 m=10 tau= 0.500: Tr=8.078822830950e-02 closed=8.078822830951e-02 rel=1.4e-13 ok
+  prim   beta= 5 m=10 tau= 0.500: Tr=8.479224309907e-02 closed=8.479224309908e-02 rel=1.4e-13 ok
+  bridge beta=10 m=10 tau= 1.000: Tr=5.761619158836e-03 closed=5.761619158836e-03 rel=1.4e-13 ok
+  prim   beta=10 m=10 tau= 1.000: Tr=8.131156281816e-03 closed=8.131156281817e-03 rel=1.4e-13 ok
+  bridge beta=10 m= 1 tau=10.000: Tr=2.403694764195e-05 closed=2.403694764195e-05 rel=1.4e-14 ok
+  prim   beta=10 m= 1 tau=10.000: Tr=1.000000000000e-01 closed=1.000000000000e-01 rel=1.4e-14 ok
+  bridge beta=10 m= 3 tau= 3.333: Tr=2.180215777399e-03 closed=2.180215777399e-03 rel=4.3e-14 ok
+  prim   beta=10 m= 3 tau= 3.333: Tr=2.125984251968e-02 closed=2.125984251969e-02 rel=4.3e-14 ok
+  bridge beta=10 m= 4 tau= 2.500: Tr=3.274602129981e-03 closed=3.274602129981e-03 rel=5.7e-14 ok
+  prim   beta=10 m= 4 tau= 2.500: Tr=1.514412236495e-02 closed=1.514412236496e-02 rel=5.7e-14 ok
+  bridge beta= 5 m= 2 tau= 2.500: Tr=5.722675219466e-02 closed=5.722675219466e-02 rel=2.8e-14 ok
+  prim   beta= 5 m= 2 tau= 2.500: Tr=1.249390095109e-01 closed=1.249390095109e-01 rel=2.8e-14 ok
+C5 from grid eigenvalues: R_n = [E_n-(n+1/2) - (2n+1)tau^2/48]/tau^3 (bridge, predicted -1/144 + 3(2n+1)tau/1280 - tau^2/1296 + 103(2n+1)tau^3/387072 - tau^4/10368 + 187(2n+1)tau^5/5308416 + O(tau^6));
+   P_n = [E_n-(n+1/2) + (2n+1)tau^2/48]/tau^4 (primitive, predicted 3(2n+1)/1280 - 5(2n+1)tau^2/14336 + 35(2n+1)tau^4/589824 + O(tau^6))
+   failure if |R_n - pred| or |P_n - pred| > 5e-6 at any tau <= 0.4, n <= 3
+  tau=0.40 bridge  n=0: R=-0.0061155 d=-4.6e-08  n=1: R=-0.0042057 d=-3.0e-08  n=2: R=-0.0022959 d=-1.4e-08  n=3: R=-0.0003861 d=+2.0e-09
+  tau=0.40 prim    n=0: P=0.0022894 d=-4.3e-08  n=1: P=0.0068683 d=-1.3e-07  n=2: P=0.0114471 d=-2.2e-07  n=3: P=0.0160260 d=-3.0e-07
+  tau=0.20 bridge  n=0: R=-0.0065046 d=-7.6e-10  n=1: R=-0.0055628 d=-6.3e-10  n=2: R=-0.0046210 d=-5.1e-10  n=3: R=-0.0036792 d=-3.9e-10
+  tau=0.20 prim    n=0: P=0.0023299 d=-6.5e-10  n=1: P=0.0069897 d=-2.0e-09  n=2: P=0.0116495 d=-3.4e-09  n=3: P=0.0163093 d=-4.8e-09
+  tau=0.10 bridge  n=0: R=-0.0067175 d=+1.3e-10  n=1: R=-0.0062482 d=+1.2e-10  n=2: R=-0.0057790 d=+1.4e-10  n=3: R=-0.0053097 d=+1.3e-10
+  tau=0.10 prim    n=0: P=0.0023403 d=+1.5e-09  n=1: P=0.0070208 d=+1.2e-09  n=2: P=0.0117013 d=+1.3e-09  n=3: P=0.0163819 d=+1.3e-09
+  tau=0.05 bridge  n=0: R=-0.0068292 d=+5.9e-10  n=1: R=-0.0065947 d=+9.4e-10  n=2: R=-0.0063603 d=+8.6e-10  n=3: R=-0.0061258 d=+5.6e-10
+  tau=0.05 prim    n=0: P=0.0023429 d=+1.9e-08  n=1: P=0.0070286 d=+1.2e-08  n=2: P=0.0117144 d=+8.5e-09  n=3: P=0.0164002 d=+1.8e-08
+C6 E_0^bridge(tau) >= 1/2 on 400 log-spaced tau in [1e-3, 31.6]: violations = 0; min(E_0 - 1/2) = 2.083e-08 at tau = 1.000e-03
+TOTAL FAILURES: 0

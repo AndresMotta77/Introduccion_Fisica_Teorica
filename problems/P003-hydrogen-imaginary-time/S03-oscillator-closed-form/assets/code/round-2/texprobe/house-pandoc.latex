@@ -1,0 +1,26 @@
+% house-pandoc.latex -- pandoc template for check P1.
+% Math/text preamble copied verbatim from the house template (log skill,
+% reference/final-tex-template.tex), lines \documentclass ... hyperref; natbib and
+% the tag macros omitted (not used by the markdown). Additions needed only by
+% pandoc's LaTeX writer: array (table column specs), \tightlist, \passthrough.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in,marginparwidth=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{marginnote}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\usepackage{array}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,showstringspaces=false}
+\begin{document}
+$body$
+\end{document}

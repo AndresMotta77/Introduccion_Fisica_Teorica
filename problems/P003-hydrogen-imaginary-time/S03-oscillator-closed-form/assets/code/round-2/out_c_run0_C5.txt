@@ -1,0 +1,12 @@
+C5 from grid eigenvalues: R_n = [E_n-(n+1/2) - (2n+1)tau^2/48]/tau^3 (bridge, predicted -1/144 + 3(2n+1)tau/1280 - tau^2/1296 + O(tau^3));
+   P_n = [E_n-(n+1/2) + (2n+1)tau^2/48]/tau^4 (primitive, predicted 3(2n+1)/1280 + O(tau^2))
+  tau=0.40 bridge  n=0: R=-0.006116 pred=-0.006130  n=1: R=-0.004206 pred=-0.004255  n=2: R=-0.002296 pred=-0.002380  n=3: R=-0.000386 pred=-0.000505
+  tau=0.40 prim    n=0: P=0.002289 pred=0.002344  n=1: P=0.006868 pred=0.007031  n=2: P=0.011447 pred=0.011719  n=3: P=0.016026 pred=0.016406
+  tau=0.20 bridge  n=0: R=-0.006505 pred=-0.006507  n=1: R=-0.005563 pred=-0.005569  n=2: R=-0.004621 pred=-0.004632  n=3: R=-0.003679 pred=-0.003694
+  tau=0.20 prim    n=0: P=0.002330 pred=0.002344  n=1: P=0.006990 pred=0.007031  n=2: P=0.011649 pred=0.011719  n=3: P=0.016309 pred=0.016406
+  tau=0.10 bridge  n=0: R=-0.006718 pred=-0.006718  n=1: R=-0.006248 pred=-0.006249  n=2: R=-0.005779 pred=-0.005780  n=3: R=-0.005310 pred=-0.005312
+  tau=0.10 prim    n=0: P=0.002340 pred=0.002344  n=1: P=0.007021 pred=0.007031  n=2: P=0.011701 pred=0.011719  n=3: P=0.016382 pred=0.016406
+  tau=0.05 bridge  n=0: R=-0.006829 pred=-0.006829  n=1: R=-0.006595 pred=-0.006595  n=2: R=-0.006360 pred=-0.006360  n=3: R=-0.006126 pred=-0.006126
+  tau=0.05 prim    n=0: P=0.002343 pred=0.002344  n=1: P=0.007029 pred=0.007031  n=2: P=0.011714 pred=0.011719  n=3: P=0.016400 pred=0.016406
+C6 E_0^bridge(tau) >= 1/2 on 400 log-spaced tau in [1e-3, 31.6]: violations = 0; min(E_0 - 1/2) = 2.083e-08 at tau = 1.000e-03
+TOTAL FAILURES: 0

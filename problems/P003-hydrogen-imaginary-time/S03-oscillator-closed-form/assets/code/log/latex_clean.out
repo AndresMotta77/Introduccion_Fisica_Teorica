@@ -1,0 +1,22 @@
+undefined references: 0 []
+undefined citations : 0 []
+\emph in final.tex  : 0
+overfull hboxes > 10pt: 17 (of 77 overfull boxes in total)
+     121.2pt  in paragraph at final.tex lines 3495--3500  [in: 1. Prior-knowledge]
+      82.8pt  detected at final.tex lines 313  [in: 3.1 Part (a): the slice]
+      80.0pt  in paragraph at final.tex lines 3357--3358  [in: Appendix A. Provenance}\label{app:provenance}]
+      77.9pt  in paragraph at final.tex lines 58--59  [in: ?]
+      72.9pt  detected at final.tex lines 412  [in: 3.2 Part (b): the closed-ring Gaussian]
+      72.0pt  detected at final.tex lines 270  [in: 3.1 Part (a): the slice]
+      62.0pt  detected at final.tex lines 748  [in: \texorpdfstring{3.3 Part (c): spectra of \(T_\tau\]
+      43.2pt  in paragraph at final.tex lines 1315--1326  [in: 4.2 Run log (all runs, including]
+      41.4pt  in paragraph at final.tex lines 3148--3159  [in: Used}\label{used}}]
+      40.7pt  in paragraph at final.tex lines 493--497  [in: 3.2 Part (b): the closed-ring Gaussian]
+      27.9pt  detected at final.tex lines 366  [in: 3.2 Part (b): the closed-ring Gaussian]
+      13.5pt  in paragraph at final.tex lines 3689--3692  [in: Appendix C. Audit history}\label{app:audit}]
+      13.3pt  detected at final.tex lines 431  [in: 3.2 Part (b): the closed-ring Gaussian]
+      12.8pt  in paragraph at final.tex lines 3362--3363  [in: Appendix A. Provenance}\label{app:provenance}]
+      12.2pt  in paragraph at final.tex lines 3369--3370  [in: Appendix A. Provenance}\label{app:provenance}]
+      12.0pt  in paragraph at final.tex lines 800--806  [in: \texorpdfstring{3.3 Part (c): spectra of \(T_\tau\]
+      10.1pt  in paragraph at final.tex lines 3329--3330  [in: Appendix A. Provenance}\label{app:provenance}]
+GATE latex_clean: fail

@@ -1,0 +1,16 @@
+30a31,37
+> # REVISION NOTE (run 3). Run 2 (check_a_run2.py, out_a_run2_1FAIL.txt) agreed with the closed
+> # form to ~1e-31 at all 13 points but flagged (0,0,1) as FAIL because the new quadrature
+> # criterion used the RELATIVE error estimate of each inner y-integral; at x=x'=0 the inner
+> # value is sigma^2/2 -> 0 as u -> 0, so a ~1e-37 absolute estimate became 6.8e-7 relative.
+> # The criterion now bounds the contribution of inner errors to I: tau*max|err_y| / I. A
+> # non-convergence like run 1's (relative error ~6e-4 on inner values of order 1, now that the
+> # integrand is scaled by 1/rho0) would give ~1e-3 here and still be flagged.
+46c53
+<     MAXERR[0] = max(MAXERR[0], abs(err)/max(abs(val), mp.mpf('1e-300')))
+---
+>     MAXERR[0] = max(MAXERR[0], abs(err))           # absolute error estimate of inner integral
+53c60
+<     return val, abs(err)/abs(val), MAXERR[0]
+---
+>     return val, abs(err)/abs(val), tau*MAXERR[0]/abs(val)

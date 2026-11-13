@@ -1,0 +1,23 @@
+1c1
+< # validate_reruns.py -- compare every round-2 output with the output recorded in round 1.
+---
+> # validate_reruns.py -- (run 1) compare every round-2 output with the output recorded in round 1.
+19c19,21
+< def block_after(text, marker):
+---
+> def block_after(text, marker, skip=0):
+>     """first fenced block after marker; skip=1 when the marker sits inside a code block,
+>     so that block's closing fence is passed first (run 0 lacked this and returned '')"""
+20a23,24
+>     for _ in range(skip):
+>         i = text.index("\n```\n", i) + 5
+28,29c32,33
+<     'dbg_a':     block_after(tmpl, "# dbg_a.py\n"),
+<     'dbg_a2':    block_after(tmpl, "# dbg_a2.py\n"),
+---
+>     'dbg_a':     block_after(tmpl, "# dbg_a.py\n", skip=1),
+>     'dbg_a2':    block_after(tmpl, "# dbg_a2.py\n", skip=1),
+53c57
+<     same = (new == old)
+---
+>     same = (new == old) and len(old) > 0 and len(new) > 0   # an empty side never counts as a match
